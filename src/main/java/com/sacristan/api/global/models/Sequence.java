@@ -1,11 +1,7 @@
 package com.sacristan.api.global.models;
 
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Duration;
@@ -31,4 +27,10 @@ public class Sequence {
     private Duration estimatedDuration;
     
     private Boolean allowGoBack;
+
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 }
