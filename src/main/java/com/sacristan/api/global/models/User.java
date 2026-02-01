@@ -1,13 +1,14 @@
 package com.sacristan.api.global.models;
 
-import com.sacristan.api.global.models.extra.Roles;
+import com.sacristan.api.global.models.extra.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@AllArgsConstructor @RequiredArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Builder
+@Table(name = "users")
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +22,7 @@ public class User {
     private String email;
     private String password;
 
-    private Roles role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 }

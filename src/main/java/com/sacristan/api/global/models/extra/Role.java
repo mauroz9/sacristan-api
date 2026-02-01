@@ -1,6 +1,6 @@
 package com.sacristan.api.global.models.extra;
 
-public enum Roles {
+public enum Role {
 
     ADMIN,
     STUDENT
