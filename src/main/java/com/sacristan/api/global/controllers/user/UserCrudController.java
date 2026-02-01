@@ -183,7 +183,7 @@ public class UserCrudController {
                                             {
                                                 "id": 1,
                                                 "name": "John",
-                                                "lastName": "Doe",
+                                                "lastName": "Doe"
                                             }
                                             """
                             )

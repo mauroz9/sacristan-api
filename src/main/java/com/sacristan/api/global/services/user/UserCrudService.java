@@ -13,6 +13,9 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class UserCrudService {
 
+
+    /* ON THE IMMEDIATE FUTURE WE WILL ADD VALIDATION DIRECTLY ON TO THE CLASSES AND GLOBAL EXCEPTION HANDLING */
+
     private final UserRepository repository;
 
     public User create(User user) {
