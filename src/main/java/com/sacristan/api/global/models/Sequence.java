@@ -28,6 +28,7 @@ public class Sequence {
     private String description;
 
     @Nullable
-    private Duration duracionEstimada;
-    private Boolean permitirAnterior;
+    private Duration estimatedDuration;
+    
+    private Boolean allowGoBack;
 }
