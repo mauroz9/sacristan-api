@@ -220,7 +220,7 @@ public class UserCrudController {
                     example = "1",
                     required = true
             )
-            @PathVariable  Long id,
+            @PathVariable(required = true)  Long id,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "UpdateUser DTO object containing the updated information for the User",
                     required = true,
@@ -251,9 +251,23 @@ public class UserCrudController {
     }
 
 
+
     @DeleteMapping("/{id}")
+    @ApiResponse(
+            responseCode = "204",
+            description = "User deleted successfully"
+    )
+    @Operation(
+            summary = "Delete a User by ID",
+            description = "Deletes the User identified by the given ID from the system."
+    )
     public ResponseEntity<?> delete(
-            @PathVariable  Long id
+            @Parameter(
+                    description = "ID of the User to be deleted",
+                    example = "1",
+                    required = true
+            )
+            @PathVariable(required = true)  Long id
     ) {
 
         service.delete(id);
