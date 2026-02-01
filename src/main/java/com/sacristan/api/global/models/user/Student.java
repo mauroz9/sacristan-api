@@ -3,10 +3,11 @@ package com.sacristan.api.global.models.user;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity @Table(name = "student")
+@Entity
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Builder
+@Table(name = "students")
 public class Student {
 
     @Id
