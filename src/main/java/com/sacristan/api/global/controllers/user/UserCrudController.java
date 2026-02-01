@@ -171,8 +171,76 @@ public class UserCrudController {
 
 
     @PutMapping("/{id}")
+    @ApiResponse(
+            responseCode = "200",
+            description = "User updated successfully",
+            content = @Content(
+                    mediaType = "application/JSON",
+                    schema = @Schema(implementation = UserResponse.class),
+                    examples = {
+                            @ExampleObject(
+                                    value = """
+                                            {
+                                                "id": 1,
+                                                "name": "John",
+                                                "lastName": "Doe",
+                                            }
+                                            """
+                            )
+                    }
+            )
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "User not found",
+            content = @Content(
+                    mediaType = "application/JSON",
+                    examples = {
+                            @ExampleObject(
+                                    value = """
+                                            {
+                                              "type": "about:blank",
+                                              "title": "User Not Found",
+                                              "status": 404,
+                                              "detail": "No User found with ID 99",
+                                              "instance": "/api/v1/user/99"
+                                            }
+                                            """
+                            )
+                    }
+            )
+    )
+    @Operation(
+            summary = "Update an existing User",
+            description = "Updates the information of an existing User identified by the given ID."
+    )
     public ResponseEntity<UserResponse> update(
+            @Parameter(
+                    description = "ID of the User to be updated",
+                    example = "1",
+                    required = true
+            )
             @PathVariable  Long id,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "UpdateUser DTO object containing the updated information for the User",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/JSON",
+                            schema = @Schema(implementation = UpdateUser.class),
+                            examples = {
+                                    @ExampleObject(
+                                            value = """
+                                                    {
+                                                        "name": "John",
+                                                        "lastName": "Doe",
+                                                        "email": "doe_john@testmail.com",
+                                                        "username": "johndoe"
+                                                    }
+                                                    """
+                                    )
+                            }
+                    )
+            )
             @RequestBody UpdateUser updateUser
     ) {
         return ResponseEntity
