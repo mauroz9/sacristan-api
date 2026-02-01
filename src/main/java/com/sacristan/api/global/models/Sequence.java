@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-import java.time.Period;
+import java.time.Duration;
 
 @Entity
 @Table(name = "sequences")
@@ -28,6 +28,6 @@ public class Sequence {
     private String description;
 
     @Nullable
-    private Period duracionEstimada;
+    private Duration duracionEstimada;
     private Boolean permitirAnterior;
 }
