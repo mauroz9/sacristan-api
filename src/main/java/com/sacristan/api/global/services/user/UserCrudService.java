@@ -40,6 +40,12 @@ public class UserCrudService {
     }
 
     public Page<User> list(Pageable pageable) {
-        return repository.findAll(pageable);
+
+        Page<User> users = repository.findAll(pageable);
+
+        if (users.isEmpty())
+            throw new NoSuchElementException("No users found");
+
+        return users;
     }
 }

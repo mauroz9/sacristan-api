@@ -279,6 +279,83 @@ public class UserCrudController {
 
 
     @GetMapping
+    @ApiResponse(
+            responseCode = "200",
+            description = "Users retrieved successfully",
+            content = @Content(
+                    mediaType = "application/JSON",
+                    schema = @Schema(implementation = UserResponse.class),
+                    examples = {
+                            @ExampleObject(
+                                    value = """
+                                            {
+                                                "content": [
+                                                    {
+                                                        "id": 1,
+                                                        "name": "John",
+                                                        "lastName": "Doe",
+                                                    },
+                                                    {
+                                                        "id": 2,
+                                                        "name": "Jane",
+                                                        "lastName": "Smith",
+                                                    }
+                                                ],
+                                                "pageable": {
+                                                    "sort": {
+                                                        "sorted": false,
+                                                        "unsorted": true,
+                                                        "empty": true
+                                                    },
+                                                    "pageNumber": 0,
+                                                    "pageSize": 20,
+                                                    "offset": 0,
+                                                    "paged": true,
+                                                    "unpaged": false
+                                                },
+                                                "totalPages": 1,
+                                                "totalElements": 2,
+                                                "last": true,
+                                                "size": 20,
+                                                "number": 0,
+                                                "sort": {
+                                                    "sorted": false,
+                                                    "unsorted": true,
+                                                    "empty": true
+                                                },
+                                                "first": true,
+                                                "numberOfElements": 2,
+                                                "empty": false
+                                            }
+                                            """
+                            )
+                    }
+            )
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "No Users found",
+            content = @Content(
+                    mediaType = "application/JSON",
+                    examples = {
+                            @ExampleObject(
+                                    value = """
+                                            {
+                                                "type": "about:blank",
+                                                "title": "No Users Found",
+                                                "status": 404,
+                                                "detail": "No users found",
+                                                "instance": "/api/v1/user"
+                                            }
+                                            """
+                            )
+                    }
+            )
+    )
+    @Operation(
+            summary = "List all Users with pagination",
+            description = "Retrieves a paginated list of all Users in the system."
+    )
     public ResponseEntity<Page<UserResponse>> list(Pageable pageable) {
         return ResponseEntity
                 .status(HttpStatus.OK)
