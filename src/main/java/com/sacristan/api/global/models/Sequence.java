@@ -1,11 +1,14 @@
 package com.sacristan.api.global.models;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+
+import java.time.Period;
 
 @Entity
 @Table(name = "sequences")
@@ -23,4 +26,8 @@ public class Sequence {
 
     private String title;
     private String description;
+
+    @Nullable
+    private Period duracionEstimada;
+    private Boolean permitirAnterior;
 }
