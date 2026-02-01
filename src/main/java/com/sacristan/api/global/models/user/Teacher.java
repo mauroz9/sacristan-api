@@ -23,17 +23,31 @@ public class Teacher {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
     @Builder.Default
+    // MANEJAR DESDE LA LOGICA - NO PUEDES BORRAR UN PROFESOR CON ESTUDIANTES
     private List<Student> students = new ArrayList<>();
 
     /* -- HELPERS -- */
     public void addStudent(Student student) {
-        students.add(student);
-        student.setTeacher(this);
+
+        if (student == null)
+            throw new IllegalArgumentException("Student cannot be null");
+
+        if (!students.contains(student)) {
+            students.add(student);
+            student.setTeacher(this);
+        }
     }
 
     public void removeStudent(Student student) {
-        students.remove(student);
-        student.setTeacher(null);
+
+        if (student == null)
+            throw new IllegalArgumentException("Student cannot be null");
+
+        if (students.contains(student)) {
+            students.remove(student);
+            student.setTeacher(null);
+        }
+
     }
 
 
