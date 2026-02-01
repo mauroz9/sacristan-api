@@ -4,7 +4,7 @@ import com.sacristan.api.global.models.user.User;
 
 public record UpdateUser (
         String name,
-        String LastName,
+        String lastName,
         String email,
         String username
 ) {
@@ -12,7 +12,7 @@ public record UpdateUser (
     public User to(){
         return User.builder()
                 .name(name)
-                .lastName(LastName)
+                .lastName(lastName)
                 .email(email)
                 .username(username)
                 .build();

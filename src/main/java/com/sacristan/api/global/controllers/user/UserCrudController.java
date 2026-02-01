@@ -42,7 +42,7 @@ public class UserCrudController {
                                             {
                                                 "id": 1,
                                                 "name": "John",
-                                                "lastName": "Doe",
+                                                "lastName": "Doe"
                                             }
                                             """
                             )
@@ -284,7 +284,7 @@ public class UserCrudController {
             description = "Users retrieved successfully",
             content = @Content(
                     mediaType = "application/JSON",
-                    schema = @Schema(implementation = UserResponse.class),
+                    schema = @Schema(implementation = Page.class),
                     examples = {
                             @ExampleObject(
                                     value = """
