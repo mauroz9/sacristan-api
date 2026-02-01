@@ -1,6 +1,6 @@
-package com.sacristan.api.global.models;
+package com.sacristan.api.global.models.user;
 
-import com.sacristan.api.global.models.extra.Role;
+import com.sacristan.api.global.models.user.extra.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
