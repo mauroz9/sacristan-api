@@ -17,12 +17,27 @@ public class User {
     private String name;
     private String lastName;
 
-
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    public User modify(User user) {
+        return User.builder()
+                .id(this.id)
+                .password(this.password)
+                .role(this.role)
+                .name(user.getName())
+                .lastName(user.getLastName())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .build();
+    }
 }
