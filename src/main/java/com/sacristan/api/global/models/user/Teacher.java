@@ -10,12 +10,12 @@ import lombok.*;
 @Table(name = "teachers")
 public class Teacher {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", unique = true, nullable = false)
-    @MapsId // Establece que este ID y el ID de la entidad deben ser la misma.
+    @MapsId // Establishes that the Entity's ID and the referenced Entity's ID must be the same
     private User user;
 
 }
