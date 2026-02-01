@@ -1,7 +1,10 @@
 package com.sacristan.api.global.models;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.Duration;
 
 @Entity
 @Table(name = "steps")
@@ -18,6 +21,11 @@ public class Step {
     private Long id;
 
     private String name;
-    private Long position;
-    private Integer idPictogramaArasaac;
+    private Integer position;
+
+    @Nullable
+    private Duration estimatedDuration;
+
+    private Integer arasaacPictogramId;
+
 }
