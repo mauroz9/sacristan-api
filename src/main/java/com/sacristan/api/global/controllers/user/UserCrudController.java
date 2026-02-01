@@ -6,6 +6,7 @@ import com.sacristan.api.global.dtos.user.UserResponse;
 import com.sacristan.api.global.services.user.UserCrudService;
 import com.sacristan.api.global.services.user.UserUtilsService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -110,8 +111,56 @@ public class UserCrudController {
 
 
     @GetMapping("/{id}")
+    @ApiResponse(
+            responseCode = "200",
+            description = "User retrieved successfully",
+            content = @Content(
+                    mediaType = "application/JSON",
+                    schema = @Schema(implementation = UserResponse.class),
+                    examples = {
+                            @ExampleObject(
+                                    value = """
+                                            {
+                                                "id": 1,
+                                                "name": "John",
+                                                "lastName": "Doe",
+                                            }
+                                            """
+                            )
+                    }
+            )
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "User not found",
+            content = @Content(
+                    mediaType = "application/JSON",
+                    examples = {
+                            @ExampleObject(
+                                    value = """
+                                            {
+                                              "type": "about:blank",
+                                              "title": "User Not Found",
+                                              "status": 404,
+                                              "detail": "No User found with ID 99",
+                                              "instance": "/api/v1/user/99"
+                                            }
+                                            """
+                            )
+                    }
+            )
+    )
+    @Operation(
+            summary = "Read a User by ID",
+            description = "Retrieves the User information for the given User ID."
+    )
     public ResponseEntity<UserResponse> read(
-            @PathVariable Long id
+            @Parameter(
+                    description = "ID of the User to be retrieved",
+                    example = "1",
+                    required = true
+            )
+            @PathVariable(required = true) Long id
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
