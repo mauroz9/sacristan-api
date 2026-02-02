@@ -1,6 +1,6 @@
 package com.sacristan.api.global.services.category;
 
-import com.sacristan.api.error.BadRequestException;
+import com.sacristan.api.error.exceptions.BadRequestException;
 import com.sacristan.api.global.models.Category;
 import com.sacristan.api.global.repositories.CategoryRepository;
 import com.sacristan.api.global.repositories.RoutineRepository;
@@ -42,9 +42,7 @@ public class CategoryCrudService {
 
     public Page<Category> list(Pageable pageable) {
 
-        Page<Category> categories = repository.findAll(pageable);
-        
-        return categories;
+        return repository.findAll(pageable);
     }
 
     public Category update(Long id, Category newCategory){

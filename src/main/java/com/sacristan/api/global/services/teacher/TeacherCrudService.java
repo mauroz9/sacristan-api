@@ -1,6 +1,6 @@
 package com.sacristan.api.global.services.teacher;
 
-import com.sacristan.api.error.BadRequestException;
+import com.sacristan.api.error.exceptions.BadRequestException;
 import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.models.user.extra.Role;

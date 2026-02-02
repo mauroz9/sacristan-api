@@ -1,4 +1,4 @@
-package com.sacristan.api.error;
+package com.sacristan.api.error.exceptions;
 
 public class BadRequestException extends RuntimeException {
     public BadRequestException(String message) {

@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 public class UserCrudService {
 
 
-    /* ON THE IMMEDIATE FUTURE WE WILL ADD VALIDATION DIRECTLY ON TO THE CLASSES AND GLOBAL EXCEPTION HANDLING */
+    /* ON THE IMMEDIATE FUTURE WE WILL ADD VALIDATION DIRECTLY ON TO THE CLASSES  */
 
     private final UserRepository repository;
 
