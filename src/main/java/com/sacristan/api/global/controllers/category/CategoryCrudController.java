@@ -2,6 +2,7 @@ package com.sacristan.api.global.controllers.category;
 
 import com.sacristan.api.global.dtos.category.CategoryResponse;
 import com.sacristan.api.global.dtos.category.CreateCategory;
+import com.sacristan.api.global.dtos.category.UpdateCategory;
 import com.sacristan.api.global.services.category.CategoryCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -65,6 +66,22 @@ public class CategoryCrudController {
     ) {
         crudService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(
+            summary = "Update Category",
+            description = "Update a specific category"
+    )
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryResponse> update(
+            @PathVariable Long id,
+            @RequestBody UpdateCategory updateCategory
+    ) {
+        return ResponseEntity.ok(
+                CategoryResponse.of(
+                        crudService.update(id, updateCategory.to())
+                )
+        );
     }
 
     @Operation(
