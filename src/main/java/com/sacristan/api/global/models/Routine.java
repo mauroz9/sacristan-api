@@ -23,7 +23,7 @@ public class Routine {
     private String name;
 
     @ElementCollection(targetClass = DaysOfTheWeek.class)
-    @CollectionTable(name = "rutine_days", joinColumns = @JoinColumn(name = "rutine_id"))
+    @CollectionTable(name = "routine_days", joinColumns = @JoinColumn(name = "routine_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "day", nullable = false)
     private Set<DaysOfTheWeek> days = new HashSet<>();
