@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "steps")
 @Builder
