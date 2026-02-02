@@ -56,7 +56,7 @@ public class StepCrudService {
         Long sequenceId = step.getSequence().getId();
         stepRepository.delete(step);
 
-        List<Step> remainingSteps = stepRepository.findAllBySequenceIdOrderByOrderAsc(sequenceId);
+        List<Step> remainingSteps = stepRepository.findAllBySequenceIdOrderByPositionAsc(sequenceId);
         int position = 1;
         for (Step remainingStep : remainingSteps) {
             remainingStep.setPosition(position++);
