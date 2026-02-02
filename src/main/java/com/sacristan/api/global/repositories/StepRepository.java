@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface StepRepository extends JpaRepository<Step, Long> {
 
-    List<Step> findAllBySequenceIdOrderByOrderAsc(Long sequenceId);
+    List<Step> findAllBySequenceIdOrderByPositionAsc(Long sequenceId);
 
-    @Query("SELECT COALESCE(MAX(s.order), 0) FROM Step s WHERE s.sequence.id = :sequenceId")
+    @Query("SELECT COALESCE(MAX(s.position), 0) FROM Step s WHERE s.sequence.id = :sequenceId")
     Integer findMaxOrderBySequenceId(Long sequenceId);
 }
