@@ -62,7 +62,7 @@ public class UserCrudController {
                                               "title": "Passwords don't match",
                                               "status": 400,
                                               "detail": "Passwords provided in 'password' and 'verifyPassword' fields do not match.",
-                                              "instance": "/api/v1/user"
+                                              "instance": "/api/v1/users"
                                             }
                                             """
                             )
@@ -143,7 +143,7 @@ public class UserCrudController {
                                               "title": "User Not Found",
                                               "status": 404,
                                               "detail": "No User found with ID 99",
-                                              "instance": "/api/v1/user/99"
+                                              "instance": "/api/v1/users/99"
                                             }
                                             """
                             )
@@ -203,7 +203,7 @@ public class UserCrudController {
                                               "title": "User Not Found",
                                               "status": 404,
                                               "detail": "No User found with ID 99",
-                                              "instance": "/api/v1/user/99"
+                                              "instance": "/api/v1/users/99"
                                             }
                                             """
                             )
@@ -345,7 +345,7 @@ public class UserCrudController {
                                                 "title": "No Users Found",
                                                 "status": 404,
                                                 "detail": "No users found",
-                                                "instance": "/api/v1/user"
+                                                "instance": "/api/v1/users"
                                             }
                                             """
                             )
