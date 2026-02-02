@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "sequences")
@@ -27,6 +29,12 @@ public class Sequence {
     private Duration estimatedDuration;
     
     private Boolean allowGoBack;
+
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "sequence_id")
+    private List<Step> steps = new ArrayList<>();
+
 
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
