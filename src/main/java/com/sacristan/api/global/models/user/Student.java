@@ -1,7 +1,12 @@
 package com.sacristan.api.global.models.user;
 
+import com.sacristan.api.global.models.Routine;
+import com.sacristan.api.global.models.Sequence;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor @NoArgsConstructor
@@ -21,6 +26,14 @@ public class Student {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
+
+    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_user_id")
+    private List<Routine> routines = new ArrayList<>();
+
+    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_user_id")
+    private List<Sequence> sequences = new ArrayList<>();
 
 }
 
