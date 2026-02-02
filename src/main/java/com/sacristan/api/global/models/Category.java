@@ -1,5 +1,6 @@
 package com.sacristan.api.global.models;
 
+import com.sacristan.api.global.models.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,5 +19,10 @@ public class Category {
 
     private String name;
 
+    public Category modify(Category category) {
+        return Category.builder()
+                .id(this.id)
+                .name(category.name).build();
+    }
 
 }
