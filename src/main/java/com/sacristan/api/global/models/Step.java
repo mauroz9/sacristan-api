@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "steps")
 @Builder
@@ -38,6 +35,7 @@ public class Step {
 
     public Step modify(Step newStep){
         this.name = newStep.getName();
+        this.position = newStep.getPosition();
         this.estimatedDuration = newStep.getEstimatedDuration();
         this.arasaacPictogramId = newStep.getArasaacPictogramId();
         return this;
