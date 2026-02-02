@@ -35,6 +35,7 @@ public class Routine {
     @Column(name = "day", nullable = false)
     private Set<DaysOfTheWeek> days = new HashSet<>();
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "routine", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RoutineSequence> sequences = new ArrayList<>();
 }
