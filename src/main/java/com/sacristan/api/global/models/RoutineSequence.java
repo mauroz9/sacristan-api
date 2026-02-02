@@ -26,6 +26,7 @@ public class RoutineSequence {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sequence_id")
+    @ToString.Exclude
     private Sequence sequence;
 
     private LocalTime startTime;
