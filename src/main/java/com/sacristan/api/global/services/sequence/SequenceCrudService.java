@@ -42,10 +42,21 @@ public class SequenceCrudService {
 
         if (newSequence.getCategory() != null && newSequence.getCategory().getId() != null) {
             Category category = categoryRepository.findById(newSequence.getCategory().getId())
-                    .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + newSequence.getCategory().getId()));
+                    .orElseThrow(() -> new NoSuchElementException("Category not found with id: " + newSequence.getCategory().getId()));
             newSequence.setCategory(category);
         }
-        return repository.save(sequence.modify(newSequence));
+        sequence.getSteps().clear();
+
+        if (newSequence.getSteps() != null) {
+            newSequence.getSteps().forEach(step -> {
+                step.setSequence(sequence);
+                sequence.getSteps().add(step);
+            });
+        }
+
+        sequence.modify(newSequence);
+
+        return repository.save(sequence);
     }
 
     public void delete(Long id) {
