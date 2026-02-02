@@ -23,7 +23,7 @@ public class Routine {
     private String name;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
