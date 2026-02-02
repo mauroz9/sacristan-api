@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "steps")
@@ -18,6 +20,7 @@ public class Step {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
     private String name;
@@ -27,5 +30,17 @@ public class Step {
     private Duration estimatedDuration;
 
     private Integer arasaacPictogramId;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sequence_id")
+    private Sequence sequence;
+
+    public Step modify(Step newStep){
+        this.name = newStep.getName();
+        this.estimatedDuration = newStep.getEstimatedDuration();
+        this.arasaacPictogramId = newStep.getArasaacPictogramId();
+        return this;
+    }
 
 }
