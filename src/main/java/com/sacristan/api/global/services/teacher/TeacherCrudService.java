@@ -3,6 +3,7 @@ package com.sacristan.api.global.services.teacher;
 import com.sacristan.api.error.BadRequestException;
 import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.global.models.user.User;
+import com.sacristan.api.global.models.user.extra.Role;
 import com.sacristan.api.global.repositories.TeacherRepository;
 import com.sacristan.api.global.services.user.UserCrudService;
 import com.sacristan.api.global.services.user.UserUtilsService;
@@ -18,15 +19,16 @@ import java.util.NoSuchElementException;
 public class TeacherCrudService {
 
     private final TeacherRepository repository;
-
-    private final UserUtilsService userUtilsService;
+    private final UserCrudService userCrudService;
 
     public Teacher create(User user) {
 
-        return repository.save(Teacher.builder()
-                .user(userUtilsService.getReferenceById(user.getId()))
-                .build());
+        User newUser = userCrudService.create(user);
+        newUser.setRole(Role.TEACHER);
 
+        return repository.save(Teacher.builder()
+                .user(newUser)
+                .build());
     }
 
     public Teacher read(long id) {
