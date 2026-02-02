@@ -22,7 +22,7 @@ public class Category {
     public Category modify(Category category) {
         return Category.builder()
                 .id(this.id)
-                .name(this.name).build();
+                .name(category.name).build();
     }
 
 }
