@@ -21,6 +21,7 @@ public class RoutineSequence {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "routine_id")
+    @ToString.Exclude
     private Routine routine;
 
     @ManyToOne(fetch = FetchType.LAZY)
