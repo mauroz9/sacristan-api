@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ public class TeacherCrudController {
             summary = "Create Teacher",
             description = "Create a new Teacher entity"
     )
+    @PostMapping
     public ResponseEntity<TeacherResponse> create(
             @RequestBody(required = true) CreateUser createUser
     ) {
@@ -51,6 +53,7 @@ public class TeacherCrudController {
             summary = "Read Teacher",
             description = "Read the info of a specific teacher"
     )
+    @GetMapping("/{id}")
     public ResponseEntity<TeacherResponse> read(
             @PathVariable(required = true) Long id
     ) {
@@ -66,6 +69,7 @@ public class TeacherCrudController {
             summary = "Delete Teacher",
             description = "Delete a specific teacher"
     )
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(
             @PathVariable Long id
     ) {
@@ -77,6 +81,7 @@ public class TeacherCrudController {
             summary = "List Teachers",
             description = "List all teachers with pagination"
     )
+    @GetMapping
     public ResponseEntity<Page<TeacherResponse>> list(
             Pageable pageable
     ) {
