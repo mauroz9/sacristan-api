@@ -1,0 +1,85 @@
+package com.sacristan.api.interfaces.admin.controllers.teacher;
+
+import com.sacristan.api.interfaces.admin.dtos.teacher.TeacherResponse;
+import com.sacristan.api.interfaces.admin.dtos.user.CreateUser;
+import com.sacristan.api.interfaces.admin.services.teacher.TeacherCrudService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/admin/teachers")
+@Tag(name = "Teacher CRUD controller", description = "CRUD Controller for basic Teacher entity")
+public class TeacherCrudController {
+
+    private final TeacherCrudService crudService;
+
+    @Operation(
+            summary = "Create Teacher",
+            description = "Create a new Teacher entity"
+    )
+    @PostMapping
+    public ResponseEntity<TeacherResponse> create(
+            @RequestBody(required = true) CreateUser createUser
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(
+                    TeacherResponse.of(
+                            crudService.create(
+                                    createUser.to()
+                            )
+                    )
+                );
+    }
+
+    @Operation(
+            summary = "Read Teacher",
+            description = "Read the info of a specific teacher"
+    )
+    @GetMapping("/{id}")
+    public ResponseEntity<TeacherResponse> read(
+            @PathVariable(required = true) Long id
+    ) {
+        return ResponseEntity.ok(
+                TeacherResponse.of(
+                        crudService.read(id)
+                )
+        );
+    }
+
+
+    @Operation(
+            summary = "Delete Teacher",
+            description = "Delete a specific teacher"
+    )
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(
+            @PathVariable Long id
+    ) {
+        crudService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(
+            summary = "List Teachers",
+            description = "List all teachers with pagination"
+    )
+    @GetMapping
+    public ResponseEntity<Page<TeacherResponse>> list(
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(
+                crudService.list(pageable).map(TeacherResponse::of)
+        );
+    }
+
+
+
+}
