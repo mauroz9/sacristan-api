@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "rutines")
+@Table(name = "routines")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +22,9 @@ public class Routine {
 
     private String name;
 
+    @ElementCollection(targetClass = DaysOfTheWeek.class)
+    @CollectionTable(name = "rutine_days", joinColumns = @JoinColumn(name = "rutine_id"))
     @Enumerated(EnumType.STRING)
+    @Column(name = "day", nullable = false)
     private Set<DaysOfTheWeek> days = new HashSet<>();
 }
