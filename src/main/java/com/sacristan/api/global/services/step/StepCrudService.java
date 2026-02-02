@@ -22,7 +22,7 @@ public class StepCrudService {
         if (!sequenceRepository.existsById(sequenceId)) {
             throw new BadRequestException("Sequence with id " + sequenceId + " does not exists.");
         }
-        return stepRepository.findAllBySequenceIdOrderByOrderAsc(sequenceId);
+        return stepRepository.findAllBySequenceIdOrderByPositionAsc(sequenceId);
     }
 
     public Step getStepById(Long id) {
@@ -32,7 +32,7 @@ public class StepCrudService {
 
     public Step create(Long sequenceId,Step step){
         Sequence sequence = sequenceRepository.findById(sequenceId)
-                .orElseThrow(() -> new BadRequestException("No se puede crear el paso. La secuencia " + sequenceId + " no existe."));
+                .orElseThrow(() -> new BadRequestException("Could not create the step. Sequence " + sequenceId + " does not exists."));
 
         Integer currentMaxOrder = stepRepository.findMaxOrderBySequenceId(sequenceId);
         step.setPosition(currentMaxOrder + 1);
