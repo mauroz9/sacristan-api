@@ -22,6 +22,11 @@ public class Routine {
 
     private String name;
 
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @ElementCollection(targetClass = DaysOfTheWeek.class)
     @CollectionTable(name = "routine_days", joinColumns = @JoinColumn(name = "routine_id"))
     @Enumerated(EnumType.STRING)

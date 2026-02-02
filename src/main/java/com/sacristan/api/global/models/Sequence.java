@@ -31,14 +31,13 @@ public class Sequence {
     private Boolean allowGoBack;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "sequence_id")
-    private List<Step> steps = new ArrayList<>();
-
-
-    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "sequence_id")
+    private List<Step> steps = new ArrayList<>();
 
 }
