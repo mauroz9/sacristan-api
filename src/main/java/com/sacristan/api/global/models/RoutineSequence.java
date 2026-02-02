@@ -1,0 +1,33 @@
+package com.sacristan.api.global.models;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalTime;
+
+@Entity
+@Table(name = "routine_sequence")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class RoutineSequence {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "routine_id")
+    private Routine routine;
+
+    @ManyToOne
+    @JoinColumn(name = "sequence_id")
+    private Sequence sequence;
+
+    private LocalTime startTime;
+    private LocalTime endTime;
+
+}
