@@ -31,7 +31,7 @@ public class Sequence {
     private Boolean allowGoBack;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
