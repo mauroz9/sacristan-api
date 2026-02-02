@@ -22,6 +22,9 @@ public class Rutine {
 
     private String name;
 
+    @ElementCollection(targetClass = DaysOfTheWeek.class)
+    @CollectionTable(name = "rutine_days", joinColumns = @JoinColumn(name = "rutine_id"))
     @Enumerated(EnumType.STRING)
+    @Column(name = "day", nullable = false)
     private Set<DaysOfTheWeek> days = new HashSet<>();
 }
