@@ -2,7 +2,6 @@ package com.sacristan.api.global.dtos.student;
 
 import com.sacristan.api.global.dtos.user.UserResponse;
 import com.sacristan.api.global.models.user.Student;
-import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.models.user.extra.Role;
 import lombok.AllArgsConstructor;

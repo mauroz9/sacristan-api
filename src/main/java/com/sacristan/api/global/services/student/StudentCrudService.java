@@ -1,6 +1,5 @@
 package com.sacristan.api.global.services.student;
 
-import com.sacristan.api.error.BadRequestException;
 import com.sacristan.api.global.models.user.Student;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.models.user.extra.Role;
@@ -23,7 +22,7 @@ public class StudentCrudService {
     public Student create(User user) {
 
         User newUser = userCrudService.create(user);
-        newUser.setRole(Role.TEACHER);
+        newUser.setRole(Role.STUDENT);
 
         return repository.save(Student.builder()
                 .user(newUser)
