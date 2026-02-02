@@ -332,26 +332,6 @@ public class UserCrudController {
                     }
             )
     )
-    @ApiResponse(
-            responseCode = "404",
-            description = "No Users found",
-            content = @Content(
-                    mediaType = "application/JSON",
-                    examples = {
-                            @ExampleObject(
-                                    value = """
-                                            {
-                                                "type": "about:blank",
-                                                "title": "No Users Found",
-                                                "status": 404,
-                                                "detail": "No users found",
-                                                "instance": "/api/v1/users"
-                                            }
-                                            """
-                            )
-                    }
-            )
-    )
     @Operation(
             summary = "List all Users with pagination",
             description = "Retrieves a paginated list of all Users in the system."
