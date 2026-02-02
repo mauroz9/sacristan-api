@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-@Table(name = "reproduction")
+@Table(name = "reproductions")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
