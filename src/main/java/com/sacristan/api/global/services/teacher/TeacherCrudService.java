@@ -46,13 +46,7 @@ public class TeacherCrudService {
     }
 
     public Page<Teacher> list(Pageable pageable) {
-
-        Page<Teacher> teachers = repository.findAll(pageable);
-
-        if (teachers.isEmpty())
-            throw new NoSuchElementException("No teachers found");
-
-        return teachers;
+        return repository.findAll(pageable);
     }
 
 }
