@@ -6,7 +6,6 @@ import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.models.user.extra.Role;
 import com.sacristan.api.global.repositories.TeacherRepository;
 import com.sacristan.api.global.services.user.UserCrudService;
-import com.sacristan.api.global.services.user.UserUtilsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
