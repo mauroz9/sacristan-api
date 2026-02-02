@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "rutines")
+@Table(name = "routines")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
