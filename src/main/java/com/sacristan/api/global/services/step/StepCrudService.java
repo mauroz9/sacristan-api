@@ -18,6 +18,10 @@ public class StepCrudService {
     private final StepRepository stepRepository;
     private final SequenceRepository sequenceRepository;
 
+    public List<Step> getAll() {
+        return stepRepository.findAll();
+    }
+
     public List<Step> getStepsBySequence(Long sequenceId) {
         if (!sequenceRepository.existsById(sequenceId)) {
             throw new BadRequestException("Sequence with id " + sequenceId + " does not exists.");
@@ -30,37 +34,32 @@ public class StepCrudService {
                 .orElseThrow(() -> new NoSuchElementException("Step not found with id: " + id));
     }
 
-    public Step create(Long sequenceId,Step step){
-        Sequence sequence = sequenceRepository.findById(sequenceId)
-                .orElseThrow(() -> new BadRequestException("Could not create the step. Sequence " + sequenceId + " does not exists."));
-
-        Integer currentMaxOrder = stepRepository.findMaxOrderBySequenceId(sequenceId);
-        step.setPosition(currentMaxOrder + 1);
-
-        step.setSequence(sequence);
+    public Step create(Step step) {
+        if (step.getSequence() != null && step.getSequence().getId() != null) {
+            Sequence sequence = sequenceRepository.findById(step.getSequence().getId())
+                    .orElseThrow(() -> new BadRequestException("Sequence not found with id: " + step.getSequence().getId()));
+            step.setSequence(sequence);
+        }
 
         return stepRepository.save(step);
     }
 
-    public Step update(Long id, Step newStep){
+    public Step update(Long id, Step newStep) {
         Step step = stepRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Step not found with id: " + id));
+
+        if (newStep.getSequence() != null && newStep.getSequence().getId() != null) {
+            Sequence sequence = sequenceRepository.findById(newStep.getSequence().getId())
+                    .orElseThrow(() -> new BadRequestException("Sequence not found with id: " + newStep.getSequence().getId()));
+            newStep.setSequence(sequence);
+        }
 
         return stepRepository.save(step.modify(newStep));
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         Step step = stepRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Step not found with id: " + id));
-
-        Long sequenceId = step.getSequence().getId();
         stepRepository.delete(step);
-
-        List<Step> remainingSteps = stepRepository.findAllBySequenceIdOrderByPositionAsc(sequenceId);
-        int position = 1;
-        for (Step remainingStep : remainingSteps) {
-            remainingStep.setPosition(position++);
-        }
-        stepRepository.saveAll(remainingSteps);
     }
 }

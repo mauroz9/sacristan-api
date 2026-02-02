@@ -5,7 +5,7 @@ import com.sacristan.api.global.models.Step;
 
 import java.time.Duration;
 
-public record CreateStep(
+public record UpdateStep(
         String name,
         Integer position,
         Duration estimatedDuration,
