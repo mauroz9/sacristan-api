@@ -89,3 +89,5 @@ INSERT INTO students (user_id, teacher_id) VALUES (33, 4);
 -- Alumno 12
 INSERT INTO users (id, name, last_name, username, email, password, role) VALUES (34, 'Álvaro', 'Moreno', 'amoreno', 'alvaro.moreno@student.sacristan.edu', 'student123', 'STUDENT');
 INSERT INTO students (user_id, teacher_id) VALUES (34, 4);
+
+ALTER TABLE users ALTER COLUMN id RESTART WITH 100;

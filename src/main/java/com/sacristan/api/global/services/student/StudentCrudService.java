@@ -40,13 +40,7 @@ public class StudentCrudService {
     }
 
     public Page<Student> list(Pageable pageable) {
-
-        Page<Student> students = repository.findAll(pageable);
-
-        if (students.isEmpty())
-            throw new NoSuchElementException("No students found");
-
-        return students;
+        return repository.findAll(pageable);
     }
 
 }

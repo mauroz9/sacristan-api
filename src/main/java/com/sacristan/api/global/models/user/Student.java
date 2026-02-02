@@ -18,8 +18,8 @@ public class Student {
     @MapsId // Establishes that the Entity's ID and the referenced Entity's ID must be the same
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "teacher_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
 }
