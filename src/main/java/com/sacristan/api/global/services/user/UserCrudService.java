@@ -19,6 +19,13 @@ public class UserCrudService {
     private final UserRepository repository;
 
     public User create(User user) {
+
+        if (repository.existsByEmailIgnoreCase(user.getEmail()))
+            throw new IllegalArgumentException("Email already in use: " + user.getEmail());
+
+        if (repository.existsByUsernameIgnoreCase(user.getUsername()))
+            throw new IllegalArgumentException("Username already in use: " + user.getUsername());
+
         return repository.save(user);
     }
 
