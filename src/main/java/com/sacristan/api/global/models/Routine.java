@@ -3,7 +3,9 @@ package com.sacristan.api.global.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,4 +34,8 @@ public class Routine {
     @Enumerated(EnumType.STRING)
     @Column(name = "day", nullable = false)
     private Set<DaysOfTheWeek> days = new HashSet<>();
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "routine", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<RoutineSequence> sequences = new ArrayList<>();
 }
