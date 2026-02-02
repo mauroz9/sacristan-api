@@ -36,8 +36,7 @@ public class StepCrudService {
 
         Integer currentMaxOrder = stepRepository.findMaxOrderBySequenceId(sequenceId);
         step.setPosition(currentMaxOrder + 1);
-
-        // 3. Asignamos la relación y guardamos
+        
         step.setSequence(sequence);
 
         return stepRepository.save(step);
