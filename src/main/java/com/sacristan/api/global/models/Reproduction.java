@@ -35,15 +35,15 @@ public class Reproduction {
 
     @ElementCollection
     @CollectionTable(name = "reproduction_step_counts", joinColumns = @JoinColumn(name = "reproduction_id"))
-    @MapKeyJoinColumn(name = "step_id")
+    @MapKeyColumn(name = "step_id")
     @Column(name = "reproductions_count")
-    private Map<Step, Integer> stepReproductions = new HashMap<>();
+    private Map<Long, Integer> stepReproductions = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "reproduction_step_times", joinColumns = @JoinColumn(name = "reproduction_id"))
-    @MapKeyJoinColumn(name = "step_id")
+    @MapKeyColumn(name = "step_id")
     @Column(name = "active_time_ms")
-    private Map<Step, Long> reproductionTime = new HashMap<>();
+    private Map<Long, Long> reproductionTime = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "reproduction_clicks", joinColumns = @JoinColumn(name = "reproduction_id"))
