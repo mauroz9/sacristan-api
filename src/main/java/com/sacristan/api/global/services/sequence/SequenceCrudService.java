@@ -18,7 +18,7 @@ public class SequenceCrudService {
     private final CategoryRepository categoryRepository;
 
 
-    public List<Sequence> getAllSequences() {
+    public List<Sequence> getAll() {
         return repository.findAll();
     }
 
@@ -26,7 +26,7 @@ public class SequenceCrudService {
         return repository.findById(id).orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + id));
     }
 
-    public Sequence createSequence(Sequence sequence) {
+    public Sequence create(Sequence sequence) {
 
         if (sequence.getCategory() != null && sequence.getCategory().getId() != null) {
             Category category = categoryRepository.findById(sequence.getCategory().getId())
@@ -37,13 +37,13 @@ public class SequenceCrudService {
         return repository.save(sequence);
     }
 
-    public Sequence updateSequence(Long id, Sequence newSequence){
+    public Sequence update(Long id, Sequence newSequence){
         Sequence sequence = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + id));
 
         return repository.save(sequence.modify(newSequence));
     }
 
-    public void deleteSequence(Long id) {
+    public void delete(Long id) {
         Sequence sequence = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + id));
         repository.delete(sequence);
     }
