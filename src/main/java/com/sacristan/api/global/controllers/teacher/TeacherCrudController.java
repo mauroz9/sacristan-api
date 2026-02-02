@@ -4,6 +4,7 @@ import com.sacristan.api.global.dtos.teacher.TeacherResponse;
 import com.sacristan.api.global.dtos.user.CreateUser;
 import com.sacristan.api.global.dtos.user.UpdateUser;
 import com.sacristan.api.global.dtos.user.UserResponse;
+import com.sacristan.api.global.services.teacher.TeacherCrudService;
 import com.sacristan.api.global.services.user.UserCrudService;
 import com.sacristan.api.global.services.user.UserUtilsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,26 +27,62 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Teacher CRUD controller", description = "CRUD Controller for basic Teacher entity")
 public class TeacherCrudController {
 
-    public ResponseEntity<?> create() {
-        return null;
+    private final TeacherCrudService crudService;
+
+    @Operation(
+            summary = "Create Teacher",
+            description = "Create a new Teacher entity"
+    )
+    public ResponseEntity<TeacherResponse> create(
+            @RequestBody(required = true) CreateUser createUser
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(
+                    TeacherResponse.of(
+                            crudService.create(
+                                    createUser.to()
+                            )
+                    )
+                );
     }
 
-    public ResponseEntity<?> read() {
-        return null;
+    @Operation(
+            summary = "Read Teacher",
+            description = "Read the info of a specific teacher"
+    )
+    public ResponseEntity<TeacherResponse> read(
+            @PathVariable(required = true) Long id
+    ) {
+        return ResponseEntity.ok(
+                TeacherResponse.of(
+                        crudService.read(id)
+                )
+        );
     }
 
-    public ResponseEntity<?> update() {
-        return null;
+
+    @Operation(
+            summary = "Delete Teacher",
+            description = "Delete a specific teacher"
+    )
+    public ResponseEntity<?> delete(
+            @PathVariable Long id
+    ) {
+        crudService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
-    public ResponseEntity<?> delete() {
-        return null;
-    }
-
-    public ResponseEntity<Page<?>> list(
+    @Operation(
+            summary = "List Teachers",
+            description = "List all teachers with pagination"
+    )
+    public ResponseEntity<Page<TeacherResponse>> list(
             Pageable pageable
     ) {
-
+        return ResponseEntity.ok(
+                crudService.list(pageable).map(TeacherResponse::of)
+        );
     }
 
 

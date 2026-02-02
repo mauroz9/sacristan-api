@@ -4,13 +4,12 @@ import com.sacristan.api.global.dtos.user.UserResponse;
 import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.models.user.extra.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@Data @SuperBuilder @AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
+@SuperBuilder
 public class TeacherResponse extends UserResponse {
 
     private String role;
@@ -25,6 +24,10 @@ public class TeacherResponse extends UserResponse {
         TeacherResponse teacherResponse = new TeacherResponse(UserResponse.of(user));
         teacherResponse.setRole(Role.TEACHER.name());
         return teacherResponse;
+    }
+
+    public static TeacherResponse of( Teacher teacher) {
+        return of(teacher.getUser());
     }
 
 
