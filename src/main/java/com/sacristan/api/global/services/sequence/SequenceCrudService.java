@@ -30,7 +30,7 @@ public class SequenceCrudService {
 
         if (sequence.getCategory() != null && sequence.getCategory().getId() != null) {
             Category category = categoryRepository.findById(sequence.getCategory().getId())
-                    .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + sequence.getCategory().getId()));
+                    .orElseThrow(() -> new NoSuchElementException("Category not found with id: " + sequence.getCategory().getId()));
             sequence.setCategory(category);
         }
 
