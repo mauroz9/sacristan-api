@@ -40,4 +40,16 @@ public class Sequence {
     @JoinColumn(name = "sequence_id")
     private List<Step> steps = new ArrayList<>();
 
+    public Sequence modify(Sequence newSequence){
+        return Sequence.builder()
+                .id(this.id)
+                .title(newSequence.getTitle())
+                .description(newSequence.getDescription())
+                .estimatedDuration(newSequence.getEstimatedDuration())
+                .allowGoBack(newSequence.getAllowGoBack())
+                .category(newSequence.getCategory())
+                .steps(newSequence.getSteps())
+                .build();
+    }
+
 }
