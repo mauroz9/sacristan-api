@@ -2,9 +2,6 @@ package com.sacristan.api.global.services.category;
 
 import com.sacristan.api.error.BadRequestException;
 import com.sacristan.api.global.models.Category;
-import com.sacristan.api.global.models.Sequence;
-import com.sacristan.api.global.models.user.User;
-import com.sacristan.api.global.models.user.extra.Role;
 import com.sacristan.api.global.repositories.CategoryRepository;
 import com.sacristan.api.global.repositories.RoutineRepository;
 import com.sacristan.api.global.repositories.SequenceRepository;
