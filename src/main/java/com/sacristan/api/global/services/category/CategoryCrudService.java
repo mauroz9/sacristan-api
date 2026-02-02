@@ -32,7 +32,7 @@ public class CategoryCrudService {
     }
 
     public void delete(long id) {
-        Category category = repository.findById(id).orElseThrow(()-> new NoSuchElementException("Category not found with id: " + id));
+        Category category = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Category not found with id: " + id));
 
         if (sequenceRepository.existsByCategory(category) || routineRepository.existsByCategory(category))
             throw new BadRequestException("Cannot delete Category with assigned sequences or routines");
