@@ -40,6 +40,11 @@ public class SequenceCrudService {
     public Sequence update(Long id, Sequence newSequence){
         Sequence sequence = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + id));
 
+        if (newSequence.getCategory() != null && newSequence.getCategory().getId() != null) {
+            Category category = categoryRepository.findById(newSequence.getCategory().getId())
+                    .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + newSequence.getCategory().getId()));
+            newSequence.setCategory(category);
+        }
         return repository.save(sequence.modify(newSequence));
     }
 
