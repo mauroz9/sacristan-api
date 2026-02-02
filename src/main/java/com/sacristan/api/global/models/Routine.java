@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class Rutine {
+public class Routine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
