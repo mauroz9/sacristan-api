@@ -31,6 +31,7 @@ public class SecurityController
     private final RefreshTokenService refreshTokenService;
     private final JwtProvider jwtProvider;
 
+    // DELETE THIS METHOD AFTER TESTING
     @GetMapping("/try")
     public ResponseEntity<String> tryAuth(
             @AuthenticationPrincipal User user
@@ -82,8 +83,6 @@ public class SecurityController
         refreshTokenService.deleteByUser(user);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
-        System.out.println(token);
-
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(JwtUserResponse.of(
                         user,
@@ -91,6 +90,21 @@ public class SecurityController
                         refreshToken.getToken()
                 ));
 
+    }
+
+    @PostMapping("/logout")
+    @Transactional
+    public ResponseEntity<String> logout(
+            @AuthenticationPrincipal User user
+    ) {
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No user is currently authenticated");
+        }
+
+        refreshTokenService.deleteByUser(user);
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok("Logged out successfully");
     }
 
 }

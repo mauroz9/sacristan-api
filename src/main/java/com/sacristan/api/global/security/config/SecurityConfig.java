@@ -16,6 +16,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -43,6 +46,13 @@ public class SecurityConfig {
                 .ignoringRequestMatchers(PathRequest.toH2Console())
                 .disable()
             )
+            .cors(cors -> cors.configurationSource((request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+                config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                config.setAllowedHeaders(Arrays.asList("*"));
+                return config;
+            })))
             .exceptionHandling(ex -> ex
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
