@@ -43,10 +43,7 @@ public class CategoryCrudService {
     public Page<Category> list(Pageable pageable) {
 
         Page<Category> categories = repository.findAll(pageable);
-
-        if (categories.isEmpty())
-            throw new NoSuchElementException("No Categories found");
-
+        
         return categories;
     }
 
