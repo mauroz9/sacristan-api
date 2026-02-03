@@ -32,8 +32,8 @@ public class Routine {
     @ElementCollection(targetClass = DaysOfTheWeek.class)
     @CollectionTable(name = "routine_days", joinColumns = @JoinColumn(name = "routine_id"))
     @Enumerated(EnumType.STRING)
-    @Column(name = "day", nullable = false)
-    private Set<DaysOfTheWeek> days = new HashSet<>();
+    @Column(name = "day_of_the_week", nullable = false)
+    private Set<DaysOfTheWeek> daysOfTheWeek = new HashSet<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "routine", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
