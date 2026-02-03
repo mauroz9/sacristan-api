@@ -4,6 +4,7 @@ import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.security.config.jwt.access.JwtProvider;
 import com.sacristan.api.global.security.config.jwt.refresh.RefreshToken;
 import com.sacristan.api.global.security.config.jwt.refresh.RefreshTokenException;
+import com.sacristan.api.global.security.config.jwt.refresh.RefreshTokenNotFoundException;
 import com.sacristan.api.global.security.config.jwt.refresh.RefreshTokenService;
 import com.sacristan.api.global.security.utils.dtos.JwtUserResponse;
 import com.sacristan.api.global.security.utils.dtos.LoginRequest;
@@ -60,7 +61,7 @@ public class SecurityController
                                     newRefreshToken.getToken()
                             )
                     );
-                }).orElseThrow(() -> new RefreshTokenException("Refresh token not found"));
+                }).orElseThrow(() -> new RefreshTokenNotFoundException("Refresh token not found"));
     }
 
     @PostMapping("/login")
