@@ -52,12 +52,11 @@ public class RoutineCrudService {
         routine.getSequences().clear();
         repository.flush();
 
-        if (newRoutine.getSequences() != null && !newRoutine.getSequences().isEmpty()) {
-            newRoutine.getSequences().forEach(routineSequence -> routineSequence.setRoutine(routine));
-        }
-
         Routine modifiedRoutine = routine.modify(newRoutine);
 
+        if (modifiedRoutine.getSequences() != null && !modifiedRoutine.getSequences().isEmpty()) {
+            modifiedRoutine.getSequences().forEach(routineSequence -> routineSequence.setRoutine(modifiedRoutine));
+        }
         return repository.save(modifiedRoutine);
     }
 
