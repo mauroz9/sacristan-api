@@ -31,7 +31,11 @@ public record UpdateSequence(
 
         if (this.steps != null && !this.steps.isEmpty()) {
             List<Step> stepList = this.steps.stream()
-                    .map(CreateStep::to)
+                    .map(createStep -> {
+                        Step step = createStep.to();
+                        step.setSequence(sequence);
+                        return step;
+                    })
                     .toList();
             sequence.setSteps(stepList);
         }
