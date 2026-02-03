@@ -13,7 +13,6 @@ import lombok.experimental.SuperBuilder;
 public class TeacherResponse extends UserResponse {
 
     private String role;
-    private Long userId;
 
     public TeacherResponse ( UserResponse userResponse ) {
         id = userResponse.getId();
