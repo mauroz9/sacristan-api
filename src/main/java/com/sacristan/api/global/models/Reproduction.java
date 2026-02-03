@@ -50,4 +50,17 @@ public class Reproduction {
     @MapKeyColumn(name = "button_name")
     @Column(name = "times_clicked")
     private Map<String, Integer> buttonsClicks = new HashMap<>();
+
+    public Reproduction modify(Reproduction newReproduction) {
+        return Reproduction.builder()
+                .id(this.id)
+                .sequence(newReproduction.getSequence())
+                .student(newReproduction.getStudent())
+                .startedAt(newReproduction.getStartedAt())
+                .endedAt(newReproduction.getEndedAt())
+                .stepReproductions(newReproduction.getStepReproductions())
+                .reproductionTime(newReproduction.getReproductionTime())
+                .buttonsClicks(newReproduction.getButtonsClicks())
+                .build();
+    }
 }
