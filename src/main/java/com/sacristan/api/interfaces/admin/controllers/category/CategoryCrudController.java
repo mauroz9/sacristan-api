@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/categories")
+@RequestMapping("/api/v1/categories")
 @Tag(name = "Category CRUD controller", description = "CRUD Controller for basic Category entity")
 public class CategoryCrudController {
 
