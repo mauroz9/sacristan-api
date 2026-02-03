@@ -24,7 +24,7 @@ public class StepCrudService {
 
     public List<Step> getStepsBySequence(Long sequenceId) {
         if (!sequenceRepository.existsById(sequenceId)) {
-            throw new BadRequestException("Sequence with id " + sequenceId + " does not exists.");
+            throw new BadRequestException("Sequence not found with id: " + sequenceId);
         }
         return stepRepository.findAllBySequenceIdOrderByPositionAsc(sequenceId);
     }
