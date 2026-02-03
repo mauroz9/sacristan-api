@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/routines")
+@RequestMapping("/api/v1/routines")
 @Tag(name = "Routine CRUD controller", description = "CRUD Controller for basic Routine entity")
 public class RoutineCrudController {
 
