@@ -49,12 +49,11 @@ public class SequenceCrudService {
         sequence.getSteps().clear();
         repository.flush();
 
-        if (newSequence.getSteps() != null && !newSequence.getSteps().isEmpty()) {
-            newSequence.getSteps().forEach(step -> step.setSequence(sequence));
-        }
-
         Sequence modifiedSequence = sequence.modify(newSequence);
 
+        if (modifiedSequence.getSteps() != null && !modifiedSequence.getSteps().isEmpty()) {
+            modifiedSequence.getSteps().forEach(step -> step.setSequence(modifiedSequence));
+        }
         return repository.save(modifiedSequence);
     }
 
