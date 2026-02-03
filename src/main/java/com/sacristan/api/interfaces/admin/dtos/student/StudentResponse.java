@@ -1,5 +1,6 @@
 package com.sacristan.api.interfaces.admin.dtos.student;
 
+import com.sacristan.api.interfaces.admin.dtos.teacher.TeacherResponse;
 import com.sacristan.api.interfaces.admin.dtos.user.UserResponse;
 import com.sacristan.api.global.models.user.Student;
 import com.sacristan.api.global.models.user.User;
@@ -15,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class StudentResponse extends UserResponse {
 
+    private TeacherResponse teacher;
     private String role;
 
     public StudentResponse(UserResponse userResponse ) {
@@ -32,7 +34,9 @@ public class StudentResponse extends UserResponse {
     }
 
     public static StudentResponse of(Student student) {
-        return of(student.getUser());
+        StudentResponse studentResponse = of(student.getUser());
+        studentResponse.setTeacher(TeacherResponse.of(student.getTeacher()));
+        return studentResponse;
     }
 
 

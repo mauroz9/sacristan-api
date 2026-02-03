@@ -37,7 +37,9 @@ public class StudentCrudService {
     }
 
     public void delete(long id) {
-        repository.deleteById(id);
+        Student student = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Student not found with id: " + id));
+        student.getTeacher().removeStudent(student);
+        repository.delete(student);
     }
 
     public Page<Student> list(Pageable pageable) {
