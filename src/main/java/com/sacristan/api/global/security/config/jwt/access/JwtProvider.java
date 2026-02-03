@@ -57,7 +57,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .header().type(TOKEN_TYPE).and()
                 .subject(user.getId().toString())
-                .issuedAt(new Date()) // Fecha de creacion
+                .issuedAt(new Date()) // Issued date
                 .expiration(tokenExpirationDateTime)
                 .signWith(secretKey)
                 .compact();

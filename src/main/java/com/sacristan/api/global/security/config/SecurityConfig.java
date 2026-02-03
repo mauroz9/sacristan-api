@@ -37,9 +37,9 @@ public class SecurityConfig {
             // URL authorization configuration
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/login", "/refresh-token", "/h2-console/**", "/h2-console").permitAll()
-                    .requestMatchers("/api/v1/**").authenticated()
                     .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                     .requestMatchers("/api/v1/student/**").hasRole("STUDENT")
+                    .requestMatchers("/api/v1/**").authenticated()
                     .anyRequest().authenticated()
             )
             .csrf(csrf -> csrf
