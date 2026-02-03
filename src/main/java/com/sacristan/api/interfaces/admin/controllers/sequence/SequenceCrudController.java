@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/sequences")
+@RequestMapping("/api/sequences")
 @Tag(name = "Sequence CRUD controller", description = "CRUD Controller for basic Sequence entity")
 public class SequenceCrudController {
 
