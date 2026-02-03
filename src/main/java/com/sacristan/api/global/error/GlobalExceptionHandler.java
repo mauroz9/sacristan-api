@@ -31,6 +31,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     /* -- SECURITY -- */
 
+    // MANEJAR RefreshTokenException
+    // RefreshTokenNotFoundException
+
     @ExceptionHandler(BadCredentialsException.class)
     public ProblemDetail handleBadCredentialsException(BadCredentialsException ex, HttpServletRequest request) {
         ProblemDetail pb = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "Invalid email or password");
