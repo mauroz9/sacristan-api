@@ -1,8 +1,8 @@
-package com.sacristan.api.global.controllers.category;
+package com.sacristan.api.interfaces.admin.controllers.category;
 
-import com.sacristan.api.global.dtos.category.CategoryResponse;
-import com.sacristan.api.global.dtos.category.CreateCategory;
-import com.sacristan.api.global.dtos.category.UpdateCategory;
+import com.sacristan.api.interfaces.admin.dtos.category.CategoryResponse;
+import com.sacristan.api.interfaces.admin.dtos.category.CreateCategory;
+import com.sacristan.api.interfaces.admin.dtos.category.UpdateCategory;
 import com.sacristan.api.global.services.category.CategoryCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

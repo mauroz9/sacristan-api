@@ -1,4 +1,4 @@
-package com.sacristan.api.global.dtos.step;
+package com.sacristan.api.interfaces.admin.dtos.step;
 
 import com.sacristan.api.global.models.Step;
 

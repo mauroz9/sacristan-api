@@ -1,9 +1,9 @@
-package com.sacristan.api.global.controllers.step;
+package com.sacristan.api.interfaces.admin.controllers.step;
 
-import com.sacristan.api.global.dtos.step.CreateStep;
-import com.sacristan.api.global.dtos.step.StepResponse;
-import com.sacristan.api.global.dtos.step.UpdateStep;
-import com.sacristan.api.global.services.step.StepCrudService;
+import com.sacristan.api.interfaces.admin.dtos.step.CreateStep;
+import com.sacristan.api.interfaces.admin.dtos.step.StepResponse;
+import com.sacristan.api.interfaces.admin.dtos.step.UpdateStep;
+import com.sacristan.api.interfaces.admin.services.step.StepCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
-package com.sacristan.api.global.dtos.sequence;
+package com.sacristan.api.interfaces.admin.dtos.sequence;
 
-import com.sacristan.api.global.dtos.category.CategoryResponse;
-import com.sacristan.api.global.dtos.step.StepResponse;
+import com.sacristan.api.interfaces.admin.dtos.category.CategoryResponse;
+import com.sacristan.api.interfaces.admin.dtos.step.StepResponse;
 import com.sacristan.api.global.models.Sequence;
 
 import java.time.Duration;

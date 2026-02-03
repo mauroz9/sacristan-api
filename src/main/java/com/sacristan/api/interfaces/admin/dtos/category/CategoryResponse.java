@@ -1,4 +1,4 @@
-package com.sacristan.api.global.dtos.category;
+package com.sacristan.api.interfaces.admin.dtos.category;
 
 import com.sacristan.api.global.models.Category;
 

@@ -1,6 +1,6 @@
-package com.sacristan.api.global.dtos.sequence;
+package com.sacristan.api.interfaces.admin.dtos.sequence;
 
-import com.sacristan.api.global.dtos.step.CreateStep;
+import com.sacristan.api.interfaces.admin.dtos.step.CreateStep;
 import com.sacristan.api.global.models.Category;
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.models.Step;
@@ -8,7 +8,7 @@ import com.sacristan.api.global.models.Step;
 import java.time.Duration;
 import java.util.List;
 
-public record UpdateSequence(
+public record CreateSequence(
         String title,
         String description,
         Duration estimatedDuration,
@@ -33,7 +33,7 @@ public record UpdateSequence(
             List<Step> stepList = this.steps.stream()
                     .map(createStep -> {
                         Step step = createStep.to();
-                        step.setSequence(sequence);
+                        step.setSequence(sequence); // Establecer relación bidireccional
                         return step;
                     })
                     .toList();

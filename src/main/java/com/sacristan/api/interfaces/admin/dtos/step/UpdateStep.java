@@ -1,11 +1,11 @@
-package com.sacristan.api.global.dtos.step;
+package com.sacristan.api.interfaces.admin.dtos.step;
 
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.models.Step;
 
 import java.time.Duration;
 
-public record CreateStep(
+public record UpdateStep(
         String name,
         Integer position,
         Duration estimatedDuration,
