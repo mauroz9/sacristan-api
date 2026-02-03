@@ -36,8 +36,7 @@ public class Sequence {
     private Category category;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "sequence_id")
+    @OneToMany(mappedBy = "sequence", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Step> steps = new ArrayList<>();
 
     public Sequence modify(Sequence newSequence){

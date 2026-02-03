@@ -22,6 +22,9 @@ public class CategoryCrudService {
 
     public Category create(Category category) {
 
+        if(repository.existsByName(category.getName()))
+            throw new BadRequestException("Category with name " + category.getName() + " already exists.");
+
         return repository.save(category);
     }
 
@@ -47,6 +50,9 @@ public class CategoryCrudService {
 
     public Category update(Long id, Category newCategory){
         Category category = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Category not found with id: " + id));
+
+        if(repository.existsByName(newCategory.getName()) && !category.getName().equals(newCategory.getName()))
+            throw new BadRequestException("Category with name " + newCategory.getName() + " already exists.");
 
         return repository.save(category.modify(newCategory));
     }
