@@ -35,7 +35,8 @@ public class StudentResponse extends UserResponse {
 
     public static StudentResponse of(Student student) {
         StudentResponse studentResponse = of(student.getUser());
-        studentResponse.setTeacher(TeacherResponse.of(student.getTeacher()));
+        if (studentResponse.getTeacher() != null)
+            studentResponse.setTeacher(TeacherResponse.of(student.getTeacher()));
         return studentResponse;
     }
 

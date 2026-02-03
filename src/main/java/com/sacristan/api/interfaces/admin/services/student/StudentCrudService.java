@@ -38,7 +38,10 @@ public class StudentCrudService {
 
     public void delete(long id) {
         Student student = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Student not found with id: " + id));
-        student.getTeacher().removeStudent(student);
+
+        if (student.getTeacher() != null)
+            student.getTeacher().removeStudent(student);
+
         repository.delete(student);
     }
 

@@ -1,6 +1,5 @@
 package com.sacristan.api.interfaces.admin.services.student;
 
-import com.sacristan.api.global.repositories.SequenceRepository;
 import com.sacristan.api.global.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +13,6 @@ public class StudentUtilsService {
     public int getSequenceCount(
             Long id
     ) {
-        return repository.countSequencesById(id);
+        return repository.countSequencesByStudentId(id);
     }
 }
