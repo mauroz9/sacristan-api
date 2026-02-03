@@ -54,7 +54,12 @@ public class StepCrudService {
             newStep.setSequence(sequence);
         }
 
-        return stepRepository.save(step.modify(newStep));
+        Step modifiedStep = step.modify(newStep);
+        if (newStep.getSequence() != null) {
+            modifiedStep.setSequence(newStep.getSequence());
+        }
+
+        return stepRepository.save(modifiedStep);
     }
 
     public void delete(Long id) {
