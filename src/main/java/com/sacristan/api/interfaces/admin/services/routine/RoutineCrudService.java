@@ -1,4 +1,4 @@
-package com.sacristan.api.global.services.routine;
+package com.sacristan.api.interfaces.admin.services.routine;
 
 import com.sacristan.api.global.models.Category;
 import com.sacristan.api.global.models.Routine;

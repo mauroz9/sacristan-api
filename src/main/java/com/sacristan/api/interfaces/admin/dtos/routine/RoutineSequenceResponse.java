@@ -1,7 +1,8 @@
-package com.sacristan.api.global.dtos.routine;
+package com.sacristan.api.interfaces.admin.dtos.routine;
 
-import com.sacristan.api.global.dtos.sequence.SequenceResponse;
+
 import com.sacristan.api.global.models.RoutineSequence;
+import com.sacristan.api.interfaces.admin.dtos.sequence.SequenceResponse;
 
 import java.time.LocalTime;
 

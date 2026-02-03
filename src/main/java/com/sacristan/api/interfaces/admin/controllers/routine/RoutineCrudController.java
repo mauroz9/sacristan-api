@@ -1,9 +1,9 @@
-package com.sacristan.api.global.controllers.routine;
+package com.sacristan.api.interfaces.admin.controllers.routine;
 
-import com.sacristan.api.global.dtos.routine.CreateRoutine;
-import com.sacristan.api.global.dtos.routine.RoutineResponse;
-import com.sacristan.api.global.dtos.routine.UpdateRoutine;
-import com.sacristan.api.global.services.routine.RoutineCrudService;
+import com.sacristan.api.interfaces.admin.dtos.routine.CreateRoutine;
+import com.sacristan.api.interfaces.admin.dtos.routine.RoutineResponse;
+import com.sacristan.api.interfaces.admin.dtos.routine.UpdateRoutine;
+import com.sacristan.api.interfaces.admin.services.routine.RoutineCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.sacristan.api.global.dtos.routine;
+package com.sacristan.api.interfaces.admin.dtos.routine;
 
 import com.sacristan.api.global.models.Category;
 import com.sacristan.api.global.models.DaysOfTheWeek;
@@ -8,7 +8,7 @@ import com.sacristan.api.global.models.RoutineSequence;
 import java.util.List;
 import java.util.Set;
 
-public record UpdateRoutine(
+public record CreateRoutine(
         String name,
         Long categoryId,
         Set<DaysOfTheWeek> daysOfTheWeek,

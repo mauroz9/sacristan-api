@@ -3,7 +3,7 @@ package com.sacristan.api.interfaces.admin.controllers.sequence;
 import com.sacristan.api.interfaces.admin.dtos.sequence.CreateSequence;
 import com.sacristan.api.interfaces.admin.dtos.sequence.SequenceResponse;
 import com.sacristan.api.interfaces.admin.dtos.sequence.UpdateSequence;
-import com.sacristan.api.global.services.sequence.SequenceCrudService;
+import com.sacristan.api.interfaces.admin.services.sequence.SequenceCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
