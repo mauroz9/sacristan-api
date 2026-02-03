@@ -3,6 +3,7 @@ package com.sacristan.api.global.error;
 import com.sacristan.api.global.error.exceptions.BadRequestException;
 import com.sacristan.api.global.error.exceptions.JwtTokenException;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.java.Log;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -17,6 +18,7 @@ import java.net.URI;
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
+@Log
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     /* -- DATABASE --  */
@@ -106,6 +108,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         pb.setTitle("Something unexpected happened");
         pb.setInstance(URI.create(request.getRequestURI()));
         pb.setProperty("exception", ex.getClass().getName());
+
+        log.info(ex.getMessage());
 
         return pb;
 

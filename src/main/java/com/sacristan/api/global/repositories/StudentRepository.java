@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpecificationExecutor<Student> {
 
 
-    @Query("SELECT COUNT(s.sequences) FROM Student s WHERE s.id = :id")
+    @Query("SELECT SIZE(s.sequences) FROM Student s WHERE s.id = :id")
     int countSequencesByStudentId(Long id);
 }
