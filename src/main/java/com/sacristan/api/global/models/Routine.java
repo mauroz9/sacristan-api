@@ -38,4 +38,14 @@ public class Routine {
     @ToString.Exclude
     @OneToMany(mappedBy = "routine", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RoutineSequence> sequences = new ArrayList<>();
+
+    public Routine modify(Routine newRoutine) {
+        return Routine.builder()
+                .id(this.id)
+                .name(newRoutine.getName())
+                .category(newRoutine.getCategory())
+                .daysOfTheWeek(newRoutine.getDaysOfTheWeek())
+                .sequences(newRoutine.getSequences())
+                .build();
+    }
 }
