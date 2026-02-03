@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/steps")
+@RequestMapping("/api/steps")
 @Tag(name = "Step CRUD controller", description = "CRUD Controller for Step entity")
 public class StepCrudController {
 
