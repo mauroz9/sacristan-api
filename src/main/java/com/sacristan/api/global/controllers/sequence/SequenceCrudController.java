@@ -27,7 +27,7 @@ public class SequenceCrudController {
     )
     @PostMapping
     public ResponseEntity<SequenceResponse> create(
-            @RequestBody CreateSequence createSequence
+            @RequestBody(required = true) CreateSequence createSequence
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
