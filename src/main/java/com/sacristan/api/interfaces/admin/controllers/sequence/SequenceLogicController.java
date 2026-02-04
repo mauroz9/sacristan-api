@@ -18,8 +18,8 @@ public class SequenceLogicController {
     private final SequenceLogicService logicService;
 
     @Operation(
-            summary = "Create Sequence",
-            description = "Create a new Sequence entity"
+            summary = "Duplicate Sequence",
+            description = "Create a duplicate of an existing Sequence entity"
     )
     @PostMapping("/{id}/duplicate")
     public ResponseEntity<SequenceResponse> create(
