@@ -23,11 +23,11 @@ public class Reproduction {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sequence_id")
+    @JoinColumn(name = "sequence_id", nullable = false)
     private Sequence sequence;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_user_id")
+    @JoinColumn(name = "student_user_id", nullable = false)
     private Student student;
 
     private LocalDateTime startedAt;

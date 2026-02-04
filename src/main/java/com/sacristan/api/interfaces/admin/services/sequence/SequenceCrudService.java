@@ -1,8 +1,11 @@
 package com.sacristan.api.interfaces.admin.services.sequence;
 
 import com.sacristan.api.global.models.Category;
+import com.sacristan.api.global.models.RoutineSequence;
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.repositories.CategoryRepository;
+import com.sacristan.api.global.repositories.ReproductionRepository;
+import com.sacristan.api.global.repositories.RoutineSequenceRepository;
 import com.sacristan.api.global.repositories.SequenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ public class SequenceCrudService {
 
     private final SequenceRepository repository;
     private final CategoryRepository categoryRepository;
+    private final ReproductionRepository reproductionRepository;
+    private final RoutineSequenceRepository routineSequenceRepository;
 
     public List<Sequence> getAll() {
         return repository.findAll();
@@ -57,8 +62,12 @@ public class SequenceCrudService {
         return repository.save(modifiedSequence);
     }
 
+
     public void delete(Long id) {
         Sequence sequence = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + id));
+        reproductionRepository.deleteBySequenceId(sequence.getId());
+        routineSequenceRepository.deleteBySequenceId(sequence.getId());
+
         repository.delete(sequence);
     }
 }
