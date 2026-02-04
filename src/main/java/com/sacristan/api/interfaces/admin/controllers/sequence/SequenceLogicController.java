@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/sequences")
-@Tag(name = "Sequence LOGIC controller", description = "CRUD Controller for logic Sequence entity")
+@Tag(name = "Sequence LOGIC controller", description = "CRUD Controller for business logic Sequence entity")
 public class SequenceLogicController {
 
     private final SequenceLogicService logicService;
@@ -22,8 +22,8 @@ public class SequenceLogicController {
             description = "Create a duplicate of an existing Sequence entity"
     )
     @PostMapping("/{id}/duplicate")
-    public ResponseEntity<SequenceResponse> create(
-            @PathVariable(required = true) Long id
+    public ResponseEntity<SequenceResponse> duplicate(
+            @PathVariable Long id
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)

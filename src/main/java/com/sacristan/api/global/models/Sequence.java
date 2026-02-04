@@ -25,7 +25,7 @@ public class Sequence {
     private String title;
     private String description;
 
-    @Nullable
+    @Column(nullable = true)
     private Duration estimatedDuration;
     
     private Boolean allowGoBack;
@@ -48,6 +48,17 @@ public class Sequence {
                 .allowGoBack(newSequence.getAllowGoBack())
                 .category(newSequence.getCategory())
                 .steps(newSequence.getSteps())
+                .build();
+    }
+
+    public Sequence duplicate(){
+        return Sequence.builder()
+                .title(this.title + " (copy)")
+                .description(this.description)
+                .estimatedDuration(this.estimatedDuration)
+                .allowGoBack(this.allowGoBack)
+                .category(this.category)
+                .steps(new ArrayList<>())
                 .build();
     }
 
