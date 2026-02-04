@@ -6,7 +6,7 @@ import java.time.Duration;
 
 public record StepResponse(
         Long id,
-        String name,
+        String title,
         Integer position,
         Duration estimatedDuration,
         Integer arasaacPictogramId
