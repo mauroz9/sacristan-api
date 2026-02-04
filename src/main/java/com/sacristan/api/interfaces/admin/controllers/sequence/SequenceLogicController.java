@@ -1,6 +1,5 @@
 package com.sacristan.api.interfaces.admin.controllers.sequence;
 
-import com.sacristan.api.interfaces.admin.dtos.sequence.CreateSequence;
 import com.sacristan.api.interfaces.admin.dtos.sequence.SequenceResponse;
 import com.sacristan.api.interfaces.admin.services.sequence.SequenceLogicService;
 import io.swagger.v3.oas.annotations.Operation;
