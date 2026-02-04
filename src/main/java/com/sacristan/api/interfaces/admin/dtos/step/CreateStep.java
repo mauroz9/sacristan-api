@@ -6,7 +6,7 @@ import com.sacristan.api.global.models.Step;
 import java.time.Duration;
 
 public record CreateStep(
-        String name,
+        String title,
         Integer position,
         Duration estimatedDuration,
         Integer arasaacPictogramId,
@@ -14,7 +14,7 @@ public record CreateStep(
 ) {
     public Step to() {
         Step step = new Step();
-        step.setName(this.name);
+        step.setName(this.title);
         step.setPosition(this.position);
         step.setEstimatedDuration(this.estimatedDuration);
         step.setArasaacPictogramId(this.arasaacPictogramId);
