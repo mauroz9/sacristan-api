@@ -51,4 +51,15 @@ public class Sequence {
                 .build();
     }
 
+    public Sequence duplicate(){
+        return Sequence.builder()
+                .title(this.title + " (copy)")
+                .description(this.description)
+                .estimatedDuration(this.estimatedDuration)
+                .allowGoBack(this.allowGoBack)
+                .category(this.category)
+                .steps(new ArrayList<>())
+                .build();
+    }
+
 }

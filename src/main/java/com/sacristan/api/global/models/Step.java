@@ -41,4 +41,14 @@ public class Step {
         return this;
     }
 
+    public Step duplicate(Sequence newSequence){
+        return Step.builder()
+                .name(this.name)
+                .position(this.position)
+                .estimatedDuration(this.estimatedDuration)
+                .arasaacPictogramId(this.arasaacPictogramId)
+                .sequence(newSequence)
+                .build();
+    }
+
 }
