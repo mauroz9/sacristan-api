@@ -25,7 +25,7 @@ public class Sequence {
     private String title;
     private String description;
 
-    @Column(nullable = true)
+    @Nullable
     private Duration estimatedDuration;
     
     private Boolean allowGoBack;
