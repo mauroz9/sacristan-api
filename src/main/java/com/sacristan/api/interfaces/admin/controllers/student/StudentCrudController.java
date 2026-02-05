@@ -93,7 +93,8 @@ public class StudentCrudController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(
-                        UserResponse.of(crudService.update(id, updateUser.to()))
+                        StudentResponse
+                                .of(crudService.update(id, updateUser.to()))
                 );
     }
 
