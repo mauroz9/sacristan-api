@@ -37,18 +37,21 @@ public class Reproduction {
     @CollectionTable(name = "reproduction_step_counts", joinColumns = @JoinColumn(name = "reproduction_id"))
     @MapKeyColumn(name = "step_id")
     @Column(name = "reproductions_count")
+    @Builder.Default
     private Map<Long, Integer> stepReproductions = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "reproduction_step_times", joinColumns = @JoinColumn(name = "reproduction_id"))
     @MapKeyColumn(name = "step_id")
     @Column(name = "active_time_ms")
+    @Builder.Default
     private Map<Long, Long> reproductionTime = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "reproduction_clicks", joinColumns = @JoinColumn(name = "reproduction_id"))
     @MapKeyColumn(name = "button_name")
     @Column(name = "times_clicked")
+    @Builder.Default
     private Map<String, Integer> buttonsClicks = new HashMap<>();
 
     public Reproduction modify(Reproduction newReproduction) {
