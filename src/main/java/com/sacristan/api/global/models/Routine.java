@@ -33,10 +33,12 @@ public class Routine {
     @CollectionTable(name = "routine_days", joinColumns = @JoinColumn(name = "routine_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "day_of_the_week", nullable = false)
+    @Builder.Default
     private Set<DaysOfTheWeek> daysOfTheWeek = new HashSet<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "routine", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
     private List<RoutineSequence> sequences = new ArrayList<>();
 
     public Routine modify(Routine newRoutine) {
