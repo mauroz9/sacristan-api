@@ -13,6 +13,6 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpec
     @Query(
             "SELECT COUNT(t.students) FROM Teacher t WHERE t.id = :teacherId"
     )
-    Integer countStudentsByTeacherId(Long teacherId);
+    int countStudentsByTeacherId(Long teacherId);
 
 }
