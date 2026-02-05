@@ -12,4 +12,6 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
 
     @Query("SELECT COUNT(s.sequences) FROM Student s WHERE s.id = :id")
     int countSequencesByStudentId(Long id);
+
+
 }
