@@ -61,7 +61,7 @@ public class StudentCrudController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> update(
+    public ResponseEntity<StudentResponse> update(
             @Parameter(
                     description = "ID of the User to be updated",
                     example = "1",
