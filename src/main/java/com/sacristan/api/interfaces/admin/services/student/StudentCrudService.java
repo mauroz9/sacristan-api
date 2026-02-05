@@ -46,6 +46,8 @@ public class StudentCrudService {
         if (student.getTeacher() != null)
             student.getTeacher().removeStudent(student);
 
+        student.getSequences().clear();
+
         repository.delete(student);
     }
 

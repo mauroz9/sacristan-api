@@ -1,7 +1,9 @@
 package com.sacristan.api.interfaces.admin.services.teacher;
 
+import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.global.repositories.TeacherRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 
@@ -15,4 +17,5 @@ public class TeacherUtilsService {
     public int getStudentCount(Long id) {
         return repository.countStudentsByTeacherId(id);
     }
+
 }

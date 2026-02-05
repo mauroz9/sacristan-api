@@ -23,11 +23,6 @@ import java.util.NoSuchElementException;
 @Log
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    /*
-    * CODIGOS DE ERRORES PERSONALIZADOS:
-    *   * 001: Email already in use
-    * */
-
     /* -- DATABASE --  */
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ProblemDetail handleDataIntegrityViolationException(DataIntegrityViolationException ex, HttpServletRequest request) {
@@ -94,6 +89,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         pb.setType(URI.create("about:blank"));
         pb.setTitle("Bad request");
         pb.setInstance(URI.create(request.getRequestURI()));
+
+        pb.setProperties(
+                Map.of(
+                        "es", Map.of(
+                                "message", "No puedes eliminar un profesor con estudiantes asignados"
+                        ),
+                        "en", Map.of(
+                                "message", "You cannot delete a teacher with assigned students"
+                        )
+                )
+        );
+
         return pb;
     }
 
@@ -117,8 +124,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         pb.setInstance(URI.create(request.getRequestURI()));
 
         pb.setProperties(Map.of(
-                "error", "001",
-                "detail", ex.getEmail()
+                "es", Map.of(
+                        "message", "El email " + ex.getEmail() + " ya está en uso"
+                ),
+                "en", Map.of(
+                        "message", "Email "+ ex.getEmail() +" already in use"
+                )
         ));
 
         return pb;
