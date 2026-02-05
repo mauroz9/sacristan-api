@@ -2,6 +2,7 @@ package com.sacristan.api.global.error;
 
 import com.sacristan.api.global.error.exceptions.BadRequestException;
 import com.sacristan.api.global.error.exceptions.JwtTokenException;
+import com.sacristan.api.global.error.exceptions.arguments.AlreadyUsedEmailException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.java.Log;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,11 +16,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.security.sasl.AuthenticationException;
 import java.net.URI;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 @Log
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    /*
+    * CODIGOS DE ERRORES PERSONALIZADOS:
+    *   * 001: Email already in use
+    * */
 
     /* -- DATABASE --  */
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -96,6 +103,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         pb.setType(URI.create("about:blank"));
         pb.setTitle("Illegal argument/s provided");
         pb.setInstance(URI.create(request.getRequestURI()));
+
+        return pb;
+    }
+
+    @ExceptionHandler(AlreadyUsedEmailException.class)
+    public ProblemDetail handleAlreadyUsedEmailException(AlreadyUsedEmailException ex, HttpServletRequest request) {
+        ProblemDetail pb = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST, ex.getMessage() + ": " + ex.getEmail()
+        );
+        pb.setType(URI.create("about:blank"));
+        pb.setTitle("Illegal argument/s provided");
+        pb.setInstance(URI.create(request.getRequestURI()));
+
+        pb.setProperties(Map.of(
+                "error", "001",
+                "detail", ex.getEmail()
+        ));
+
         return pb;
     }
 
