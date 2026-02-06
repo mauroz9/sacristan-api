@@ -60,6 +60,10 @@ public class TeacherCrudController {
     }
 
     @PutMapping("/{id}")
+    @Operation(
+            summary = "Update Teacher",
+            description = "Update the info of a specific teacher"
+    )
     public ResponseEntity<TeacherResponse> update(
             @Parameter(
                     description = "ID of the User to be updated",
