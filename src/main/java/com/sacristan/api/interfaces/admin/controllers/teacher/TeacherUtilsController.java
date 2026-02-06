@@ -1,6 +1,7 @@
 package com.sacristan.api.interfaces.admin.controllers.teacher;
 
-import com.sacristan.api.interfaces.admin.services.teacher.TeacherUtilsService;
+import com.sacristan.api.interfaces.admin.services.mixed.StudentTeacherService;
+import com.sacristan.api.interfaces.admin.services.model.teacher.TeacherUtilsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 )
 public class TeacherUtilsController {
 
-    private final TeacherUtilsService service;
+    private final StudentTeacherService studentTeacherService;
 
     @GetMapping("/{id}/student-count")
     @Operation(
@@ -29,7 +30,7 @@ public class TeacherUtilsController {
     public ResponseEntity<Integer> getStudentCount(
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(service.getStudentCount(id));
+        return ResponseEntity.ok(studentTeacherService.getStudentCountByTeacherId(id));
     }
 
 }

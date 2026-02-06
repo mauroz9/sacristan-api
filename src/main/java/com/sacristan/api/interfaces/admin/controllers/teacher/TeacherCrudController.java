@@ -3,7 +3,7 @@ package com.sacristan.api.interfaces.admin.controllers.teacher;
 import com.sacristan.api.interfaces.admin.dtos.teacher.TeacherResponse;
 import com.sacristan.api.interfaces.admin.dtos.user.CreateUser;
 import com.sacristan.api.interfaces.admin.dtos.user.UpdateUser;
-import com.sacristan.api.interfaces.admin.services.teacher.TeacherCrudService;
+import com.sacristan.api.interfaces.admin.services.model.teacher.TeacherCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -60,6 +60,10 @@ public class TeacherCrudController {
     }
 
     @PutMapping("/{id}")
+    @Operation(
+            summary = "Update Teacher",
+            description = "Update the info of a specific teacher"
+    )
     public ResponseEntity<TeacherResponse> update(
             @Parameter(
                     description = "ID of the User to be updated",

@@ -1,4 +1,4 @@
-package com.sacristan.api.interfaces.admin.services.category;
+package com.sacristan.api.interfaces.admin.services.model.category;
 
 import com.sacristan.api.global.error.exceptions.BadRequestException;
 import com.sacristan.api.global.models.Category;

@@ -1,10 +1,10 @@
-package com.sacristan.api.interfaces.admin.services.student;
+package com.sacristan.api.interfaces.admin.services.model.student;
 
 import com.sacristan.api.global.models.user.Student;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.models.user.extra.Role;
 import com.sacristan.api.global.repositories.StudentRepository;
-import com.sacristan.api.interfaces.admin.services.user.UserCrudService;
+import com.sacristan.api.interfaces.admin.services.model.user.UserCrudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,7 +44,7 @@ public class StudentCrudService {
         Student student = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Student not found with id: " + id));
 
         if (student.getTeacher() != null)
-            student.getTeacher().removeStudent(student);
+            student.setTeacher(null);
 
         student.getSequences().clear();
 
