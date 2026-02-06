@@ -5,7 +5,6 @@ import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.interfaces.admin.services.model.student.StudentUtilsService;
 import com.sacristan.api.interfaces.admin.services.model.teacher.TeacherUtilsService;
 import lombok.AllArgsConstructor;
-import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
