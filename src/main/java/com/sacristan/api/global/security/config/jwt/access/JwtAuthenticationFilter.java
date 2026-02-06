@@ -2,7 +2,7 @@ package com.sacristan.api.global.security.config.jwt.access;
 
 import com.sacristan.api.global.error.exceptions.JwtTokenException;
 import com.sacristan.api.global.models.user.User;
-import com.sacristan.api.interfaces.admin.services.user.UserUtilsService;
+import com.sacristan.api.interfaces.admin.services.model.user.UserUtilsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

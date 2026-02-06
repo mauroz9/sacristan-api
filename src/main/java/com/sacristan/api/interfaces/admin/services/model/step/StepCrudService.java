@@ -1,4 +1,4 @@
-package com.sacristan.api.interfaces.admin.services.step;
+package com.sacristan.api.interfaces.admin.services.model.step;
 
 import com.sacristan.api.global.error.exceptions.BadRequestException;
 import com.sacristan.api.global.models.Sequence;
