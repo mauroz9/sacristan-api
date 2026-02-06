@@ -43,7 +43,7 @@ public class StudentSequenceService {
             throw new IllegalStateException("Sequence with id: " + sequenceId + " is not assigned to student with id: " + studentId);
         }
 
-        student.unnassignSequence(sequence);
+        student.unassignSequence(sequence);
         return studentRepository.save(student);
     }
 

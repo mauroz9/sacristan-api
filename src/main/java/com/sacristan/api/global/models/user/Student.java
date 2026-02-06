@@ -39,7 +39,7 @@ public class Student {
         this.sequences.add(sequence);
     }
 
-    public void unnassignSequence(Sequence sequence){
+    public void unassignSequence(Sequence sequence){
         this.sequences.remove(sequence);
     }
 }
