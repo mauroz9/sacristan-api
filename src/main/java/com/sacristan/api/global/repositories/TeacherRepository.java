@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpecificationExecutor<Teacher> {
 
     @Query(
-            "SELECT COUNT(t.students) FROM Teacher t WHERE t.id = :teacherId"
+            "SELECT SIZE(t.students) FROM Teacher t WHERE t.id = :teacherId"
     )
     int countStudentsByTeacherId(Long teacherId);
 

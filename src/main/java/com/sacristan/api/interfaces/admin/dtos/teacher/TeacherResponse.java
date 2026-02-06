@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class TeacherResponse extends UserResponse {
 
-    private String role;
+    protected String role;
 
     public TeacherResponse ( UserResponse userResponse ) {
         id = userResponse.getId();

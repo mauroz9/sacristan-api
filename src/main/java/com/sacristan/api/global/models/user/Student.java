@@ -34,6 +34,5 @@ public class Student {
     @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "student_user_id")
     private List<Sequence> sequences = new ArrayList<>();
-
 }
 

@@ -37,6 +37,10 @@ public class TeacherCrudService {
                 .orElseThrow(() -> new NoSuchElementException("Teacher not found with id: " + id));
     }
 
+    public User update(Long id, User user) {
+        return userCrudService.update(id, user);
+    }
+
     public void delete(long id) {
         Teacher teacher = repository.findById(id).orElseThrow(()-> new NoSuchElementException("Teacher not found with id: " + id));
 
@@ -49,5 +53,6 @@ public class TeacherCrudService {
     public Page<Teacher> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
+
 
 }
