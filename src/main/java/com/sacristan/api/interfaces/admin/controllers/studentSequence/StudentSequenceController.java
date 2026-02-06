@@ -42,7 +42,7 @@ public class StudentSequenceController {
             @PathVariable Long studentId,
             @PathVariable Long sequenceId
     ) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(StudentResponse.of(service.unnassignSequenceFromStudent(studentId, sequenceId)));
+        return ResponseEntity.ok(StudentResponse.of(service.unnassignSequenceFromStudent(studentId, sequenceId)));
     }
 
     @Operation(
@@ -62,13 +62,15 @@ public class StudentSequenceController {
     public ResponseEntity<List<SequenceResponse>> getUnassignedSequences(@PathVariable Long studentId){
         return ResponseEntity.ok(service.getUnassignedSequencesOfStudent(studentId).stream().map(SequenceResponse::of).toList());
     }
-
+    /*
     @Operation(
             summary = "Count assigned Sequences",
             description = "Count all the sequences assigned to a student"
     )
     @GetMapping("/{studentId}/sequence-count")
-    public ResponseEntity<Integer> countAssignedSequences(@PathVariable Long studentId){
+    public ResponseEntity<Long> countAssignedSequences(@PathVariable Long studentId){
         return ResponseEntity.ok(service.countAssignedSequencesOfStudent(studentId));
     }
+    */
+
 }

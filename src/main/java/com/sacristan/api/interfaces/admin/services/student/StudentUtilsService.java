@@ -10,7 +10,7 @@ public class StudentUtilsService {
 
     private final StudentRepository repository;
 
-    public int getSequenceCount(
+    public long getSequenceCount(
             Long id
     ) {
         return repository.countSequencesByStudentId(id);

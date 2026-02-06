@@ -27,7 +27,7 @@ public class StudentUtilsController {
             summary = "Get Student Sequence Count",
             description = "Get the number of sequences assigned to a specific student"
     )
-    public ResponseEntity<Integer> getSequenceCount(
+    public ResponseEntity<Long> getSequenceCount(
             @PathVariable Long id
     ) {
         return ResponseEntity.ok(service.getSequenceCount(id));
