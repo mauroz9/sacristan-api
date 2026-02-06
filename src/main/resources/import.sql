@@ -103,32 +103,33 @@ INSERT INTO categories (id, name) VALUES (6, 'Comunicación Social');
 -- =================================================================================
 -- 5. SECUENCIAS
 -- =================================================================================
--- Nota: student_user_id se asigna para vincular secuencias a alumnos específicos según tu modelo JPA.
+-- Nota: se asigna para vincular secuencias a alumnos específicos según tu modelo JPA.
 -- Duraciones en nanosegundos (1 min = 60000000000)
 
 -- --- Secuencias para Sofía (ID 10) ---
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (1, 'Lavarse los dientes', 'Pasos para cepillado correcto', 180000000000, true, 1, 10);
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (2, 'Preparar la mochila', 'Cosas para llevar al cole', 300000000000, false, 2, 10);
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (3, 'Pedir jugar', 'Cómo unirse a un juego con amigos', 60000000000, true, 5, 10);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (1, 'Lavarse los dientes', 'Pasos para cepillado correcto', 180000000000, true, 1);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (2, 'Preparar la mochila', 'Cosas para llevar al cole', 300000000000, false, 2);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (3, 'Pedir jugar', 'Cómo unirse a un juego con amigos', 60000000000, true, 5);
 
 -- --- Secuencias para Mateo (ID 11) ---
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (4, 'Ir al baño', 'Secuencia de uso del inodoro', 240000000000, true, 1, 11);
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (5, 'Merienda', 'Pasos para preparar la merienda', 600000000000, true, 3, 11);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (4, 'Ir al baño', 'Secuencia de uso del inodoro', 240000000000, true, 1);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (5, 'Merienda', 'Pasos para preparar la merienda', 600000000000, true, 3);
 
 -- --- Secuencias para Valentina (ID 12) ---
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (6, 'Lavarse las manos', 'Higiene antes de comer', 120000000000, true, 1, 12);
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (7, 'Guardar juguetes', 'Orden en la habitación', 900000000000, false, 3, 12);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (6, 'Lavarse las manos', 'Higiene antes de comer', 120000000000, true, 1);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (7, 'Guardar juguetes', 'Orden en la habitación', 900000000000, false, 3);
 
 -- --- Secuencias para Lucía Pérez (ID 20) ---
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (8, 'Calmarse', 'Técnica de la tortuga', 300000000000, true, 4, 20);
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (9, 'Entrar en clase', 'Rutina de entrada y saludo', 60000000000, false, 2, 20);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (8, 'Calmarse', 'Técnica de la tortuga', 300000000000, true, 4);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (9, 'Entrar en clase', 'Rutina de entrada y saludo', 60000000000, false, 2);
 
 -- --- Secuencias para Hugo (ID 30) ---
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (10, 'Vestirse', 'Ponerse la ropa por la mañana', 600000000000, true, 1, 30);
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (11, 'Poner la mesa', 'Ayudar antes de cenar', 420000000000, false, 3, 30);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (10, 'Vestirse', 'Ponerse la ropa por la mañana', 600000000000, true, 1);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (11, 'Poner la mesa', 'Ayudar antes de cenar', 420000000000, false, 3);
 
 -- --- Secuencias para Julia (ID 31) ---
-INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id, student_user_id) VALUES (12, 'Ducharse', 'Pasos para la ducha diaria', 900000000000, true, 1, 31);
+INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (12, 'Ducharse', 'Pasos para la ducha diaria', 900000000000, true, 1);
+
 
 -- =================================================================================
 -- 6. PASOS (STEPS)

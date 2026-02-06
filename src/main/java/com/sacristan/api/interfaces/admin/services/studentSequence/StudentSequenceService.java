@@ -63,7 +63,7 @@ public class StudentSequenceService {
         return allSequences;
     }
 
-    public Long countAssignedSequencesOfStudent(Long studentId) {
+    public Integer countAssignedSequencesOfStudent(Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new NoSuchElementException("Student not found with id: " + studentId));
 

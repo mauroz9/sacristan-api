@@ -1,4 +1,4 @@
-package com.sacristan.api.interfaces.admin.services.reproduction;
+package com.sacristan.api.interfaces.admin.services.model.reproduction;
 
 import com.sacristan.api.global.models.Reproduction;
 import com.sacristan.api.global.models.Sequence;

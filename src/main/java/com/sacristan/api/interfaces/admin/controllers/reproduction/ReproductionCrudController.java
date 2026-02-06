@@ -3,7 +3,7 @@ package com.sacristan.api.interfaces.admin.controllers.reproduction;
 import com.sacristan.api.interfaces.admin.dtos.reproduction.CreateReproduction;
 import com.sacristan.api.interfaces.admin.dtos.reproduction.ReproductionResponse;
 import com.sacristan.api.interfaces.admin.dtos.reproduction.UpdateReproduction;
-import com.sacristan.api.interfaces.admin.services.reproduction.ReproductionCrudService;
+import com.sacristan.api.interfaces.admin.services.model.reproduction.ReproductionCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

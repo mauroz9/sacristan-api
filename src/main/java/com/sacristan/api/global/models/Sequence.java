@@ -1,12 +1,15 @@
 package com.sacristan.api.global.models;
 
+import com.sacristan.api.global.models.user.Student;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "sequences")

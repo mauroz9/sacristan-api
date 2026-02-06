@@ -8,11 +8,4 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpecificationExecutor<Teacher> {
-
-    @Query(
-            "SELECT SIZE(t.students) FROM Teacher t WHERE t.id = :teacherId"
-    )
-    int countStudentsByTeacherId(Long teacherId);
-
-}
+public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpecificationExecutor<Teacher> { }

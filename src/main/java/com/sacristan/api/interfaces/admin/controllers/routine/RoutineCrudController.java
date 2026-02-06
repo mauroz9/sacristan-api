@@ -3,7 +3,7 @@ package com.sacristan.api.interfaces.admin.controllers.routine;
 import com.sacristan.api.interfaces.admin.dtos.routine.CreateRoutine;
 import com.sacristan.api.interfaces.admin.dtos.routine.RoutineResponse;
 import com.sacristan.api.interfaces.admin.dtos.routine.UpdateRoutine;
-import com.sacristan.api.interfaces.admin.services.routine.RoutineCrudService;
+import com.sacristan.api.interfaces.admin.services.model.routine.RoutineCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
