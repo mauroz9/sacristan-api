@@ -42,7 +42,7 @@ public class StudentSequenceController {
             @PathVariable Long studentId,
             @PathVariable Long sequenceId
     ) {
-        return ResponseEntity.ok(StudentResponse.of(service.unnassignSequenceFromStudent(studentId, sequenceId)));
+        return ResponseEntity.ok(StudentResponse.of(service.unassignSequenceFromStudent(studentId, sequenceId)));
     }
 
     @Operation(
