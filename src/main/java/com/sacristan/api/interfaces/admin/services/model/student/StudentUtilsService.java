@@ -14,11 +14,6 @@ public class StudentUtilsService {
 
     private final StudentRepository repository;
 
-    public int getSequenceCount(
-            Long id
-    ) {
-        return repository.countSequencesByStudentId(id);
-    }
 
     public List<Student> findByTeacher(Teacher teacher) {
         return repository.findByTeacher(teacher);
