@@ -32,7 +32,7 @@ public class StudentSequenceService {
         return studentRepository.save(student);
     }
 
-    public Student unnassignSequenceFromStudent(Long studentId, Long sequenceId) {
+    public Student unassignSequenceFromStudent(Long studentId, Long sequenceId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new NoSuchElementException("Student not found with id: " + studentId));
 

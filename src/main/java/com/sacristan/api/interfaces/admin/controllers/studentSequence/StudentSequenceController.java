@@ -42,7 +42,7 @@ public class StudentSequenceController {
             @PathVariable Long studentId,
             @PathVariable Long sequenceId
     ) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(StudentResponse.of(service.unnassignSequenceFromStudent(studentId, sequenceId)));
+        return ResponseEntity.ok(StudentResponse.of(service.unassignSequenceFromStudent(studentId, sequenceId)));
     }
 
     @Operation(
@@ -71,4 +71,6 @@ public class StudentSequenceController {
     public ResponseEntity<Integer> countAssignedSequences(@PathVariable Long studentId){
         return ResponseEntity.ok(service.countAssignedSequencesOfStudent(studentId));
     }
+
+
 }

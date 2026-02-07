@@ -23,18 +23,6 @@ public class StudentUtilsController {
     private final StudentUtilsService service;
     private final StudentTeacherService studentTeacherService;
 
-
-    @GetMapping("/{id}/sequence-count")
-    @Operation(
-            summary = "Get Student Sequence Count",
-            description = "Get the number of sequences assigned to a specific student"
-    )
-    public ResponseEntity<Integer> getSequenceCount(
-            @PathVariable Long id
-    ) {
-        return ResponseEntity.ok(service.getSequenceCount(id));
-    }
-
     @GetMapping("/no-teacher")
     @Operation(
             summary = "Get Students without Teacher",
