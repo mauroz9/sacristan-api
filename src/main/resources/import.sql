@@ -103,31 +103,24 @@ INSERT INTO categories (id, name) VALUES (6, 'Comunicación Social');
 -- =================================================================================
 -- 5. SECUENCIAS
 -- =================================================================================
--- Nota: se asigna para vincular secuencias a alumnos específicos según tu modelo JPA.
 -- Duraciones en nanosegundos (1 min = 60000000000)
 
--- --- Secuencias para Sofía (ID 10) ---
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (1, 'Lavarse los dientes', 'Pasos para cepillado correcto', 180000000000, true, 1);
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (2, 'Preparar la mochila', 'Cosas para llevar al cole', 300000000000, false, 2);
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (3, 'Pedir jugar', 'Cómo unirse a un juego con amigos', 60000000000, true, 5);
 
--- --- Secuencias para Mateo (ID 11) ---
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (4, 'Ir al baño', 'Secuencia de uso del inodoro', 240000000000, true, 1);
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (5, 'Merienda', 'Pasos para preparar la merienda', 600000000000, true, 3);
 
--- --- Secuencias para Valentina (ID 12) ---
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (6, 'Lavarse las manos', 'Higiene antes de comer', 120000000000, true, 1);
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (7, 'Guardar juguetes', 'Orden en la habitación', 900000000000, false, 3);
 
--- --- Secuencias para Lucía Pérez (ID 20) ---
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (8, 'Calmarse', 'Técnica de la tortuga', 300000000000, true, 4);
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (9, 'Entrar en clase', 'Rutina de entrada y saludo', 60000000000, false, 2);
 
--- --- Secuencias para Hugo (ID 30) ---
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (10, 'Vestirse', 'Ponerse la ropa por la mañana', 600000000000, true, 1);
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (11, 'Poner la mesa', 'Ayudar antes de cenar', 420000000000, false, 3);
 
--- --- Secuencias para Julia (ID 31) ---
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES (12, 'Ducharse', 'Pasos para la ducha diaria', 900000000000, true, 1);
 
 
@@ -135,20 +128,20 @@ INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back
 -- 6. PASOS (STEPS)
 -- =================================================================================
 
--- Pasos para Seq 1: Lavarse los dientes (Sofía)
+-- Pasos para Seq 1: Lavarse los dientes
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (1, 'Poner pasta', 1, 10000000000, 5432, 1);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (2, 'Cepillar dientes', 2, 120000000000, 5433, 1);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (3, 'Enjuagar boca', 3, 20000000000, 5434, 1);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (4, 'Secarse', 4, 10000000000, 5435, 1);
 
--- Pasos para Seq 2: Mochila (Sofía)
+-- Pasos para Seq 2: Mochila
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (5, 'Abrir mochila', 1, 5000000000, 2301, 2);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (6, 'Meter agenda', 2, 10000000000, 2302, 2);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (7, 'Meter estuche', 3, 10000000000, 2303, 2);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (8, 'Meter merienda', 4, 10000000000, 2304, 2);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (9, 'Cerrar mochila', 5, 5000000000, 2305, 2);
 
--- Pasos para Seq 6: Lavarse manos (Valentina)
+-- Pasos para Seq 6: Lavarse manos
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (10, 'Subir mangas', 1, 10000000000, 6701, 6);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (11, 'Mojar manos', 2, 5000000000, 6702, 6);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (12, 'Poner jabón', 3, 5000000000, 6703, 6);
@@ -156,20 +149,20 @@ INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id,
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (14, 'Aclarar', 5, 10000000000, 6705, 6);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (15, 'Secar', 6, 10000000000, 6706, 6);
 
--- Pasos para Seq 8: Calmarse (Lucía)
+-- Pasos para Seq 8: Calmarse
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (16, 'Parar', 1, 5000000000, 8801, 8);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (17, 'Respirar hondo', 2, 30000000000, 8802, 8);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (18, 'Contar hasta 10', 3, 30000000000, 8803, 8);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (19, 'Pensar solución', 4, 60000000000, 8804, 8);
 
--- Pasos para Seq 10: Vestirse (Hugo)
+-- Pasos para Seq 10: Vestirse
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (20, 'Ropa interior', 1, 30000000000, 4401, 10);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (21, 'Camiseta', 2, 45000000000, 4402, 10);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (22, 'Pantalón', 3, 45000000000, 4403, 10);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (23, 'Calcetines', 4, 30000000000, 4404, 10);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (24, 'Zapatos', 5, 60000000000, 4405, 10);
 
--- Pasos para Seq 11: Poner la mesa (Hugo)
+-- Pasos para Seq 11: Poner la mesa
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (25, 'Mantel', 1, 30000000000, 9901, 11);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (26, 'Platos', 2, 40000000000, 9902, 11);
 INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id, sequence_id) VALUES (27, 'Cubiertos', 3, 40000000000, 9903, 11);
@@ -181,19 +174,19 @@ INSERT INTO steps (id, name, position, estimated_duration, arasaac_pictogram_id,
 -- =================================================================================
 -- Rutinas asignadas a estudiantes (student_user_id)
 
--- Rutina 1: Mañana (Sofía - ID 10)
+-- Rutina 1: Mañana
 INSERT INTO routines (id, name, category_id, student_user_id) VALUES (1, 'Rutina de Mañana', 1, 10);
 
--- Rutina 2: Colegio (Sofía - ID 10)
+-- Rutina 2: Colegio
 INSERT INTO routines (id, name, category_id, student_user_id) VALUES (2, 'Llegada al Colegio', 2, 10);
 
--- Rutina 3: Higiene (Valentina - ID 12)
+-- Rutina 3: Higiene
 INSERT INTO routines (id, name, category_id, student_user_id) VALUES (3, 'Aseo Personal', 1, 12);
 
--- Rutina 4: Tarde (Hugo - ID 30)
+-- Rutina 4: Tarde
 INSERT INTO routines (id, name, category_id, student_user_id) VALUES (4, 'Rutina de Tarde', 3, 30);
 
--- Rutina 5: Colegio (Lucía - ID 20)
+-- Rutina 5: Colegio
 INSERT INTO routines (id, name, category_id, student_user_id) VALUES (5, 'En la escuela', 2, 20);
 
 -- =================================================================================
@@ -207,7 +200,7 @@ INSERT INTO routine_days (routine_id, day_of_the_week) VALUES (1, 'WEDNESDAY');
 INSERT INTO routine_days (routine_id, day_of_the_week) VALUES (1, 'THURSDAY');
 INSERT INTO routine_days (routine_id, day_of_the_week) VALUES (1, 'FRIDAY');
 
--- Rutina 2 (Sofía Colegio): Lunes a Viernes
+-- Rutina 2 (Sofía Colegio): Lunes a viernes
 INSERT INTO routine_days (routine_id, day_of_the_week) VALUES (2, 'MONDAY');
 INSERT INTO routine_days (routine_id, day_of_the_week) VALUES (2, 'TUESDAY');
 INSERT INTO routine_days (routine_id, day_of_the_week) VALUES (2, 'WEDNESDAY');
@@ -287,7 +280,7 @@ INSERT INTO reproduction_step_times (reproduction_id, step_id, active_time_ms) V
 INSERT INTO reproduction_step_times (reproduction_id, step_id, active_time_ms) VALUES (4, 14, 10000);
 INSERT INTO reproduction_step_times (reproduction_id, step_id, active_time_ms) VALUES (4, 15, 10000);
 
--- Reinicio de secuencia para IDs futuros
+-- Reinicio de secuencia para ID futuros
 ALTER TABLE categories ALTER COLUMN id RESTART WITH 10;
 ALTER TABLE sequences ALTER COLUMN id RESTART WITH 50;
 ALTER TABLE steps ALTER COLUMN id RESTART WITH 100;
