@@ -86,7 +86,7 @@ INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES
     (3, 'Pedir jugar', 'Cómo unirse a un juego con amigos', 60000000000, true, 5);
 
--- Categoría 7: Seguridad
+-- Categoría 7: Seguridad Vial
 INSERT INTO sequences (id, title, description, estimated_duration, allow_go_back, category_id) VALUES
     (16, 'Cruzar la calle', 'Seguridad vial para cruzar', 120000000000, true, 7);
 
