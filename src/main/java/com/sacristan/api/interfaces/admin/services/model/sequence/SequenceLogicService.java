@@ -1,15 +1,9 @@
-package com.sacristan.api.interfaces.admin.services.sequence;
+package com.sacristan.api.interfaces.admin.services.model.sequence;
 
 import com.sacristan.api.global.models.Sequence;
-import com.sacristan.api.global.models.Step;
 import com.sacristan.api.global.repositories.SequenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor

@@ -1,6 +1,6 @@
 package com.sacristan.api.global.security.utils.service;
 
-import com.sacristan.api.interfaces.admin.services.user.UserUtilsService;
+import com.sacristan.api.interfaces.admin.services.model.user.UserUtilsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

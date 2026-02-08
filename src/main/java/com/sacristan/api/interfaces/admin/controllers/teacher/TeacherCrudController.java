@@ -2,8 +2,13 @@ package com.sacristan.api.interfaces.admin.controllers.teacher;
 
 import com.sacristan.api.interfaces.admin.dtos.teacher.TeacherResponse;
 import com.sacristan.api.interfaces.admin.dtos.user.CreateUser;
-import com.sacristan.api.interfaces.admin.services.teacher.TeacherCrudService;
+import com.sacristan.api.interfaces.admin.dtos.user.UpdateUser;
+import com.sacristan.api.interfaces.admin.services.model.teacher.TeacherCrudService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +59,49 @@ public class TeacherCrudController {
                 )
         );
     }
+
+    @PutMapping("/{id}")
+    @Operation(
+            summary = "Update Teacher",
+            description = "Update the info of a specific teacher"
+    )
+    public ResponseEntity<TeacherResponse> update(
+            @Parameter(
+                    description = "ID of the User to be updated",
+                    example = "1",
+                    required = true
+            )
+            @PathVariable(required = true)  Long id,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "UpdateUser DTO object containing the updated information for the User",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/JSON",
+                            schema = @Schema(implementation = UpdateUser.class),
+                            examples = {
+                                    @ExampleObject(
+                                            value = """
+                                                    {
+                                                        "name": "John",
+                                                        "lastName": "Doe",
+                                                        "email": "doe_john@testmail.com",
+                                                        "username": "johndoe"
+                                                    }
+                                                    """
+                                    )
+                            }
+                    )
+            )
+            @RequestBody UpdateUser updateUser
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        TeacherResponse
+                                .of(crudService.update(id, updateUser.to()))
+                );
+    }
+
 
 
     @Operation(

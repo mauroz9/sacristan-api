@@ -105,18 +105,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         pb.setType(URI.create("about:blank"));
         pb.setTitle("Bad request");
         pb.setInstance(URI.create(request.getRequestURI()));
-
-        pb.setProperties(
-                Map.of(
-                        "es", Map.of(
-                                "message", "No puedes eliminar un profesor con estudiantes asignados"
-                        ),
-                        "en", Map.of(
-                                "message", "You cannot delete a teacher with assigned students"
-                        )
-                )
-        );
-
         return pb;
     }
 

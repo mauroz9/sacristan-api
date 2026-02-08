@@ -1,4 +1,4 @@
-package com.sacristan.api.interfaces.admin.services.user;
+package com.sacristan.api.interfaces.admin.services.model.user;
 
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.repositories.UserRepository;

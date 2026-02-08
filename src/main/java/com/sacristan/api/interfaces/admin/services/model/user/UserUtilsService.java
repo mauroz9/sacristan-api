@@ -1,5 +1,6 @@
-package com.sacristan.api.interfaces.admin.services.user;
+package com.sacristan.api.interfaces.admin.services.model.user;
 
+import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +31,11 @@ public class UserUtilsService {
         return repository.getReferenceById(id);
     }
 
-
     public Optional<User> findByEmail(String email) {
         return repository.findByEmail(email);
+    }
+
+    public boolean existsStudentsAssignedToTeacher(Teacher teacher) {
+        return repository.existsStudentsAssignedToTeacher(teacher);
     }
 }

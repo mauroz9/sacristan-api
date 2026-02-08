@@ -29,11 +29,19 @@ public class Student {
 
     @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "student_user_id")
+    @Builder.Default
     private List<Routine> routines = new ArrayList<>();
 
-    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_user_id")
+    @Builder.Default
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Sequence> sequences = new ArrayList<>();
 
+    public void assignSequence(Sequence sequence){
+        this.sequences.add(sequence);
+    }
+
+    public void unassignSequence(Sequence sequence){
+        this.sequences.remove(sequence);
+    }
 }
 
