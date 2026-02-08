@@ -1,5 +1,6 @@
 package com.sacristan.api.interfaces.admin.controllers.student;
 
+import com.sacristan.api.global.dtos.SortParamDTO;
 import com.sacristan.api.interfaces.admin.dtos.student.StudentResponse;
 import com.sacristan.api.interfaces.admin.services.mixed.StudentTeacherService;
 import com.sacristan.api.interfaces.admin.services.model.student.StudentUtilsService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -79,6 +81,15 @@ public class StudentUtilsController {
         return ResponseEntity.ok(
                 StudentResponse.of(studentTeacherService.assignTeacher(studentId, teacherId))
         );
+    }
+
+    @GetMapping("/sort-params")
+    @Operation(
+            summary = "Get Student Sort Params",
+            description = "Get the available sort parameters for the Student entity"
+    )
+    public ResponseEntity<List<SortParamDTO>> getStudentSortParams() {
+        return ResponseEntity.ok(service.getStudentSortParams());
     }
 
 

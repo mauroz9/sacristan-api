@@ -5,6 +5,8 @@ import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.models.user.extra.Role;
 import com.sacristan.api.global.repositories.TeacherRepository;
+import com.sacristan.api.global.spefications.StudentSpecification;
+import com.sacristan.api.global.spefications.TeacherSpecification;
 import com.sacristan.api.interfaces.admin.services.model.user.UserCrudService;
 import com.sacristan.api.interfaces.admin.services.model.user.UserUtilsService;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +54,11 @@ public class TeacherCrudService {
         repository.delete(teacher);
     }
 
-    public Page<Teacher> list(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<Teacher> list(Pageable pageable, String q) {
+        return repository.findBy(
+                TeacherSpecification.searchByTerm(q),
+                p -> p.page(pageable)
+        );
     }
 
 

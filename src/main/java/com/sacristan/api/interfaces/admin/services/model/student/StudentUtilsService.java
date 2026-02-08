@@ -1,11 +1,14 @@
 package com.sacristan.api.interfaces.admin.services.model.student;
 
+import com.sacristan.api.global.dtos.SortParamDTO;
 import com.sacristan.api.global.models.user.Student;
 import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.global.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -29,5 +32,14 @@ public class StudentUtilsService {
 
     public Integer getStudentCountByTeacherId(Long id) {
         return repository.getStudentCountByTeacherId(id);
+    }
+
+    public List<SortParamDTO> getStudentSortParams() {
+        return List.of(
+                new SortParamDTO("Nombre" , "user.name"),
+                new SortParamDTO("Apellidos", "user.lastName"),
+                new SortParamDTO("Email", "user.email"),
+                new SortParamDTO("Usuario", "user.username")
+        );
     }
 }
