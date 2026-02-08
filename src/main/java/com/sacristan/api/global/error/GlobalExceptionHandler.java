@@ -2,7 +2,6 @@ package com.sacristan.api.global.error;
 
 import com.sacristan.api.global.error.exceptions.BadRequestException;
 import com.sacristan.api.global.error.exceptions.JwtTokenException;
-import com.sacristan.api.global.error.exceptions.arguments.AlreadyUsedEmailException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.java.Log;
 import org.jspecify.annotations.Nullable;
@@ -37,7 +36,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .map(ApiValidationSubError::from)
                 .toList());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(pb);
     }
 
     /* -- DATABASE --  */
@@ -127,27 +126,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         pb.setType(URI.create("about:blank"));
         pb.setTitle("Illegal argument/s provided");
         pb.setInstance(URI.create(request.getRequestURI()));
-
-        return pb;
-    }
-
-    @ExceptionHandler(AlreadyUsedEmailException.class)
-    public ProblemDetail handleAlreadyUsedEmailException(AlreadyUsedEmailException ex, HttpServletRequest request) {
-        ProblemDetail pb = ProblemDetail.forStatusAndDetail(
-                HttpStatus.BAD_REQUEST, ex.getMessage() + ": " + ex.getEmail()
-        );
-        pb.setType(URI.create("about:blank"));
-        pb.setTitle("Illegal argument/s provided");
-        pb.setInstance(URI.create(request.getRequestURI()));
-
-        pb.setProperties(Map.of(
-                "es", Map.of(
-                        "message", "El email " + ex.getEmail() + " ya está en uso"
-                ),
-                "en", Map.of(
-                        "message", "Email "+ ex.getEmail() +" already in use"
-                )
-        ));
 
         return pb;
     }

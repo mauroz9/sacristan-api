@@ -1,6 +1,5 @@
 package com.sacristan.api.interfaces.admin.services.user;
 
-import com.sacristan.api.global.error.exceptions.arguments.AlreadyUsedEmailException;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +19,6 @@ public class UserCrudService {
     private final UserRepository repository;
 
     public User create(User user) {
-
-        if (repository.existsByEmailIgnoreCase(user.getEmail()))
-            throw new AlreadyUsedEmailException("Email already in use", user.getEmail());
-
-        if (repository.existsByUsernameIgnoreCase(user.getUsername()))
-            throw new IllegalArgumentException("Username already in use: " + user.getUsername());
-
         return repository.save(user);
     }
 

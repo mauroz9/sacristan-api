@@ -2,6 +2,8 @@ package com.sacristan.api.interfaces.admin.dtos.user;
 
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.validation.anotations.UniqueUpdateEmail;
+import com.sacristan.api.global.validation.anotations.UniqueUpdateUsername;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record UpdateUser (
@@ -9,9 +11,9 @@ public record UpdateUser (
         String name,
         @NotBlank
         String lastName,
-        @UniqueUpdateEmail
+        @UniqueUpdateEmail @Email
         String email,
-        @UniqueUpdateUsername
+        @UniqueUpdateUsername @NotBlank
         String username
 ) {
 

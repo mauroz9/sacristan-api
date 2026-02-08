@@ -5,6 +5,7 @@ import com.sacristan.api.interfaces.admin.dtos.user.CreateUser;
 import com.sacristan.api.interfaces.admin.services.teacher.TeacherCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +27,7 @@ public class TeacherCrudController {
     )
     @PostMapping
     public ResponseEntity<TeacherResponse> create(
-            @RequestBody(required = true) CreateUser createUser
+            @Valid @RequestBody(required = true) CreateUser createUser
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)

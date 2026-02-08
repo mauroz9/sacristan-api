@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -96,12 +97,8 @@ public class UserCrudController {
                             }
                     )
             )
-            @RequestBody(required = true) CreateUser createUser
+            @Valid @RequestBody(required = true) CreateUser createUser
     ) {
-
-        if (!utilsService.passwordMatch(createUser.password(), createUser.verifyPassword()))
-            throw new IllegalArgumentException("Passwords don't match");
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(
@@ -241,7 +238,7 @@ public class UserCrudController {
                             }
                     )
             )
-            @RequestBody UpdateUser updateUser
+            @Valid @RequestBody UpdateUser updateUser
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
