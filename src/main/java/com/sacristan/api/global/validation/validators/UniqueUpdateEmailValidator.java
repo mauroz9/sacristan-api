@@ -30,6 +30,8 @@ public class UniqueUpdateEmailValidator implements ConstraintValidator<UniqueUpd
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return !repository.existsByEmailAndIdNot(s, id);
+        return id != null
+                ? !repository.existsByEmailAndIdNot(s,id)
+                : !repository.existsByEmailIgnoreCase(s);
     }
 }

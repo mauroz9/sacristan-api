@@ -31,6 +31,8 @@ public class UniqueUpdateUsernameValidator implements ConstraintValidator<Unique
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return !repository.existsByUsernameAndIdNot(s, id);
+        return id != null
+                ? !repository.existsByUsernameAndIdNot(s,id)
+                : !repository.existsByUsernameIgnoreCase(s);
     }
 }
