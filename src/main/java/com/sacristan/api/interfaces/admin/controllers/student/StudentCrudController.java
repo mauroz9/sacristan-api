@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +32,7 @@ public class StudentCrudController {
     )
     @PostMapping
     public ResponseEntity<StudentResponse> create(
-            @RequestBody(required = true) CreateUser createUser
+            @Valid @RequestBody(required = true) CreateUser createUser
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -87,7 +88,7 @@ public class StudentCrudController {
                             }
                     )
             )
-            @RequestBody UpdateUser updateUser
+            @Valid @RequestBody UpdateUser updateUser
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)

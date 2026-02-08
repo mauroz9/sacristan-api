@@ -2,16 +2,17 @@ package com.sacristan.api.global.error;
 
 import com.sacristan.api.global.error.exceptions.BadRequestException;
 import com.sacristan.api.global.error.exceptions.JwtTokenException;
-import com.sacristan.api.global.error.exceptions.arguments.AlreadyUsedEmailException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.java.Log;
+import org.jspecify.annotations.Nullable;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
+import org.springframework.http.*;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.security.sasl.AuthenticationException;
@@ -22,6 +23,21 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 @Log
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    /* -- VALIDATION -- */
+
+    @Override
+    protected @Nullable ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        ProblemDetail pb = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Validation failed for one or more arguments");
+        pb.setType(URI.create("about:blank"));
+        pb.setTitle("Validation error");
+
+        pb.setProperty("invalid-params", ex.getAllErrors().stream()
+                .map(ApiValidationSubError::from)
+                .toList());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(pb);
+    }
 
     /* -- DATABASE --  */
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -89,18 +105,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         pb.setType(URI.create("about:blank"));
         pb.setTitle("Bad request");
         pb.setInstance(URI.create(request.getRequestURI()));
-
-        pb.setProperties(
-                Map.of(
-                        "es", Map.of(
-                                "message", "No puedes eliminar un profesor con estudiantes asignados"
-                        ),
-                        "en", Map.of(
-                                "message", "You cannot delete a teacher with assigned students"
-                        )
-                )
-        );
-
         return pb;
     }
 
@@ -110,27 +114,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         pb.setType(URI.create("about:blank"));
         pb.setTitle("Illegal argument/s provided");
         pb.setInstance(URI.create(request.getRequestURI()));
-
-        return pb;
-    }
-
-    @ExceptionHandler(AlreadyUsedEmailException.class)
-    public ProblemDetail handleAlreadyUsedEmailException(AlreadyUsedEmailException ex, HttpServletRequest request) {
-        ProblemDetail pb = ProblemDetail.forStatusAndDetail(
-                HttpStatus.BAD_REQUEST, ex.getMessage() + ": " + ex.getEmail()
-        );
-        pb.setType(URI.create("about:blank"));
-        pb.setTitle("Illegal argument/s provided");
-        pb.setInstance(URI.create(request.getRequestURI()));
-
-        pb.setProperties(Map.of(
-                "es", Map.of(
-                        "message", "El email " + ex.getEmail() + " ya está en uso"
-                ),
-                "en", Map.of(
-                        "message", "Email "+ ex.getEmail() +" already in use"
-                )
-        ));
 
         return pb;
     }

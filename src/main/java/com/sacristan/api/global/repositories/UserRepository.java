@@ -20,4 +20,11 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     @Query("SELECT COUNT(s) > 0 FROM Student s WHERE s.teacher = :teacher")
     boolean existsStudentsAssignedToTeacher(Teacher teacher);
+
+    @Query(
+            "SELECT Count(u) > 0 FROM User u Where Lower(u.email) = Lower(:email) AND u.id <> :id"
+    )
+    boolean existsByEmailAndIdNot(String email, Long id);
+
+    boolean existsByUsernameAndIdNot(String s, Long id);
 }

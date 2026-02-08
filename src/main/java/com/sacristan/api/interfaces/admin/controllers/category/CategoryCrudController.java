@@ -6,6 +6,7 @@ import com.sacristan.api.interfaces.admin.dtos.category.UpdateCategory;
 import com.sacristan.api.interfaces.admin.services.model.category.CategoryCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +28,7 @@ public class CategoryCrudController {
     )
     @PostMapping
     public ResponseEntity<CategoryResponse> create(
-            @RequestBody(required = true) CreateCategory createCategory
+            @Valid @RequestBody(required = true) CreateCategory createCategory
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -75,7 +76,7 @@ public class CategoryCrudController {
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponse> update(
             @PathVariable Long id,
-            @RequestBody UpdateCategory updateCategory
+            @Valid @RequestBody UpdateCategory updateCategory
     ) {
         return ResponseEntity.ok(
                 CategoryResponse.of(
