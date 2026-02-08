@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface PasswordsMatch {
 
-        String message() default "{validation.passwords.match}";
+        String message() default "{validation.mismatch.password}";
 
         Class<?>[] groups() default {};
 
