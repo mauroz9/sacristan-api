@@ -1,7 +1,6 @@
 package com.sacristan.api.global.validation.validators;
 
 import com.sacristan.api.global.repositories.UserRepository;
-import com.sacristan.api.global.validation.anotations.UniqueUpdateEmail;
 import com.sacristan.api.global.validation.anotations.UniqueUpdateUsername;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintValidator;
@@ -32,7 +31,7 @@ public class UniqueUpdateUsernameValidator implements ConstraintValidator<Unique
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
         return id != null
-                ? !repository.existsByUsernameAndIdNot(s,id)
+                ? !repository.existsByUsernameIgnoreCaseAndIdNot(s,id)
                 : !repository.existsByUsernameIgnoreCase(s);
     }
 }

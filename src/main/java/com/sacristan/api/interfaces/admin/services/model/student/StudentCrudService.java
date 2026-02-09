@@ -4,6 +4,7 @@ import com.sacristan.api.global.models.user.Student;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.models.user.extra.Role;
 import com.sacristan.api.global.repositories.StudentRepository;
+import com.sacristan.api.global.specifications.StudentSpecification;
 import com.sacristan.api.interfaces.admin.services.model.user.UserCrudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -51,8 +52,8 @@ public class StudentCrudService {
         repository.delete(student);
     }
 
-    public Page<Student> list(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<Student> list(Pageable pageable, String q) {
+        return repository.findBy(StudentSpecification.searchByTerm(q), p -> p.page(pageable));
     }
 
 

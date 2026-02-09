@@ -26,5 +26,5 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     )
     boolean existsByEmailAndIdNot(String email, Long id);
 
-    boolean existsByUsernameAndIdNot(String s, Long id);
+    boolean existsByUsernameIgnoreCaseAndIdNot(String s, Long id);
 }

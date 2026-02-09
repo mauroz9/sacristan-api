@@ -11,7 +11,7 @@ public record UpdateUser (
         String name,
         @NotBlank
         String lastName,
-        @UniqueUpdateEmail @Email
+        @UniqueUpdateEmail @Email @NotBlank
         String email,
         @UniqueUpdateUsername @NotBlank
         String username

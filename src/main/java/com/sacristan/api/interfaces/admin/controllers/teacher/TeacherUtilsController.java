@@ -1,5 +1,6 @@
 package com.sacristan.api.interfaces.admin.controllers.teacher;
 
+import com.sacristan.api.global.dtos.SortParamDTO;
 import com.sacristan.api.interfaces.admin.services.mixed.StudentTeacherService;
 import com.sacristan.api.interfaces.admin.services.model.teacher.TeacherUtilsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/admin/teachers")
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TeacherUtilsController {
 
     private final StudentTeacherService studentTeacherService;
+    private final TeacherUtilsService service;
 
     @GetMapping("/{id}/student-count")
     @Operation(
@@ -31,6 +35,15 @@ public class TeacherUtilsController {
             @PathVariable Long id
     ) {
         return ResponseEntity.ok(studentTeacherService.getStudentCountByTeacherId(id));
+    }
+
+    @GetMapping("/sort-params")
+    @Operation(
+            summary = "Get Teacher Sort Params",
+            description = "Get the available sort parameters for the Teacher entity"
+    )
+    public ResponseEntity<List<SortParamDTO>> getTeacherSortParams() {
+        return ResponseEntity.ok(service.getTeacherSortParams());
     }
 
 }

@@ -23,6 +23,6 @@ public class PasswordsMatchValidator implements ConstraintValidator<PasswordsMat
         String passwordValue = (String) PropertyAccessorFactory.forBeanPropertyAccess(o).getPropertyValue(passwordField);
         String verifyPasswordValue = (String) PropertyAccessorFactory.forBeanPropertyAccess(o).getPropertyValue(verifyPasswordField);
 
-        return StringUtils.hasText(passwordValue) && passwordField.equals(verifyPasswordValue);
+        return StringUtils.hasText(passwordValue) && passwordValue.equals(verifyPasswordValue);
     }
 }

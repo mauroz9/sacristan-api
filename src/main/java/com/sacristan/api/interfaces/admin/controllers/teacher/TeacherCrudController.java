@@ -122,10 +122,11 @@ public class TeacherCrudController {
     )
     @GetMapping
     public ResponseEntity<Page<TeacherResponse>> list(
-            Pageable pageable
+            Pageable pageable,
+            @RequestParam(required = false) String q
     ) {
         return ResponseEntity.ok(
-                crudService.list(pageable).map(TeacherResponse::of)
+                crudService.list(pageable, q).map(TeacherResponse::of)
         );
     }
 
