@@ -7,6 +7,8 @@ import com.sacristan.api.interfaces.admin.services.model.sequence.SequenceCrudSe
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -88,11 +90,10 @@ public class SequenceCrudController {
             description = "List all sequences"
     )
     @GetMapping
-    public ResponseEntity<List<SequenceResponse>> list() {
+    public ResponseEntity<Page<SequenceResponse>> list(Pageable pageable, @RequestParam (required = false) String q) {
         return ResponseEntity.ok(
-                crudService.getAll().stream()
+                crudService.getAll(pageable, q)
                         .map(SequenceResponse::of)
-                        .toList()
         );
     }
 }
