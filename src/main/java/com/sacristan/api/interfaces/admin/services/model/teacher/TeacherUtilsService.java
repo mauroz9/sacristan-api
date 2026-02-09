@@ -8,7 +8,6 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -30,7 +29,7 @@ public class TeacherUtilsService {
         return repository.save(teacher);
     }
 
-    public @Nullable List<SortParamDTO> getTeacherSortParams() {
+    public List<SortParamDTO> getTeacherSortParams() {
         return List.of(
                 new SortParamDTO("Nombre", "user.name"),
                 new SortParamDTO("Apellidos", "user.lastName"),

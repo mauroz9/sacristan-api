@@ -4,7 +4,7 @@ import com.sacristan.api.global.models.user.Student;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.models.user.extra.Role;
 import com.sacristan.api.global.repositories.StudentRepository;
-import com.sacristan.api.global.spefications.StudentSpecification;
+import com.sacristan.api.global.specifications.StudentSpecification;
 import com.sacristan.api.interfaces.admin.services.model.user.UserCrudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

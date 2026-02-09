@@ -1,15 +1,15 @@
-package com.sacristan.api.global.spefications;
+package com.sacristan.api.global.specifications;
 
 import com.sacristan.api.global.models.user.Student;
+import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.global.models.user.User;
-
 import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.PredicateSpecification;
 
 
-public class StudentSpecification {
+public class TeacherSpecification {
 
-    public static PredicateSpecification<Student> searchByTerm(String query) {
+    public static PredicateSpecification<Teacher> searchByTerm(String query) {
 
         return (from, cb) -> {
             if (query == null || query.isBlank()) {
@@ -17,7 +17,7 @@ public class StudentSpecification {
             }
 
             String likeQuery = "%" + query.toLowerCase() + "%";
-            Join<Student, User> userJoin = from.join("user");
+            Join<Teacher, User> userJoin = from.join("user");
 
             return cb.or(
                     cb.like(cb.lower(userJoin.get("name")), likeQuery),
