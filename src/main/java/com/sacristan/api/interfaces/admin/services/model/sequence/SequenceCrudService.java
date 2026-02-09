@@ -7,7 +7,10 @@ import com.sacristan.api.global.repositories.CategoryRepository;
 import com.sacristan.api.global.repositories.ReproductionRepository;
 import com.sacristan.api.global.repositories.RoutineSequenceRepository;
 import com.sacristan.api.global.repositories.SequenceRepository;
+import com.sacristan.api.global.specifications.SequenceSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +26,8 @@ public class SequenceCrudService {
     private final ReproductionRepository reproductionRepository;
     private final RoutineSequenceRepository routineSequenceRepository;
 
-    public List<Sequence> getAll() {
-        return repository.findAll();
+    public Page<Sequence> getAll(Pageable pageable, String q) {
+        return repository.findBy(SequenceSpecification.searchByTerm(q), p -> p.page(pageable));
     }
 
     public Sequence read(Long id) {

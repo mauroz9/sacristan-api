@@ -1,5 +1,6 @@
 package com.sacristan.api.interfaces.admin.controllers.sequence;
 
+import com.sacristan.api.global.dtos.SortParamDTO;
 import com.sacristan.api.interfaces.admin.dtos.sequence.SequenceResponse;
 import com.sacristan.api.interfaces.admin.services.model.sequence.SequenceLogicService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,5 +37,14 @@ public class SequenceLogicController {
                                 )
                         )
                 );
+    }
+
+    @GetMapping("/sort-params")
+    @Operation(
+            summary = "Get Sequence Sort Params",
+            description = "Get the available sort parameters for the Sequence entity"
+    )
+    public ResponseEntity<List<SortParamDTO>> getSequenceSortParams() {
+        return ResponseEntity.ok(logicService.getSequenceSortParams());
     }
 }
