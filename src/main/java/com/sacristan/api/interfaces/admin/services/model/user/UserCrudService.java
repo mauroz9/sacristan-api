@@ -5,6 +5,7 @@ import com.sacristan.api.global.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -13,12 +14,11 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class UserCrudService {
 
-
-    /* ON THE IMMEDIATE FUTURE WE WILL ADD VALIDATION DIRECTLY ON TO THE CLASSES  */
-
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     public User create(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 
