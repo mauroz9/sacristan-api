@@ -2,16 +2,16 @@
 -- 1. ADMINISTRADOR
 -- =================================================================================
 INSERT INTO users (id, name, last_name, username, email, password, account_non_expired, account_non_locked, credentials_non_expired, enabled)
-VALUES (1, 'Administrador', 'Sistema', 'admin', 'admin@sacristan.edu', '{noop}admin123', true, true, true, true);
+VALUES (1, 'Administrador', 'Sistema', 'admin', 'admin@sacristan.edu', 'admin123', true, true, true, true);
 INSERT INTO user_roles (user_id, roles) VALUES (1, 'ADMIN');
 
 -- =================================================================================
 -- 2. PROFESORES
 -- =================================================================================
 INSERT INTO users (id, name, last_name, username, email, password, account_non_expired, account_non_locked, credentials_non_expired, enabled) VALUES
-                                                                                                                                                  (2, 'Laura', 'García', 'lgarcia', 'laura.garcia@sacristan.edu', '{noop}pass1234', true, true, true, true),
-                                                                                                                                                  (3, 'Carlos', 'Ruiz', 'cruiz', 'carlos.ruiz@sacristan.edu', '{noop}pass1234', true, true, true, true),
-                                                                                                                                                  (4, 'Elena', 'Martín', 'emartin', 'elena.martin@sacristan.edu', '{noop}pass1234', true, true, true, true);
+                                                                                                                                                  (2, 'Laura', 'García', 'lgarcia', 'laura.garcia@sacristan.edu', 'pass1234', true, true, true, true),
+                                                                                                                                                  (3, 'Carlos', 'Ruiz', 'cruiz', 'carlos.ruiz@sacristan.edu', 'pass1234', true, true, true, true),
+                                                                                                                                                  (4, 'Elena', 'Martín', 'emartin', 'elena.martin@sacristan.edu', 'pass1234', true, true, true, true);
 
 INSERT INTO user_roles (user_id, roles) VALUES (2, 'TEACHER'), (3, 'TEACHER'), (4, 'TEACHER');
 INSERT INTO teachers (user_id) VALUES (2), (3), (4);
@@ -20,18 +20,18 @@ INSERT INTO teachers (user_id) VALUES (2), (3), (4);
 -- 3. ALUMNOS
 -- =================================================================================
 INSERT INTO users (id, name, last_name, username, email, password, account_non_expired, account_non_locked, credentials_non_expired, enabled) VALUES
-                                                                                                                                                  (10, 'Sofía', 'López', 'slopez', 'sofia.lopez@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (11, 'Mateo', 'Fernández', 'mfernandez', 'mateo.fernandez@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (12, 'Valentina', 'Gómez', 'vgomez', 'valentina.gomez@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (13, 'Alejandro', 'Díaz', 'adiaz', 'alejandro.diaz@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (20, 'Lucía', 'Pérez', 'lperez', 'lucia.perez@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (21, 'Daniel', 'Sánchez', 'dsanchez', 'daniel.sanchez@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (22, 'Martina', 'Romero', 'mromero', 'martina.romero@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (30, 'Hugo', 'Alvarez', 'halvarez', 'hugo.alvarez@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (31, 'Julia', 'Torres', 'jtorres', 'julia.torres@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (32, 'Pablo', 'Ruiz', 'pruiz_student', 'pablo.ruiz@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (33, 'Emma', 'Vázquez', 'evazquez', 'emma.vazquez@student.sacristan.edu', '{noop}student123', true, true, true, true),
-                                                                                                                                                  (34, 'Álvaro', 'Moreno', 'amoreno', 'alvaro.moreno@student.sacristan.edu', '{noop}student123', true, true, true, true);
+                                                                                                                                                  (10, 'Sofía', 'López', 'slopez', 'sofia.lopez@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (11, 'Mateo', 'Fernández', 'mfernandez', 'mateo.fernandez@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (12, 'Valentina', 'Gómez', 'vgomez', 'valentina.gomez@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (13, 'Alejandro', 'Díaz', 'adiaz', 'alejandro.diaz@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (20, 'Lucía', 'Pérez', 'lperez', 'lucia.perez@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (21, 'Daniel', 'Sánchez', 'dsanchez', 'daniel.sanchez@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (22, 'Martina', 'Romero', 'mromero', 'martina.romero@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (30, 'Hugo', 'Alvarez', 'halvarez', 'hugo.alvarez@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (31, 'Julia', 'Torres', 'jtorres', 'julia.torres@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (32, 'Pablo', 'Ruiz', 'pruiz_student', 'pablo.ruiz@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (33, 'Emma', 'Vázquez', 'evazquez', 'emma.vazquez@student.sacristan.edu', 'student123', true, true, true, true),
+                                                                                                                                                  (34, 'Álvaro', 'Moreno', 'amoreno', 'alvaro.moreno@student.sacristan.edu', 'student123', true, true, true, true);
 
 INSERT INTO user_roles (user_id, roles) VALUES
                                             (10, 'STUDENT'), (11, 'STUDENT'), (12, 'STUDENT'), (13, 'STUDENT'),
