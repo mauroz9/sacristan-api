@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -34,11 +36,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
 
         http
+            .httpBasic(AbstractHttpConfigurer::disable)
             // URL authorization configuration
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/login", "/refresh-token", "/h2-console/**", "/h2-console").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/login", "/refresh-token").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/h2-console/**", "/h2-console").permitAll()
                     .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                     .requestMatchers("/api/v1/student/**").hasRole("STUDENT")
+                    .requestMatchers("/api/v1/parent/**").hasRole("PARENT")
+                    .requestMatchers("/api/v1/teacher/**").hasRole("TEACHER")
                     .requestMatchers("/api/v1/**").authenticated()
                     .anyRequest().authenticated()
             )

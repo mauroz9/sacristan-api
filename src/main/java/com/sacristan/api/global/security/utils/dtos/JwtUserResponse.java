@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -18,6 +19,7 @@ public class JwtUserResponse extends UserResponse {
     private String token;
     private String refreshToken;
     private Set<String> roles;
+
 
     public JwtUserResponse(UserResponse userResponse) {
         this.id = userResponse.getId();
