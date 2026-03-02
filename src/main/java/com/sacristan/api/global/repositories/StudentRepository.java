@@ -1,7 +1,12 @@
 package com.sacristan.api.global.repositories;
 
+import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.models.user.Student;
 import com.sacristan.api.global.models.user.Teacher;
+import org.jspecify.annotations.Nullable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +24,17 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
 
     @Query("SELECT COUNT(s) FROM Student s WHERE s.teacher.id = :id")
     Integer getStudentCountByTeacherId(Long id);
+
+
+    @EntityGraph(
+            attributePaths = {
+                    "sequences",
+                    "sequences.steps",
+                    "sequences.category"
+            }
+    )
+    @Query(
+            "SELECT s.sequences FROM Student s WHERE s.id = :id"
+    )
+    @Nullable Page<Sequence> findAllSequencesByUserId(Pageable pageable, Long id);
 }
