@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -64,12 +65,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    public ProblemDetail handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
+    public ErrorResponse handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
         ProblemDetail pb = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
         pb.setType(URI.create("about:blank"));
         pb.setTitle("Authentication error");
         pb.setInstance(URI.create(request.getRequestURI()));
-        return pb;
+        return ErrorResponse.builder(ex,pb)
+                .header("WWW-Authenticate", "Bearer")
+                .build();
     }
 
     @ExceptionHandler(AccessDeniedException.class)

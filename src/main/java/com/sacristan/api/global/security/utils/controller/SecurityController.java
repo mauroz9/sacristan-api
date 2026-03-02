@@ -9,6 +9,7 @@ import com.sacristan.api.global.security.config.jwt.refresh.RefreshTokenService;
 import com.sacristan.api.global.security.utils.dtos.JwtUserResponse;
 import com.sacristan.api.global.security.utils.dtos.LoginRequest;
 import com.sacristan.api.global.security.utils.dtos.RefreshTokenRequest;
+import com.sacristan.api.global.security.utils.service.AuthService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,14 +24,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 public class SecurityController
 {
 
-    private final AuthenticationManager authManager;
     private final RefreshTokenService refreshTokenService;
     private final JwtProvider jwtProvider;
+    private final AuthService authService;
 
     // DELETE THIS METHOD AFTER TESTING
     @GetMapping("/try")
@@ -69,43 +72,33 @@ public class SecurityController
     public ResponseEntity<JwtUserResponse> login (
             @RequestBody LoginRequest loginRequest
     ) {
-        Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.email(),
-                        loginRequest.password()
-                )
+
+        String token = authService.generateToken(loginRequest.email(), loginRequest.password());
+        User user = (User)  SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String refreshToken = authService.generateRefreshToken(user).getToken();
+
+        JwtUserResponse jwtUserResponse = JwtUserResponse.of(
+                user,
+                token,
+                refreshToken
         );
-
-        SecurityContextHolder.getContext().setAuthentication(auth);
-
-        String token = jwtProvider.generateToken(auth);
-        User user = (User) auth.getPrincipal();
-
-        refreshTokenService.deleteByUser(user);
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(JwtUserResponse.of(
-                        user,
-                        token,
-                        refreshToken.getToken()
-                ));
-
+        return ResponseEntity.ok(jwtUserResponse);
     }
 
     @PostMapping("/logout")
     @Transactional
-    public ResponseEntity<String> logout(
+    public ResponseEntity<Map<String,Object>> logout(
             @AuthenticationPrincipal User user
     ) {
 
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No user is currently authenticated");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("detail","No user is currently authenticated"));
         }
 
         refreshTokenService.deleteByUser(user);
         SecurityContextHolder.clearContext();
-        return ResponseEntity.ok("Logged out successfully");
+
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("detail", "Logged out successfully"));
     }
 
 }
