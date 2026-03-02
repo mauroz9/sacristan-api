@@ -82,7 +82,7 @@ public class SecurityController
                 token,
                 refreshToken
         );
-        return ResponseEntity.ok(jwtUserResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(jwtUserResponse);
     }
 
     @PostMapping("/logout")
