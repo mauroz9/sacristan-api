@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
-public class StudentSequenceService {
+public class AdminStudentSequenceService {
 
     private final StudentRepository studentRepository;
     private final SequenceRepository sequenceRepository;

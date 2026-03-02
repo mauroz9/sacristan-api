@@ -36,5 +36,6 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
     @Query(
             "SELECT s.sequences FROM Student s WHERE s.id = :id"
     )
-    @Nullable Page<Sequence> findAllSequencesByUserId(Pageable pageable, Long id);
+    @Nullable List<Sequence> findAllSequencesByUserId(Long id);
+
 }

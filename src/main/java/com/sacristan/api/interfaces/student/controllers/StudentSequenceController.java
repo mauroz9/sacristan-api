@@ -1,8 +1,8 @@
-package com.sacristan.api.interfaces.user.controllers;
+package com.sacristan.api.interfaces.student.controllers;
 
 import com.sacristan.api.global.models.user.User;
-import com.sacristan.api.interfaces.user.dtos.sequence.LibrarySequenceDTO;
-import com.sacristan.api.interfaces.user.services.UserSequenceService;
+import com.sacristan.api.interfaces.student.dtos.sequence.LibrarySequenceDTO;
+import com.sacristan.api.interfaces.student.services.sequence.StudentSequenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller(value = "UserSequenceController")
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/user/sequence")
-public class UserSequenceController {
+@RequestMapping("/api/v1/user/sequences")
+public class StudentSequenceController {
 
-    private final UserSequenceService service;
+    private final StudentSequenceService service;
 
     @GetMapping
     public ResponseEntity<Page<LibrarySequenceDTO>> list(
