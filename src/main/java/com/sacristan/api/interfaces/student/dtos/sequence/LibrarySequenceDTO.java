@@ -1,4 +1,4 @@
-package com.sacristan.api.interfaces.user.dtos.sequence;
+package com.sacristan.api.interfaces.student.dtos.sequence;
 
 import com.sacristan.api.global.models.Sequence;
 
