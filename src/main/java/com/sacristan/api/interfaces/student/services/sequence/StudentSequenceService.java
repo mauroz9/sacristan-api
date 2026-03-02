@@ -19,8 +19,15 @@ public class StudentSequenceService {
 
     private final StudentSequenceUtilsService studentSequenceUtilsService;
 
-    public Page<Sequence> list(Pageable pageable, User user) {
+    public Page<Sequence> list(Pageable pageable, User user, Long categoryId) {
         List<Sequence> sequences = studentSequenceUtilsService.getSequencesByUserId(user);
+
+        if (categoryId != null) {
+            sequences = sequences.stream()
+                    .filter(s -> s.getCategory() != null && s.getCategory().getId().equals(categoryId))
+                    .toList();
+        }
+
         return new PageImpl<>(
                 sequences,
                 pageable,

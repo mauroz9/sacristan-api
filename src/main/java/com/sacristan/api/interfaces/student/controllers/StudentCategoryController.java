@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/user/categories")
+@RequestMapping("/api/v1/student/categories")
 public class StudentCategoryController {
 
     private final StudentCategoryService service;

@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,9 +31,23 @@ public class StudentCategoryService {
                 .distinct()
                 .toList();
 
-        List<LibraryCategoryDTO> categoryDTOs = categories.stream()
-                .map(c -> LibraryCategoryDTO.from(c, categoryUtilsService.countSequencesByCategory(c, sequences)))
-                .toList();
+        if (categories.isEmpty()) {
+            return new PageImpl<>(new ArrayList<>());
+        }
+
+        List<LibraryCategoryDTO> categoryDTOs = new ArrayList<>(
+                categories.stream()
+                        .map(c -> LibraryCategoryDTO.from(c, categoryUtilsService.countSequencesByCategory(c, sequences)))
+                        .toList()
+        );
+
+        categoryDTOs.addFirst(
+                new LibraryCategoryDTO(
+                        null,
+                        "Todas",
+                        categoryUtilsService.countSequencesByCategory(null, sequences)
+                )
+        );
 
         return new PageImpl<>(
                 categoryDTOs,

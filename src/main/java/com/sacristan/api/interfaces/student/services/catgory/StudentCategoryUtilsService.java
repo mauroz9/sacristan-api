@@ -12,6 +12,10 @@ public class StudentCategoryUtilsService {
     public Integer countSequencesByCategory(Category category, List<Sequence> sequences) {
         Integer count = 0;
         for (Sequence sequence : sequences) {
+            if (category == null) {
+                count++;
+                continue;
+            }
             if (sequence.getCategory().getId().equals(category.getId())) {
                 count++;
             }

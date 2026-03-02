@@ -11,11 +11,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller(value = "UserSequenceController")
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/user/sequences")
+@RequestMapping("/api/v1/student/sequences")
 public class StudentSequenceController {
 
     private final StudentSequenceService service;
@@ -23,9 +24,10 @@ public class StudentSequenceController {
     @GetMapping
     public ResponseEntity<Page<LibrarySequenceDTO>> list(
             Pageable pageable,
-            @AuthenticationPrincipal User user
+            @AuthenticationPrincipal User user,
+            @RequestParam(required = false, name = "category") Long categoryId
     ) {
-        return ResponseEntity.ok(service.list(pageable, user).map(LibrarySequenceDTO::from));
+        return ResponseEntity.ok(service.list(pageable, user, categoryId).map(LibrarySequenceDTO::from));
     }
 
 
