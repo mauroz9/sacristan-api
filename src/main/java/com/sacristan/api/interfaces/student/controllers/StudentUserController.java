@@ -1,7 +1,9 @@
 package com.sacristan.api.interfaces.student.controllers;
 
+import com.sacristan.api.global.models.user.Teacher;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.interfaces.student.dtos.user.UserProfileDto;
+import com.sacristan.api.interfaces.student.dtos.user.UserTeacherDto;
 import com.sacristan.api.interfaces.student.services.user.StudentUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,13 @@ public class StudentUserController {
     public ResponseEntity<UserProfileDto> getProfile(
             @AuthenticationPrincipal User user
             ) {
-        return ResponseEntity.ok(UserProfileDto.from(service.getStudentByUserId(user.getId())));
+        return ResponseEntity.ok(UserProfileDto.from(service.getStudentByUserId(user)));
+    }
+
+    @GetMapping("/teacher")
+    public ResponseEntity<UserTeacherDto> getTeacher(
+            @AuthenticationPrincipal User user
+    ) {
+        return ResponseEntity.ok(UserTeacherDto.from(service.getTeacherByUserId(user)));
     }
 }

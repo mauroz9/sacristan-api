@@ -7,8 +7,7 @@ public record UserProfileDto(
         String username,
         String email,
         String name,
-        String lastName,
-        UserTeacherDto teacher
+        String lastName
 ) {
         public static UserProfileDto from(Student student) {
             if (student == null) {
@@ -19,8 +18,7 @@ public record UserProfileDto(
                     student.getUser().getUsername(),
                     student.getUser().getEmail(),
                     student.getUser().getName(),
-                    student.getUser().getLastName(),
-                    UserTeacherDto.from(student.getTeacher())
+                    student.getUser().getLastName()
             );
         }
 }
