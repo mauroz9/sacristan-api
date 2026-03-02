@@ -25,9 +25,11 @@ public class StudentSequenceController {
     public ResponseEntity<Page<LibrarySequenceDTO>> list(
             Pageable pageable,
             @AuthenticationPrincipal User user,
-            @RequestParam(required = false, name = "category") Long categoryId
+            @RequestParam(required = false, name = "category") Long categoryId,
+            @RequestParam(required = false, name = "search") String searchQuery
+
     ) {
-        return ResponseEntity.ok(service.list(pageable, user, categoryId).map(LibrarySequenceDTO::from));
+        return ResponseEntity.ok(service.list(pageable, user, categoryId, searchQuery).map(LibrarySequenceDTO::from));
     }
 
 
