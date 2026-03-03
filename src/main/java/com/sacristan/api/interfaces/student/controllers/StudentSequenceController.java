@@ -39,7 +39,7 @@ public class StudentSequenceController {
             @AuthenticationPrincipal User user,
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(PlaySequenceDTO.from(service.getById(id, user)));
+        return ResponseEntity.ok(PlaySequenceDTO.from(service.getById(id)));
     }
 
 

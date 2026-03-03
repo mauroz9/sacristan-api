@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor @NoArgsConstructor
@@ -33,7 +35,7 @@ public class Student {
 
     @Builder.Default
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Sequence> sequences = new ArrayList<>();
+    private Set<Sequence> sequences = new HashSet<>();
 
     public void assignSequence(Sequence sequence){
         this.sequences.add(sequence);

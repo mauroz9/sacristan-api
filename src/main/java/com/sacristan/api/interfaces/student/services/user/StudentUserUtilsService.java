@@ -24,9 +24,4 @@ public class StudentUserUtilsService {
         return studentRepository.findAllRoutinesByUserId(user.getId());
     }
 
-    public Sequence getSequenceByIdAndUserId(Long id, User user) {
-        return studentRepository.findSequenceByIdAndUserId(id, user.getId())
-                .orElseThrow(() -> new NoSuchElementException("Secuencia no encontrada o no pertenece al usuario"));
-    }
-
 }

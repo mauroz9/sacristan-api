@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +48,7 @@ public class AdminStudentSequenceService {
         return studentRepository.save(student);
     }
 
-    public List<Sequence> getSequencesOfStudent(Long studentId) {
+    public Set<Sequence> getSequencesOfStudent(Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new NoSuchElementException("Student not found with id: " + studentId));
 

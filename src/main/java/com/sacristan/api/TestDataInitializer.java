@@ -289,6 +289,7 @@ public class TestDataInitializer implements CommandLineRunner {
 
         // 4. Assign it specifically to Alejandro
         sAlejandro.getRoutines().add(rutTardeMartes);
+        sAlejandro.getSequences().add(seqDibujo);
         studentRepository.save(sAlejandro);
 
     }

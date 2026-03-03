@@ -44,17 +44,6 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
 
     @EntityGraph(
             attributePaths = {
-                    "sequences.steps",
-                    "sequences.category"
-            }
-    )
-    @Query(
-            "SELECT seq FROM Student s JOIN s.sequences seq WHERE s.id = :studentId AND seq.id = :sequenceId"
-    )
-    Optional<Sequence> findSequenceByIdAndUserId(Long sequenceId, Long studentId);
-
-    @EntityGraph(
-            attributePaths = {
                     "routines",
             }
     )

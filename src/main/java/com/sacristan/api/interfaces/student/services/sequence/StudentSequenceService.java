@@ -20,6 +20,7 @@ import java.util.List;
 public class StudentSequenceService {
 
     private final StudentUserUtilsService studentUserUtilsService;
+    private final StudentSequenceUtilsService studentSequenceUtilsService;
 
     public Page<Sequence> list(Pageable pageable, User user, Long categoryId, String searchQuery) {
         List<Sequence> sequences = studentUserUtilsService.getSequencesByUserId(user);
@@ -48,8 +49,8 @@ public class StudentSequenceService {
         );
     }
 
-    public Sequence getById(Long id, User user) {
-        return studentUserUtilsService.getSequenceByIdAndUserId(id, user);
+    public Sequence getById(Long id) {
+        return studentSequenceUtilsService.getSequenceById(id);
     }
 
 
