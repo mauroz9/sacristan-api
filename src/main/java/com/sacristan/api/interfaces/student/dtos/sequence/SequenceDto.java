@@ -19,7 +19,7 @@ public record SequenceDto(
                 sequence.getTitle(),
                 sequence.getDescription(),
                 sequence.getCategory() != null ? sequence.getCategory().getName() : null,
-                sequence.getSteps().stream().map(StepDto::from).toList()
+                !sequence.getSteps().isEmpty() ? sequence.getSteps().stream().map(StepDto::from).toList() : List.of()
         );
     }
 }
