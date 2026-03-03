@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.PredicateSpecification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -20,5 +21,10 @@ public class StudentSequenceUtilsService {
 
     public List<Sequence> getSequencesByUserId(User user) {
         return studentRepository.findAllSequencesByUserId(user.getId());
+    }
+
+    public Sequence getSequenceByIdAndUserId(Long id, User user) {
+        return studentRepository.findSequenceByIdAndUserId(id, user.getId())
+                .orElseThrow(() -> new NoSuchElementException("Secuencia no encontrada o no pertenece al usuario"));
     }
 }
