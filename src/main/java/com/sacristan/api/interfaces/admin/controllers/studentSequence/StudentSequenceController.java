@@ -1,9 +1,8 @@
 package com.sacristan.api.interfaces.admin.controllers.studentSequence;
 
-import com.sacristan.api.interfaces.admin.dtos.sequence.CreateSequence;
 import com.sacristan.api.interfaces.admin.dtos.sequence.SequenceResponse;
 import com.sacristan.api.interfaces.admin.dtos.student.StudentResponse;
-import com.sacristan.api.interfaces.admin.services.studentSequence.StudentSequenceService;
+import com.sacristan.api.interfaces.admin.services.studentSequence.AdminStudentSequenceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ import java.util.List;
 @Tag(name = "Student-Sequence controller", description = "Controller for managing the relationship between students and sequences")
 public class StudentSequenceController {
 
-    private final StudentSequenceService service;
+    private final AdminStudentSequenceService service;
 
     @Operation(
             summary = "Assign Sequence",

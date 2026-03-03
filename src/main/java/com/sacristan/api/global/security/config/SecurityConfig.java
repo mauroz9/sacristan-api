@@ -41,12 +41,17 @@ public class SecurityConfig {
             // URL authorization configuration
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(HttpMethod.POST,"/login", "/refresh-token").permitAll()
+
                     .requestMatchers(HttpMethod.GET,"/h2-console/**", "/h2-console").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/h2-console/**", "/h2-console").permitAll()
+
                     .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                     .requestMatchers("/api/v1/student/**").hasRole("STUDENT")
                     .requestMatchers("/api/v1/parent/**").hasRole("PARENT")
                     .requestMatchers("/api/v1/teacher/**").hasRole("TEACHER")
+
                     .requestMatchers("/api/v1/**").authenticated()
+
                     .anyRequest().authenticated()
             )
             .csrf(csrf -> csrf
