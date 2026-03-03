@@ -2,7 +2,7 @@ package com.sacristan.api.interfaces.student.controllers;
 
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.interfaces.student.dtos.sequence.LibrarySequenceDTO;
-import com.sacristan.api.interfaces.student.dtos.sequence.SequenceDto;
+import com.sacristan.api.interfaces.student.dtos.sequence.PlaySequenceDTO;
 import com.sacristan.api.interfaces.student.services.sequence.StudentSequenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,11 +35,11 @@ public class StudentSequenceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SequenceDto> getById(
+    public ResponseEntity<PlaySequenceDTO> getById(
             @AuthenticationPrincipal User user,
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(SequenceDto.from(service.getById(id, user)));
+        return ResponseEntity.ok(PlaySequenceDTO.from(service.getById(id)));
     }
 
 

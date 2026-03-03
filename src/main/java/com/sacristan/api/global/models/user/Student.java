@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor @NoArgsConstructor
@@ -27,14 +29,13 @@ public class Student {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_user_id")
+    @ManyToMany(fetch = FetchType.LAZY)
     @Builder.Default
     private List<Routine> routines = new ArrayList<>();
 
     @Builder.Default
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Sequence> sequences = new ArrayList<>();
+    private Set<Sequence> sequences = new HashSet<>();
 
     public void assignSequence(Sequence sequence){
         this.sequences.add(sequence);

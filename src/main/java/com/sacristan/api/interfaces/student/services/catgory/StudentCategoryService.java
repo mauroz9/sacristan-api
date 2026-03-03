@@ -4,7 +4,7 @@ import com.sacristan.api.global.models.Category;
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.interfaces.student.dtos.category.LibraryCategoryDTO;
-import com.sacristan.api.interfaces.student.services.sequence.StudentSequenceUtilsService;
+import com.sacristan.api.interfaces.student.services.user.StudentUserUtilsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,14 +18,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentCategoryService {
 
-    private final StudentSequenceUtilsService sequenceUtilsService;
+    private final StudentUserUtilsService studentUserUtilsService;
     private final StudentCategoryUtilsService categoryUtilsService;
 
     public Page<LibraryCategoryDTO> list(
             Pageable pageable,
             User user
     ) {
-        List<Sequence> sequences = sequenceUtilsService.getSequencesByUserId(user);
+        List<Sequence> sequences = studentUserUtilsService.getSequencesByUserId(user);
         List<Category> categories = sequences.stream()
                 .map(Sequence::getCategory)
                 .distinct()
