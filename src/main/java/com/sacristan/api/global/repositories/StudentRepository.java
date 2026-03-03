@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 @Repository
@@ -40,5 +41,15 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
     )
     @Nullable List<Sequence> findAllSequencesByUserId(Long id);
 
+    @EntityGraph(
+            attributePaths = {
+                    "sequences.steps",
+                    "sequences.category"
+            }
+    )
+    @Query(
+            "SELECT seq FROM Student s JOIN s.sequences seq WHERE s.id = :studentId AND seq.id = :sequenceId"
+    )
+    Optional<Sequence> findSequenceByIdAndUserId(Long sequenceId, Long studentId);
 
 }
