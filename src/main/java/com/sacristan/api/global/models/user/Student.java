@@ -27,8 +27,7 @@ public class Student {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_user_id")
+    @ManyToMany(fetch = FetchType.LAZY)
     @Builder.Default
     private List<Routine> routines = new ArrayList<>();
 

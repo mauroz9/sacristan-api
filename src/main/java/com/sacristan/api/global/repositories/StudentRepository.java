@@ -1,5 +1,6 @@
 package com.sacristan.api.global.repositories;
 
+import com.sacristan.api.global.models.Routine;
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.models.user.Student;
 import com.sacristan.api.global.models.user.Teacher;
@@ -41,4 +42,13 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
     @Nullable List<Sequence> findAllSequencesByUserId(Long id);
 
 
+    @EntityGraph(
+            attributePaths = {
+                    "routines",
+            }
+    )
+    @Query(
+            "SELECT s.routines FROM Student s WHERE s.id = :id"
+    )
+    List<Routine> findAllRoutinesByUserId(Long id);
 }

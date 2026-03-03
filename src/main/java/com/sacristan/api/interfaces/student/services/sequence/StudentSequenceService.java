@@ -3,6 +3,7 @@ package com.sacristan.api.interfaces.student.services.sequence;
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.repositories.StudentRepository;
+import com.sacristan.api.interfaces.student.services.user.StudentUserUtilsService;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
@@ -18,10 +19,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentSequenceService {
 
-    private final StudentSequenceUtilsService studentSequenceUtilsService;
+    private final StudentUserUtilsService studentUserUtilsService;
 
     public Page<Sequence> list(Pageable pageable, User user, Long categoryId, String searchQuery) {
-        List<Sequence> sequences = studentSequenceUtilsService.getSequencesByUserId(user);
+        List<Sequence> sequences = studentUserUtilsService.getSequencesByUserId(user);
 
         if (searchQuery != null && !searchQuery.isBlank()) {
 

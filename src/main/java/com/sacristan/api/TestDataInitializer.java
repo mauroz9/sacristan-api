@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -172,6 +173,10 @@ public class TestDataInitializer implements CommandLineRunner {
         sLucia.getRoutines().add(rutEscuela);
         studentRepository.save(sLucia);
 
+        sAlejandro.getRoutines().add(rutManana);
+        sAlejandro.getRoutines().add(rutAseo);
+        studentRepository.save(sAlejandro);
+
         /* =================================================================================
            8.5 ASSIGN STANDALONE SEQUENCES TO STUDENTS
            ================================================================================= */
@@ -193,6 +198,10 @@ public class TestDataInitializer implements CommandLineRunner {
         // Lucía gets assigned school-related sequences
         sLucia.assignSequence(seqEntrarClase);
         studentRepository.save(sLucia);
+
+        sAlejandro.assignSequence(seqEntrarClase);
+        sAlejandro.assignSequence(seqDientes);
+        studentRepository.save(sAlejandro);
 
         /* =================================================================================
            9. REPRODUCTIONS (HISTORY)
@@ -221,6 +230,50 @@ public class TestDataInitializer implements CommandLineRunner {
                 .startedAt(LocalDateTime.of(2023, 10, 25, 20, 30))
                 .endedAt(null).build();
         reproductionRepository.save(rep3);
+
+
+        /* =================================================================================
+           NEW: CUSTOM AFTER-SCHOOL ROUTINE FOR ALEJANDRO
+           ================================================================================= */
+
+        // 1. Create a new Sequence for the routine
+        Sequence seqDibujo = Sequence.builder()
+                .steps(new ArrayList<>())
+                .title("Dibujo Creativo")
+                .description("Preparar materiales y dibujar")
+                .estimatedDuration(Duration.ofMinutes(45))
+                .allowGoBack(true)
+                .category(catOcioJuego)
+                .build();
+
+        seqDibujo.getSteps().add(Step.builder().name("Sacar folios").position(1).estimatedDuration(Duration.ofNanos(30000000000L)).arasaacPictogramId(7535).sequence(seqDibujo).build());
+        seqDibujo.getSteps().add(Step.builder().name("Elegir colores").position(2).estimatedDuration(Duration.ofNanos(60000000000L)).arasaacPictogramId(25357).sequence(seqDibujo).build());
+        seqDibujo.getSteps().add(Step.builder().name("Dibujar libre").position(3).estimatedDuration(Duration.ofNanos(1800000000000L)).arasaacPictogramId(2341).sequence(seqDibujo).build());
+
+        sequenceRepository.save(seqDibujo);
+
+        Routine rutTardeMartes = Routine.builder()
+                .name("Actividad de Martes")
+                .category(catOcioJuego)
+                .daysOfTheWeek(
+                        Set.of(DaysOfTheWeek.valueOf(LocalDate.now().getDayOfWeek().name()))
+                )
+                .build();
+
+        // 3. Add the Sequence to the Routine with the specific time
+        rutTardeMartes.getSequences().add(RoutineSequence.builder()
+                .routine(rutTardeMartes)
+                .sequence(seqDibujo)
+                .startTime(LocalTime.now())
+                .endTime(LocalTime.now().plusMinutes(45))
+                .build());
+
+        routineRepository.save(rutTardeMartes);
+
+        // 4. Assign it specifically to Alejandro
+        sAlejandro.getRoutines().add(rutTardeMartes);
+        studentRepository.save(sAlejandro);
+
     }
 
     // Helper method to create and save a Teacher
@@ -238,4 +291,6 @@ public class TestDataInitializer implements CommandLineRunner {
         user = userRepository.save(user);
         return studentRepository.save(Student.builder().user(user).teacher(teacher).build());
     }
+
+
 }
