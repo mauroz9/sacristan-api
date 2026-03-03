@@ -246,9 +246,9 @@ public class TestDataInitializer implements CommandLineRunner {
                 .category(catOcioJuego)
                 .build();
 
-        seqDibujo.getSteps().add(Step.builder().name("Sacar folios").position(1).estimatedDuration(Duration.ofNanos(30000000000L)).arasaacPictogramId(7535).sequence(seqDibujo).build());
-        seqDibujo.getSteps().add(Step.builder().name("Elegir colores").position(2).estimatedDuration(Duration.ofNanos(60000000000L)).arasaacPictogramId(25357).sequence(seqDibujo).build());
-        seqDibujo.getSteps().add(Step.builder().name("Dibujar libre").position(3).estimatedDuration(Duration.ofNanos(1800000000000L)).arasaacPictogramId(2341).sequence(seqDibujo).build());
+        seqDibujo.getSteps().add(Step.builder().name("Sacar folios").position(1).estimatedDuration(Duration.ofNanos(30000000000L)).arasaacPictogramId(2398).sequence(seqDibujo).build());
+        seqDibujo.getSteps().add(Step.builder().name("Elegir colores").position(2).estimatedDuration(Duration.ofNanos(60000000000L)).arasaacPictogramId(5968).sequence(seqDibujo).build());
+        seqDibujo.getSteps().add(Step.builder().name("Dibujar libre").position(3).estimatedDuration(Duration.ofNanos(1800000000000L)).arasaacPictogramId(8088).sequence(seqDibujo).build());
 
         sequenceRepository.save(seqDibujo);
 
@@ -261,12 +261,29 @@ public class TestDataInitializer implements CommandLineRunner {
                 .build();
 
         // 3. Add the Sequence to the Routine with the specific time
-        rutTardeMartes.getSequences().add(RoutineSequence.builder()
+        rutTardeMartes.getSequences().add(
+                RoutineSequence.builder()
+                        .routine(rutTardeMartes)
+                        .sequence(seqDibujo)
+                        .startTime(LocalTime.now().minusMinutes(10))
+                        .endTime(LocalTime.now().plusMinutes(35))
+                        .build());
+
+        rutTardeMartes.getSequences().add(
+                RoutineSequence.builder()
                 .routine(rutTardeMartes)
                 .sequence(seqDibujo)
                 .startTime(LocalTime.now())
                 .endTime(LocalTime.now().plusMinutes(45))
                 .build());
+
+        rutTardeMartes.getSequences().add(
+                RoutineSequence.builder()
+                        .routine(rutTardeMartes)
+                        .sequence(seqDibujo)
+                        .startTime(LocalTime.now().plusMinutes(10))
+                        .endTime(LocalTime.now().plusMinutes(55))
+                        .build());
 
         routineRepository.save(rutTardeMartes);
 

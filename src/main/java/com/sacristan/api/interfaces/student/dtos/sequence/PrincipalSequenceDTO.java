@@ -9,13 +9,15 @@ public record PrincipalSequenceDTO (
         Long id,
         String name,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-        LocalTime startTime
+        LocalTime startTime,
+        Integer frontImageId
 ) {
     public static PrincipalSequenceDTO from(Sequence s, LocalTime startTime) {
         return new PrincipalSequenceDTO(
                 s.getId(),
                 s.getTitle(),
-                startTime != null ? LocalTime.now() : null
+                startTime,
+                s.getSteps().getFirst().getArasaacPictogramId()
         );
     }
 }
