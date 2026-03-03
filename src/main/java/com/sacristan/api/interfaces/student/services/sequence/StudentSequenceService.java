@@ -48,6 +48,10 @@ public class StudentSequenceService {
         );
     }
 
+    public Sequence getById(Long id, User user) {
+        return studentUserUtilsService.getSequenceByIdAndUserId(id, user);
+    }
+
 
 
 

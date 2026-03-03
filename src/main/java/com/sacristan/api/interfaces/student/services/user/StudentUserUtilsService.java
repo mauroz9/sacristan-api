@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,11 @@ public class StudentUserUtilsService {
 
     public List<Routine> getRoutinesByUserId(User user) {
         return studentRepository.findAllRoutinesByUserId(user.getId());
+    }
+
+    public Sequence getSequenceByIdAndUserId(Long id, User user) {
+        return studentRepository.findSequenceByIdAndUserId(id, user.getId())
+                .orElseThrow(() -> new NoSuchElementException("Secuencia no encontrada o no pertenece al usuario"));
     }
 
 }
