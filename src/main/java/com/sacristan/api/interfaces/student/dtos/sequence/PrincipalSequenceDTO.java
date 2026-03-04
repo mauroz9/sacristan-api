@@ -10,14 +10,16 @@ public record PrincipalSequenceDTO (
         String name,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
         LocalTime startTime,
-        Integer frontImageId
+        Integer frontImageId,
+        Long routineSequenceId
 ) {
-    public static PrincipalSequenceDTO from(Sequence s, LocalTime startTime) {
+    public static PrincipalSequenceDTO from(Sequence s, LocalTime startTime, Long routineSequenceId) {
         return new PrincipalSequenceDTO(
                 s.getId(),
                 s.getTitle(),
                 startTime,
-                s.getSteps().getFirst().getArasaacPictogramId()
+                s.getSteps().getFirst().getArasaacPictogramId(),
+                routineSequenceId
         );
     }
 }

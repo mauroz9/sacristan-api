@@ -40,7 +40,7 @@ public class StudentRoutineService {
 
         for (RoutineSequence routineSequence : pendingSequences) {
             Sequence s = routineSequence.getSequence();
-            pendingSequenceDTOs.add(PrincipalSequenceDTO.from(s, routineSequence.getStartTime()));
+            pendingSequenceDTOs.add(PrincipalSequenceDTO.from(s, routineSequence.getStartTime(), routineSequence.getId()));
         }
 
         return new PageImpl<>(pendingSequenceDTOs, pageable, pendingSequenceDTOs.size());

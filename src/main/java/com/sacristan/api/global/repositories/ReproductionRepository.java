@@ -15,15 +15,9 @@ import java.util.List;
 @Repository
 public interface ReproductionRepository extends JpaRepository<Reproduction, Long>, JpaSpecificationExecutor<Reproduction> {
 
-    List<Reproduction> findByStudent(Student student);
-
-    List<Reproduction> findBySequence(Sequence sequence);
-
-    List<Reproduction> findByStudentAndSequence(Student student, Sequence sequence);
-
     @Modifying
     @Transactional
-    @Query("DELETE FROM Reproduction r WHERE r.sequence.id = :sequenceId")
-    void deleteBySequenceId(Long sequenceId);
+    @Query("DELETE FROM Reproduction r WHERE r.routineSequence.id = :routineSequenceId")
+    void deleteByRoutineSequenceId(Long routineSequenceId);
 
 }

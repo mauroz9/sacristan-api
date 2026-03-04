@@ -1,6 +1,7 @@
 package com.sacristan.api.interfaces.admin.dtos.reproduction;
 
 import com.sacristan.api.global.models.Reproduction;
+import com.sacristan.api.interfaces.admin.dtos.routine.RoutineSequenceResponse;
 import com.sacristan.api.interfaces.admin.dtos.sequence.SequenceResponse;
 import com.sacristan.api.interfaces.admin.dtos.student.StudentResponse;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public record ReproductionResponse(
         Long id,
-        SequenceResponse sequence,
+        RoutineSequenceResponse routineSequenceResponse,
         StudentResponse student,
         LocalDateTime startedAt,
         LocalDateTime endedAt,
@@ -21,7 +22,7 @@ public record ReproductionResponse(
     public static ReproductionResponse of(Reproduction reproduction) {
         return new ReproductionResponse(
                 reproduction.getId(),
-                reproduction.getSequence() != null ? SequenceResponse.of(reproduction.getSequence()) : null,
+                reproduction.getRoutineSequence() != null ? RoutineSequenceResponse.of(reproduction.getRoutineSequence()) : null,
                 reproduction.getStudent() != null ? StudentResponse.of(reproduction.getStudent()) : null,
                 reproduction.getStartedAt(),
                 reproduction.getEndedAt(),
