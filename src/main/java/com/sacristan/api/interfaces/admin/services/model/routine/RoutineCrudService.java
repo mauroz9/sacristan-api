@@ -3,15 +3,15 @@ package com.sacristan.api.interfaces.admin.services.model.routine;
 import com.sacristan.api.global.models.Category;
 import com.sacristan.api.global.models.Routine;
 import com.sacristan.api.global.models.Sequence;
-import com.sacristan.api.global.repositories.CategoryRepository;
-import com.sacristan.api.global.repositories.RoutineRepository;
-import com.sacristan.api.global.repositories.SequenceRepository;
+import com.sacristan.api.global.models.user.Student;
+import com.sacristan.api.global.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -21,6 +21,7 @@ public class RoutineCrudService {
     private final RoutineRepository repository;
     private final CategoryRepository categoryRepository;
     private final SequenceRepository sequenceRepository;
+    private final StudentRepository studentRepository;
 
     public Page<Routine> list(Pageable pageable) {
         return repository.findAll(pageable);
@@ -86,6 +87,14 @@ public class RoutineCrudService {
     public void delete(Long id) {
         Routine routine = repository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Routine not found with id: " + id));
+
+        List<Student> studentsWithRoutine = studentRepository.findByRoutinesId(id);
+
+        for (Student student : studentsWithRoutine) {
+            student.getRoutines().remove(routine);
+            studentRepository.save(student);
+        }
+
         repository.delete(routine);
     }
 }
