@@ -1,9 +1,11 @@
 package com.sacristan.api.interfaces.admin.services.model.reproduction;
 
 import com.sacristan.api.global.models.Reproduction;
+import com.sacristan.api.global.models.RoutineSequence;
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.models.user.Student;
 import com.sacristan.api.global.repositories.ReproductionRepository;
+import com.sacristan.api.global.repositories.RoutineSequenceRepository;
 import com.sacristan.api.global.repositories.SequenceRepository;
 import com.sacristan.api.global.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +21,8 @@ import java.util.NoSuchElementException;
 public class ReproductionCrudService {
 
     private final ReproductionRepository repository;
-    private final SequenceRepository sequenceRepository;
     private final StudentRepository studentRepository;
+    private final RoutineSequenceRepository routineSequenceRepository;
 
     public Page<Reproduction> list(Pageable pageable) {
         return repository.findAll(pageable);
@@ -33,10 +35,10 @@ public class ReproductionCrudService {
 
     public Reproduction create(Reproduction reproduction) {
         // Validar que la secuencia existe
-        if (reproduction.getSequence() != null && reproduction.getSequence().getId() != null) {
-            Sequence sequence = sequenceRepository.findById(reproduction.getSequence().getId())
-                    .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + reproduction.getSequence().getId()));
-            reproduction.setSequence(sequence);
+        if (reproduction.getRoutineSequence() != null && reproduction.getRoutineSequence().getId() != null) {
+            RoutineSequence routineSequence = routineSequenceRepository.findById(reproduction.getRoutineSequence().getId())
+                    .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + reproduction.getRoutineSequence().getId()));
+            reproduction.setRoutineSequence(routineSequence);
         }
 
         // Validar que el estudiante existe
@@ -55,10 +57,10 @@ public class ReproductionCrudService {
                 .orElseThrow(() -> new NoSuchElementException("Reproduction not found with id: " + id));
 
         // Validar que la secuencia existe
-        if (newReproduction.getSequence() != null && newReproduction.getSequence().getId() != null) {
-            Sequence sequence = sequenceRepository.findById(newReproduction.getSequence().getId())
-                    .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + newReproduction.getSequence().getId()));
-            newReproduction.setSequence(sequence);
+        if (newReproduction.getRoutineSequence() != null && newReproduction.getRoutineSequence().getId() != null) {
+            RoutineSequence routineSequence = routineSequenceRepository.findById(newReproduction.getRoutineSequence().getId())
+                    .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + newReproduction.getRoutineSequence().getId()));
+            newReproduction.setRoutineSequence(routineSequence);
         }
 
         // Validar que el estudiante existe

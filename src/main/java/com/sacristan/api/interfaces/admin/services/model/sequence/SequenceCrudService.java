@@ -68,7 +68,7 @@ public class SequenceCrudService {
 
     public void delete(Long id) {
         Sequence sequence = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + id));
-        reproductionRepository.deleteBySequenceId(sequence.getId());
+        reproductionRepository.deleteByRoutineSequenceId(sequence.getId());
         routineSequenceRepository.deleteBySequenceId(sequence.getId());
 
         repository.delete(sequence);

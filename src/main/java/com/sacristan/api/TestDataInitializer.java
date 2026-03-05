@@ -206,31 +206,6 @@ public class TestDataInitializer implements CommandLineRunner {
         /* =================================================================================
            9. REPRODUCTIONS (HISTORY)
            ================================================================================= */
-        Reproduction rep1 = Reproduction.builder()
-                .sequence(seqDientes).student(sSofia)
-                .startedAt(LocalDateTime.of(2023, 10, 25, 7, 35))
-                .endedAt(LocalDateTime.of(2023, 10, 25, 7, 40)).build();
-        rep1.getButtonsClicks().put("NEXT", 4);
-        rep1.getButtonsClicks().put("AUDIO", 2);
-        // Using dynamically generated step IDs
-        rep1.getReproductionTime().put(seqDientes.getSteps().get(0).getId(), 15000L);
-        rep1.getReproductionTime().put(seqDientes.getSteps().get(1).getId(), 120000L);
-        reproductionRepository.save(rep1);
-
-        Reproduction rep2 = Reproduction.builder()
-                .sequence(seqMochila).student(sSofia)
-                .startedAt(LocalDateTime.of(2023, 10, 25, 8, 5))
-                .endedAt(LocalDateTime.of(2023, 10, 25, 8, 15)).build();
-        rep2.getButtonsClicks().put("NEXT", 6);
-        rep2.getButtonsClicks().put("PREVIOUS", 2);
-        reproductionRepository.save(rep2);
-
-        Reproduction rep3 = Reproduction.builder()
-                .sequence(seqMesa).student(sHugo)
-                .startedAt(LocalDateTime.of(2023, 10, 25, 20, 30))
-                .endedAt(null).build();
-        reproductionRepository.save(rep3);
-
 
         /* =================================================================================
            NEW: CUSTOM AFTER-SCHOOL ROUTINE FOR ALEJANDRO

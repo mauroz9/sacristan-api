@@ -1,15 +1,12 @@
 package com.sacristan.api.interfaces.admin.controllers.reproduction;
 
-import com.sacristan.api.interfaces.admin.dtos.reproduction.CreateReproduction;
 import com.sacristan.api.interfaces.admin.dtos.reproduction.ReproductionResponse;
-import com.sacristan.api.interfaces.admin.dtos.reproduction.UpdateReproduction;
 import com.sacristan.api.interfaces.admin.services.model.reproduction.ReproductionCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,25 +19,6 @@ public class ReproductionCrudController {
     private final ReproductionCrudService crudService;
 
     @Operation(
-            summary = "Create Reproduction",
-            description = "Create a new Reproduction entity"
-    )
-    @PostMapping
-    public ResponseEntity<ReproductionResponse> create(
-            @RequestBody CreateReproduction createReproduction
-    ) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(
-                        ReproductionResponse.of(
-                                crudService.create(
-                                        createReproduction.to()
-                                )
-                        )
-                );
-    }
-
-    @Operation(
             summary = "Read Reproduction",
             description = "Read the info of a specific reproduction"
     )
@@ -51,22 +29,6 @@ public class ReproductionCrudController {
         return ResponseEntity.ok(
                 ReproductionResponse.of(
                         crudService.read(id)
-                )
-        );
-    }
-
-    @Operation(
-            summary = "Update Reproduction",
-            description = "Update a specific reproduction"
-    )
-    @PutMapping("/{id}")
-    public ResponseEntity<ReproductionResponse> update(
-            @PathVariable Long id,
-            @RequestBody UpdateReproduction updateReproduction
-    ) {
-        return ResponseEntity.ok(
-                ReproductionResponse.of(
-                        crudService.update(id, updateReproduction.to())
                 )
         );
     }

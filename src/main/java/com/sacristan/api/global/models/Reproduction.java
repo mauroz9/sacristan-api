@@ -22,9 +22,12 @@ public class Reproduction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sequence_id", nullable = false)
-    private Sequence sequence;
+    @JoinColumn(name = "routine_sequence_id")
+    private RoutineSequence routineSequence;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_user_id")
@@ -57,7 +60,7 @@ public class Reproduction {
     public Reproduction modify(Reproduction newReproduction) {
         return Reproduction.builder()
                 .id(this.id)
-                .sequence(newReproduction.getSequence())
+                .routineSequence(newReproduction.getRoutineSequence())
                 .student(newReproduction.getStudent())
                 .startedAt(newReproduction.getStartedAt())
                 .endedAt(newReproduction.getEndedAt())
