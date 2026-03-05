@@ -7,7 +7,9 @@ import com.sacristan.api.interfaces.admin.services.model.student.StudentUtilsSer
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -89,6 +91,22 @@ public class StudentUtilsController {
     )
     public ResponseEntity<List<SortParamDTO>> getStudentSortParams() {
         return ResponseEntity.ok(service.getStudentSortParams());
+    }
+
+    @PutMapping("/{idStudent}/assign-routine/{idRoutine}")
+    public ResponseEntity<StudentResponse> assignRoutine(
+            @PathVariable Long idStudent,
+            @PathVariable Long idRoutine
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(StudentResponse.of(service.assignRoutine(idRoutine, idStudent)));
+    }
+
+    @PutMapping("/{idStudent}/unassign-routine/{idRoutine}")
+    public ResponseEntity<StudentResponse> unassignRoutine(
+            @PathVariable Long idStudent,
+            @PathVariable Long idRoutine
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(StudentResponse.of(service.unassignRoutine(idRoutine, idStudent)));
     }
 
 
