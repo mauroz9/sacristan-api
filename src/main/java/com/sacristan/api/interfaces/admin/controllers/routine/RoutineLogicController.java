@@ -18,7 +18,7 @@ import java.util.List;
 @Tag(name = "Routine CRUD controller", description = "CRUD Controller for business logic Routine entity")
 public class RoutineLogicController {
 
-    public final RoutineLogicService logicService;
+    private final RoutineLogicService logicService;
 
     @GetMapping("/sort-params")
     @Operation(
