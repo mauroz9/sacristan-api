@@ -89,7 +89,7 @@ public class RoutineCrudController {
     )
     @GetMapping
     public ResponseEntity<Page<RoutineResponse>> list(
-            Pageable pageable
+            Pageable pageable, @RequestParam (required = false) String q
     ) {
         return ResponseEntity.ok(
                 crudService.list(pageable).map(RoutineResponse::of)

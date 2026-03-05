@@ -30,6 +30,11 @@ public class Student {
     private Teacher teacher;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "student_routines",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "routine_id")
+    )
     @Builder.Default
     private List<Routine> routines = new ArrayList<>();
 
