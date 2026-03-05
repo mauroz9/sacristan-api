@@ -27,8 +27,8 @@ public class SequenceLogicService {
 
     public List<SortParamDTO> getSequenceSortParams() {
         return List.of(
-                new SortParamDTO("Título" , "name"),
-                //new SortParamDTO("Descripción", "description"),
+                new SortParamDTO("Título" , "title"),
+                new SortParamDTO("Descripción", "description"),
                 new SortParamDTO("Categoría", "category.name")
         );
     }

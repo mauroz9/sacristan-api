@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/routines")
-@Tag(name = "Routine CRUD controller", description = "CRUD Controller for business logic Routine entity")
+@Tag(name = "Routine logic controller", description = "Logic controller for business logic Routine entity")
 public class RoutineLogicController {
 
     private final RoutineLogicService logicService;

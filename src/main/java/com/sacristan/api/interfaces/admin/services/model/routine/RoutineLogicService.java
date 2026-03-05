@@ -12,8 +12,8 @@ public class RoutineLogicService {
 
     public List<SortParamDTO> getRoutineSortParams() {
         return List.of(
-                new SortParamDTO("Título" , "title"),
-                new SortParamDTO("Descripción", "description"),
+                new SortParamDTO("Título" , "name"),
+                //new SortParamDTO("Descripción", "description"),
                 new SortParamDTO("Categoría", "category.name")
         );
     }
