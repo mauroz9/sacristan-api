@@ -18,18 +18,14 @@ public class UniqueUpdateEmailValidator implements ConstraintValidator<UniqueUpd
     @Autowired
     private HttpServletRequest request;
 
-    Long id;
-
     @Override
-    public void initialize(UniqueUpdateEmail constraintAnnotation) {
+    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+
         var pathVariables = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         String idStr = pathVariables.get("id");
 
-        id = idStr != null ? Long.parseLong(idStr) : null;
-    }
+        Long id = idStr != null ? Long.parseLong(idStr) : null;
 
-    @Override
-    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
         return id != null
                 ? !repository.existsByEmailAndIdNot(s,id)
                 : !repository.existsByEmailIgnoreCase(s);
