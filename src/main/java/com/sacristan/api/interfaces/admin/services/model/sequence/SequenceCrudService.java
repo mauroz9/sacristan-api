@@ -3,10 +3,7 @@ package com.sacristan.api.interfaces.admin.services.model.sequence;
 import com.sacristan.api.global.models.Category;
 import com.sacristan.api.global.models.RoutineSequence;
 import com.sacristan.api.global.models.Sequence;
-import com.sacristan.api.global.repositories.CategoryRepository;
-import com.sacristan.api.global.repositories.ReproductionRepository;
-import com.sacristan.api.global.repositories.RoutineSequenceRepository;
-import com.sacristan.api.global.repositories.SequenceRepository;
+import com.sacristan.api.global.repositories.*;
 import com.sacristan.api.global.specifications.SequenceSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +22,7 @@ public class SequenceCrudService {
     private final CategoryRepository categoryRepository;
     private final ReproductionRepository reproductionRepository;
     private final RoutineSequenceRepository routineSequenceRepository;
+    private final StudentRepository studentRepository;
 
     public Page<Sequence> getAll(Pageable pageable, String q) {
         return repository.findBy(SequenceSpecification.searchByTerm(q), p -> p.page(pageable));
@@ -66,8 +64,11 @@ public class SequenceCrudService {
     }
 
 
+    @Transactional
     public void delete(Long id) {
         Sequence sequence = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + id));
+
+        studentRepository.deleteSequenceFromStudents(sequence.getId());
         reproductionRepository.deleteByRoutineSequenceId(sequence.getId());
         routineSequenceRepository.deleteBySequenceId(sequence.getId());
 
