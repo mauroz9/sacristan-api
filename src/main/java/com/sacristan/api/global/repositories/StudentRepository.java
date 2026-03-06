@@ -51,4 +51,10 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
     @Modifying
     @Query(value = "DELETE FROM student_routines WHERE routine_id = :routineId", nativeQuery = true)
     void deleteRoutineAssociationsByRoutineId(Long routineId);
+
+    @Modifying
+    @Query(
+            value = "DELETE FROM STUDENTS_SEQUENCES WHERE sequences_id = :id", nativeQuery = true
+    )
+    void deleteSequenceFromStudents(Long id);
 }

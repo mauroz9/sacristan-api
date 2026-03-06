@@ -92,7 +92,7 @@ public class RoutineCrudController {
             Pageable pageable, @RequestParam (required = false) String q
     ) {
         return ResponseEntity.ok(
-                crudService.list(pageable).map(RoutineResponse::of)
+                crudService.list(pageable, q).map(RoutineResponse::of)
         );
     }
 }

@@ -92,7 +92,7 @@ public class TeacherCrudController {
                             }
                     )
             )
-            @RequestBody UpdateUser updateUser
+            @Valid @RequestBody UpdateUser updateUser
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
