@@ -1,5 +1,6 @@
 package com.sacristan.api.global.validation.validators;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.sacristan.api.global.repositories.UserRepository;
 import com.sacristan.api.global.validation.anotations.UniqueUpdateUsername;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,15 +22,13 @@ public class UniqueUpdateUsernameValidator implements ConstraintValidator<Unique
     Long id;
 
     @Override
-    public void initialize(UniqueUpdateUsername constraintAnnotation) {
+    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+
         var pathVariables = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         String idStr = pathVariables.get("id");
 
-        id = idStr != null ? Long.parseLong(idStr) : null;
-    }
+        Long id = idStr != null ? Long.parseLong(idStr) : null;
 
-    @Override
-    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
         return id != null
                 ? !repository.existsByUsernameIgnoreCaseAndIdNot(s,id)
                 : !repository.existsByUsernameIgnoreCase(s);

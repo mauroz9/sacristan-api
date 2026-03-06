@@ -4,6 +4,8 @@ import com.sacristan.api.global.models.Category;
 import com.sacristan.api.global.models.Routine;
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.repositories.*;
+import com.sacristan.api.global.specifications.RoutineSpecification;
+import com.sacristan.api.global.specifications.StudentSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +23,9 @@ public class RoutineCrudService {
     private final SequenceRepository sequenceRepository;
     private final StudentRepository studentRepository;
 
-    public Page<Routine> list(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<Routine> list(Pageable pageable, String q) {
+        return repository.findBy(RoutineSpecification.searchByTerm(q), p -> p.page(pageable));
+
     }
 
     public Routine read(Long id) {

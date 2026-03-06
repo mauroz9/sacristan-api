@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
-    
+
     boolean existsByEmailIgnoreCase(String email);
 
     boolean existsByUsernameIgnoreCase(String username);
@@ -26,5 +26,10 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     )
     boolean existsByEmailAndIdNot(String email, Long id);
 
+
+    @Query(
+            "SELECT Count(u) > 0 FROM User u Where Lower(u.username) = Lower(:s) AND u.id <> :id"
+    )
     boolean existsByUsernameIgnoreCaseAndIdNot(String s, Long id);
 }
+
