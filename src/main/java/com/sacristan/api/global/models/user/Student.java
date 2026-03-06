@@ -5,9 +5,7 @@ import com.sacristan.api.global.models.Sequence;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,7 +34,7 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "routine_id")
     )
     @Builder.Default
-    private List<Routine> routines = new ArrayList<>();
+    private Set<Routine> routines = new HashSet<>();
 
     @Builder.Default
     @ManyToMany(fetch = FetchType.LAZY)
