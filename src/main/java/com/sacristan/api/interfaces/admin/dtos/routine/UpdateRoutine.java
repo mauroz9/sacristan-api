@@ -12,7 +12,7 @@ public record UpdateRoutine(
         String name,
         Long categoryId,
         Set<DaysOfTheWeek> daysOfTheWeek,
-        List<CreateRoutineSequence> sequences
+        List<UpdateRoutineSequence> sequences
 ) {
     public Routine to() {
         Routine routine = new Routine();
@@ -30,9 +30,10 @@ public record UpdateRoutine(
 
         if (this.sequences != null && !this.sequences.isEmpty()) {
             List<RoutineSequence> routineSequences = this.sequences.stream()
-                    .map(createRoutineSequence -> {
-                        RoutineSequence rs = createRoutineSequence.to();
+                    .map(ors -> {
+                        RoutineSequence rs = ors.to();
                         rs.setRoutine(routine);
+                        rs.setId(ors.id());
                         return rs;
                     })
                     .toList();
