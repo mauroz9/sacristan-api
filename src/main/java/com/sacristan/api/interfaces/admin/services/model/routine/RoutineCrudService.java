@@ -2,6 +2,7 @@ package com.sacristan.api.interfaces.admin.services.model.routine;
 
 import com.sacristan.api.global.models.Category;
 import com.sacristan.api.global.models.Routine;
+import com.sacristan.api.global.models.RoutineSequence;
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.repositories.*;
 import com.sacristan.api.global.specifications.RoutineSpecification;
@@ -57,32 +58,65 @@ public class RoutineCrudService {
 
     @Transactional
     public Routine update(Long id, Routine newRoutine) {
-        Routine routine = repository.findById(id)
+
+        System.out.println("Updating routine with id: " + id);
+        System.out.println(newRoutine.getSequences());
+
+        Routine managedRoutine = repository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Routine not found with id: " + id));
+
+        managedRoutine.setName(newRoutine.getName());
+        if (newRoutine.getDaysOfTheWeek() != null) {
+            managedRoutine.setDaysOfTheWeek(newRoutine.getDaysOfTheWeek());
+        }
 
         if (newRoutine.getCategory() != null && newRoutine.getCategory().getId() != null) {
             Category category = categoryRepository.findById(newRoutine.getCategory().getId())
                     .orElseThrow(() -> new NoSuchElementException("Category not found with id: " + newRoutine.getCategory().getId()));
-            newRoutine.setCategory(category);
+            managedRoutine.setCategory(category);
         }
 
-        routine.getSequences().clear();
-        repository.flush();
+        if (newRoutine.getSequences() != null) {
+            for (RoutineSequence incomingRs : newRoutine.getSequences()) {
 
-        Routine modifiedRoutine = routine.modify(newRoutine);
+                if (incomingRs.getSequence() != null && incomingRs.getSequence().getId() != null) {
 
-        if (modifiedRoutine.getSequences() != null && !modifiedRoutine.getSequences().isEmpty()) {
-            modifiedRoutine.getSequences().forEach(routineSequence -> {
-                // Validar que la secuencia existe en la base de datos
-                if (routineSequence.getSequence() != null && routineSequence.getSequence().getId() != null) {
-                    Sequence sequence = sequenceRepository.findById(routineSequence.getSequence().getId())
-                            .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + routineSequence.getSequence().getId()));
-                    routineSequence.setSequence(sequence);
+                    if (incomingRs.getId() != null) {
+                        managedRoutine.getSequences().stream()
+                                .filter(existingRs -> existingRs.getId().equals(incomingRs.getId()))
+                                .findFirst()
+                                .ifPresent(existingRs -> {
+                                    existingRs.setStartTime(incomingRs.getStartTime());
+                                    existingRs.setEndTime(incomingRs.getEndTime());
+
+                                    if (!existingRs.getSequence().getId().equals(incomingRs.getSequence().getId())) {
+                                        Sequence sequence = sequenceRepository.findById(incomingRs.getSequence().getId())
+                                                .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + incomingRs.getSequence().getId()));
+                                        existingRs.setSequence(sequence);
+                                    }
+                                });
+                    } else {
+                        boolean isDuplicate = managedRoutine.getSequences().stream().anyMatch(existingRs ->
+                                existingRs.getSequence().getId().equals(incomingRs.getSequence().getId()) &&
+                                        java.util.Objects.equals(existingRs.getStartTime(), incomingRs.getStartTime()) &&
+                                        java.util.Objects.equals(existingRs.getEndTime(), incomingRs.getEndTime())
+                        );
+
+                        if (!isDuplicate) {
+                            Sequence sequence = sequenceRepository.findById(incomingRs.getSequence().getId())
+                                    .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + incomingRs.getSequence().getId()));
+
+                            incomingRs.setSequence(sequence);
+                            incomingRs.setRoutine(managedRoutine);
+
+                            managedRoutine.getSequences().add(incomingRs);
+                        }
+                    }
                 }
-                routineSequence.setRoutine(modifiedRoutine);
-            });
+            }
         }
-        return repository.save(modifiedRoutine);
+
+        return repository.save(managedRoutine);
     }
 
     @Transactional

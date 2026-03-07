@@ -10,8 +10,8 @@
 	</parent>
 	<groupId>com.sacristan</groupId>
 	<artifactId>api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>api</name>
+	<version>1.1</version>
+	<name>sacristan-api</name>
 	<description>API para los servicios del Instituto Dr. Sacristan</description>
 	<url/>
 	<licenses>
