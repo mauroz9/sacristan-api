@@ -49,6 +49,13 @@ public class RoutineCrudService {
                             .orElseThrow(() -> new NoSuchElementException("Sequence not found with id: " + routineSequence.getSequence().getId()));
                     routineSequence.setSequence(sequence);
                 }
+
+                if(routineSequence.getStartTime() == null || routineSequence.getEndTime() == null) {
+                    throw new IllegalArgumentException("Start time and end time must be provided for each routine sequence.");
+                }else if(routineSequence.getStartTime().isAfter(routineSequence.getEndTime())) {
+                    throw new IllegalArgumentException("Start time must be before end time for each routine sequence.");
+                }
+
                 routineSequence.setRoutine(routine);
             });
         }
@@ -80,6 +87,12 @@ public class RoutineCrudService {
             for (RoutineSequence incomingRs : newRoutine.getSequences()) {
 
                 if (incomingRs.getSequence() != null && incomingRs.getSequence().getId() != null) {
+
+                    if(incomingRs.getStartTime() == null || incomingRs.getEndTime() == null) {
+                        throw new IllegalArgumentException("Start time and end time must be provided for each routine sequence.");
+                    }else if(incomingRs.getStartTime().isAfter(incomingRs.getEndTime())) {
+                        throw new IllegalArgumentException("Start time must be before end time for each routine sequence.");
+                    }
 
                     if (incomingRs.getId() != null) {
                         managedRoutine.getSequences().stream()
