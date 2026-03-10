@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +85,11 @@ public class RoutineCrudService {
             managedRoutine.setCategory(category);
         }
 
+        managedRoutine.getSequences().removeIf(rs ->
+                newRoutine.getSequences().stream()
+                        .noneMatch(routineSequence -> Objects.equals(routineSequence.getId(), rs.getId()))
+        );
+
         if (newRoutine.getSequences() != null) {
             for (RoutineSequence incomingRs : newRoutine.getSequences()) {
 
@@ -128,6 +135,8 @@ public class RoutineCrudService {
                 }
             }
         }
+
+
 
         return repository.save(managedRoutine);
     }
