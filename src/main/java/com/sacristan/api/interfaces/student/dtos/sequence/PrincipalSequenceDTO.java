@@ -18,7 +18,7 @@ public record PrincipalSequenceDTO (
                 s.getId(),
                 s.getTitle(),
                 startTime,
-                s.getFrontPage(),
+                s.getFrontPage() != null ? s.getFrontPage() : s.getSteps().getFirst().getArasaacPictogramId(),
                 routineSequenceId
         );
     }
