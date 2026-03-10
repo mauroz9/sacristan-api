@@ -39,6 +39,10 @@ public class SequenceCrudService {
             sequence.setCategory(category);
         }
 
+        if(sequence.getFrontPage() == null && sequence.getSteps() != null && !sequence.getSteps().isEmpty()) {
+            sequence.setFrontPage(sequence.getSteps().getFirst().getArasaacPictogramId());
+        }
+
         return repository.save(sequence);
     }
 
@@ -59,6 +63,10 @@ public class SequenceCrudService {
 
         if (modifiedSequence.getSteps() != null && !modifiedSequence.getSteps().isEmpty()) {
             modifiedSequence.getSteps().forEach(step -> step.setSequence(modifiedSequence));
+        }
+
+        if(newSequence.getFrontPage() == null && modifiedSequence.getSteps() != null && !modifiedSequence.getSteps().isEmpty()) {
+            modifiedSequence.setFrontPage(modifiedSequence.getSteps().getFirst().getArasaacPictogramId());
         }
         return repository.save(modifiedSequence);
     }

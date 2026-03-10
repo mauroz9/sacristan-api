@@ -14,7 +14,8 @@ public record SequenceResponse(
         Duration estimatedDuration,
         Boolean allowGoBack,
         CategoryResponse category,
-        List<StepResponse> steps
+        List<StepResponse> steps,
+        Integer frontPage
 ) {
     public static SequenceResponse of(Sequence sequence) {
         return new SequenceResponse(
@@ -28,7 +29,8 @@ public record SequenceResponse(
                         sequence.getSteps().stream()
                                 .map(StepResponse::of)
                                 .toList()
-                        : List.of()
+                        : List.of(),
+                sequence.getFrontPage()
         );
     }
 }
