@@ -48,8 +48,7 @@ public class StudentRoutineService {
                             .contains(rs.getId());
                 })
                 .filter(rs ->
-                        rs.getStartTime().isAfter(LocalTime.now().minusMinutes(15))
-                    && (rs.getStartTime().isBefore(LocalTime.now().plusMinutes(30)) && rs.getEndTime().isAfter(LocalTime.now()))
+                        rs.getStartTime().isBefore(LocalTime.now()) && rs.getEndTime().isAfter(LocalTime.now())
                 ).toList();
 
         List<PrincipalSequenceDTO> pendingSequenceDTOs = new ArrayList<>();
