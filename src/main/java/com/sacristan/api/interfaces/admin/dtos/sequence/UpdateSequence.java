@@ -14,7 +14,8 @@ public record UpdateSequence(
         Duration estimatedDuration,
         Boolean allowGoBack,
         Long categoryId,
-        List<CreateStep> steps
+        List<CreateStep> steps,
+        Integer frontPage
 ) {
     public Sequence to() {
         Sequence sequence = new Sequence();
@@ -39,6 +40,8 @@ public record UpdateSequence(
                     .toList();
             sequence.setSteps(stepList);
         }
+
+        sequence.setFrontPage(this.frontPage);
 
         return sequence;
     }

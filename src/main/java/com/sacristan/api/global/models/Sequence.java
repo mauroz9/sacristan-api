@@ -39,6 +39,8 @@ public class Sequence {
     @OneToMany(mappedBy = "sequence", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Step> steps = new ArrayList<>();
 
+    private Integer frontPage;
+
     public Sequence modify(Sequence newSequence){
         return Sequence.builder()
                 .id(this.id)
@@ -48,6 +50,7 @@ public class Sequence {
                 .allowGoBack(newSequence.getAllowGoBack())
                 .category(newSequence.getCategory())
                 .steps(newSequence.getSteps())
+                .frontPage(newSequence.getFrontPage())
                 .build();
     }
 
@@ -59,6 +62,7 @@ public class Sequence {
                 .allowGoBack(this.allowGoBack)
                 .category(this.category)
                 .steps(new ArrayList<>())
+                .frontPage(this.frontPage)
                 .build();
     }
 
