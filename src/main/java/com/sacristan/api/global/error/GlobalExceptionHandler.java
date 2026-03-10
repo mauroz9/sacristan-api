@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -131,9 +132,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         pb.setInstance(URI.create(request.getRequestURI()));
         pb.setProperty("exception", ex.getClass().getName());
 
-        log.info(ex.getMessage());
-
         return pb;
 
+    }
+
+    @ExceptionHandler(InsufficientAuthenticationException.class)
+    public ProblemDetail handleInsufficientAuthenticationException(InsufficientAuthenticationException ex, HttpServletRequest request){
+        ProblemDetail pb = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
+
+        pb.setType(URI.create("about:blank"));
+        pb.setTitle("Authentication required");
+        pb.setInstance(URI.create(request.getRequestURI()));
+        pb.setProperty("exception", ex.getClass().getName());
+
+        return pb;
     }
 }
