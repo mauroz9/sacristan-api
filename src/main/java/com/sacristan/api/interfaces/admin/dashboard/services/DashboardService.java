@@ -55,7 +55,7 @@ public class DashboardService {
 
     public List<DailyExpectedSequencesDto> getDailyExpectedAndCompleted(LocalDate from, LocalDate to) {
         if (from.isAfter(to)) {
-            throw new IllegalArgumentException("from no puede ser mayor que to");
+            throw new IllegalArgumentException("'from' date must be on or before 'to' date");
         }
 
         List<DailyExpectedSequencesDto> result = new ArrayList<>();
