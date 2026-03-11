@@ -44,6 +44,11 @@ public class DashboardController {
         return dashboardService.countCompletedSequencesToday();
     }
 
+    @GetMapping("/average-completed-sequences")
+    public double averageCompletedSequencesPerStudentToday() {
+        return dashboardService.averageCompletedSequencesPerStudentToday();
+    }
+
     @GetMapping("/daily-sequences")
     public List<DailyExpectedSequencesDto> getDailyExpectedAndCompleted(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
