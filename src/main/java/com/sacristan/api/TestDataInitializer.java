@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @Component
@@ -26,6 +28,7 @@ public class TestDataInitializer implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final SequenceRepository sequenceRepository;
     private final RoutineRepository routineRepository;
+    private final ReproductionRepository reproductionRepository;
 
     private Teacher createTeacher(String name, String lastName, String username, String email, String password) {
         User user = User.builder().name(name).lastName(lastName).username(username)
@@ -1819,5 +1822,68 @@ public class TestDataInitializer implements CommandLineRunner {
         sPablo.getRoutines().add(rutViernesOcio);
         studentRepository.save(sPablo);
 
+        // ============================================================================
+        // GENERACIÓN DE REPRODUCCIONES HISTÓRICAS (últimas 6 semanas laborables)
+        // ============================================================================
+        generateHistoricalReproductions(List.of(
+                sAntonio, sGerman, sPedroS, sJesus, sPedroM, sSimon,
+                sRaul, sAlvaro, sJavier, sAlejandro, sRoberto, sCristian,
+                sGonzalo, sPedroD, sAdrian, sNayat, sCristina, sMiguel,
+                sMauro, sGabriel, sHugo, sPablo
+        ));
+
+    }
+
+    /**
+     * Genera reproducciones COMPLETED para cada alumno, recorriendo sus rutinas
+     * asignadas y comprobando si el día de la semana coincide.
+     * Se simulan las últimas 6 semanas laborables con un 80% de probabilidad
+     * de completar cada secuencia cada día.
+     */
+    private void generateHistoricalReproductions(List<Student> students) {
+        Random rnd = new Random(42); // Semilla fija para reproducibilidad
+        LocalDate today = LocalDate.now();
+        LocalDate from = today.minusWeeks(6);
+
+        for (LocalDate date = from; !date.isAfter(today.minusDays(1)); date = date.plusDays(1)) {
+            // Solo días laborables
+            int dow = date.getDayOfWeek().getValue(); // 1=Lun … 5=Vie
+            if (dow > 5) continue;
+
+            DaysOfTheWeek dayEnum = DaysOfTheWeek.valueOf(date.getDayOfWeek().name());
+
+            for (Student student : students) {
+                for (Routine routine : student.getRoutines()) {
+                    // Verificar que la rutina está programada ese día
+                    if (!routine.getDaysOfTheWeek().contains(dayEnum)) continue;
+
+                    for (RoutineSequence rs : routine.getSequences()) {
+                        // 80% de probabilidad de completar
+                        if (rnd.nextDouble() > 0.80) continue;
+
+                        LocalTime start = rs.getStartTime();
+                        LocalTime end = rs.getEndTime();
+
+                        // Añadir variación de ±2 minutos para realismo
+                        int startOffsetSecs = rnd.nextInt(120) - 60;
+                        int durationSecs = (int) Duration.between(start, end).toSeconds();
+                        if (durationSecs <= 0) durationSecs = 600;
+
+                        LocalDateTime startedAt = date.atTime(start).plusSeconds(startOffsetSecs);
+                        LocalDateTime endedAt = startedAt.plusSeconds(durationSecs + rnd.nextInt(60));
+
+                        reproductionRepository.save(
+                                Reproduction.builder()
+                                        .student(student)
+                                        .routineSequence(rs)
+                                        .status(Status.COMPLETED)
+                                        .startedAt(startedAt)
+                                        .endedAt(endedAt)
+                                        .build()
+                        );
+                    }
+                }
+            }
+        }
     }
 }
