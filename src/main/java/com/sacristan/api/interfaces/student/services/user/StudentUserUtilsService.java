@@ -5,6 +5,8 @@ import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.models.user.User;
 import com.sacristan.api.global.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,18 @@ public class StudentUserUtilsService {
 
     public List<Routine> getRoutinesByUserId(User user) {
         return studentRepository.findAllRoutinesByUserId(user.getId());
+    }
+
+    public Page<Sequence> list(Pageable pageable, User user, Long categoryId, String searchQuery) {
+
+        String query = (searchQuery != null && !searchQuery.isBlank()) ? searchQuery : null;
+
+        return studentRepository.findFilteredSequencesByStudentId(
+                user.getId(),
+                categoryId,
+                query,
+                pageable
+        );
     }
 
 }

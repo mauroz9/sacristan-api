@@ -4,12 +4,16 @@ import com.sacristan.api.global.models.Routine;
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.models.user.Student;
 import com.sacristan.api.global.models.user.Teacher;
+import com.sacristan.api.global.models.user.User;
 import org.jspecify.annotations.Nullable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -57,4 +61,20 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
             value = "DELETE FROM STUDENTS_SEQUENCES WHERE sequences_id = :id", nativeQuery = true
     )
     void deleteSequenceFromStudents(Long id);
+
+    @EntityGraph(attributePaths = {"sequences.steps", "sequences.category"})
+    @Query(
+            "SELECT seq FROM Student st JOIN st.sequences seq " +
+                    "WHERE st.id = :userId " +
+                    "AND (:categoryId IS NULL OR seq.category.id = :categoryId) " +
+                    "AND (:searchQuery IS NULL OR " +
+                    "LOWER(seq.title) LIKE LOWER(CONCAT('%', :searchQuery, '%')) OR " +
+                    "LOWER(seq.description) LIKE LOWER(CONCAT('%', :searchQuery, '%')))"
+    )
+    Page<Sequence> findFilteredSequencesByStudentId(
+            @Param("userId") Long userId,
+            @Param("categoryId") Long categoryId,
+            @Param("searchQuery") String searchQuery,
+            Pageable pageable
+    );
 }
