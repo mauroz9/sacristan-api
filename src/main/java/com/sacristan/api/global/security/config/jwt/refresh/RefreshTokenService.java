@@ -1,6 +1,7 @@
 package com.sacristan.api.global.security.config.jwt.refresh;
 
 import com.sacristan.api.global.models.user.User;
+import com.sacristan.api.global.models.user.extra.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class RefreshTokenService {
 
     public RefreshToken createRefreshToken(User user) {
         RefreshToken refreshToken = new RefreshToken();
+
+        if (user.getRoles().contains(Role.STUDENT))
+            durationInMinutes = 131400L;
 
         refreshToken.setUser(user);
         refreshToken.setToken(UUID.randomUUID().toString());

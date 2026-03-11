@@ -47,6 +47,7 @@ public class JwtProvider {
     }
 
     public String generateToken(User user) {
+
         Date tokenExpirationDateTime = Date.from(
                 LocalDateTime.now()
                         .plusMinutes(jwtLifeDuration)

@@ -46,7 +46,7 @@ public class SecurityController
 
     @PostMapping("/refresh-token")
     @Transactional
-    public ResponseEntity<?> refreshToken(
+    public ResponseEntity<JwtUserResponse> refreshToken(
             @RequestBody RefreshTokenRequest refreshTokenRequest
     ) {
         String refreshToken = refreshTokenRequest.refreshToken();
