@@ -64,7 +64,7 @@ public class DashboardController {
         return dashboardService.getMostUsedSequences(pageable);
     }
 
-    @GetMapping("/latest-reproductions")
+    @GetMapping("/lastest-reproductions")
     public Page<LatestReproductionsDto> getLatestReproductions(
             @PageableDefault(size = 10) Pageable pageable
     ) {
