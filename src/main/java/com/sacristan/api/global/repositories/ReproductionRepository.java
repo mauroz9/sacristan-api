@@ -4,7 +4,10 @@ import com.sacristan.api.global.models.Reproduction;
 import com.sacristan.api.global.models.Sequence;
 import com.sacristan.api.global.models.Status;
 import com.sacristan.api.global.models.user.Student;
+import com.sacristan.api.interfaces.admin.dashboard.dtos.LatestReproductionsDto;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,4 +38,32 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
                                                             LocalDateTime today,
                                                             LocalDateTime tomorrow,
                                                             Status completed);
+
+    @Query(
+            "SELECT COUNT(r) FROM Reproduction r " +
+            "WHERE r.startedAt >= :today AND r.startedAt < :tomorrow " +
+            "AND r.status = :completed"
+    )
+    long countCompletedToday(LocalDateTime today, LocalDateTime tomorrow, Status completed);
+
+    @Query(
+            "SELECT COUNT(r) * 1.0 / (SELECT COUNT(s) FROM Student s) " +
+                    "FROM Reproduction r " +
+                    "WHERE r.startedAt >= :today AND r.startedAt < :tomorrow " +
+                    "AND r.status = :completed"
+    )
+    double averageCompletedPerStudentToday(LocalDateTime today, LocalDateTime tomorrow, Status completed);
+
+    @Query("""
+        SELECT new com.sacristan.api.interfaces.admin.dashboard.dtos.LatestReproductionsDto(
+            CONCAT(r.student.user.name, ' ', r.student.user.lastName),
+            r.routineSequence.sequence.title,
+            r.endedAt
+        )
+        FROM Reproduction r
+        WHERE r.status = com.sacristan.api.global.models.Status.COMPLETED
+        ORDER BY r.endedAt DESC
+        """)
+    Page<LatestReproductionsDto> findLatestReproductions(Pageable pageable);
+
 }
