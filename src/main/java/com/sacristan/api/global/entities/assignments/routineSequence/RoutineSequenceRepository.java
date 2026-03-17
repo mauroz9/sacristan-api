@@ -1,6 +1,5 @@
-package com.sacristan.api.global.repositories;
+package com.sacristan.api.global.entities.assignments.routineSequence;
 
-import com.sacristan.api.global.models.RoutineSequence;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,5 +1,7 @@
-package com.sacristan.api.global.models;
+package com.sacristan.api.global.entities.assignments.routineSequence;
 
+import com.sacristan.api.global.entities.content.rotuine.Routine;
+import com.sacristan.api.global.entities.content.sequence.Sequence;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,9 +1,6 @@
-package com.sacristan.api.global.repositories;
+package com.sacristan.api.global.entities.tracking.reproduction;
 
-import com.sacristan.api.global.models.Reproduction;
-import com.sacristan.api.global.models.Sequence;
-import com.sacristan.api.global.models.Status;
-import com.sacristan.api.global.models.user.Student;
+import com.sacristan.api.global.entities.tracking.status.Status;
 import com.sacristan.api.interfaces.admin.dashboard.dtos.LatestReproductionsDto;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -14,7 +11,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

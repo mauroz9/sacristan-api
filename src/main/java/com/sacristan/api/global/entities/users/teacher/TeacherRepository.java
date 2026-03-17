@@ -1,10 +1,7 @@
-package com.sacristan.api.global.repositories;
+package com.sacristan.api.global.entities.users.teacher;
 
-import com.sacristan.api.global.models.user.Teacher;
-import com.sacristan.api.global.models.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository

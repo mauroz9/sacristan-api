@@ -1,6 +1,5 @@
-package com.sacristan.api.global.repositories;
+package com.sacristan.api.global.entities.content.step;
 
-import com.sacristan.api.global.models.Step;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

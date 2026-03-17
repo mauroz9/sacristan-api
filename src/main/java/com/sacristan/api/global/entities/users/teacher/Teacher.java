@@ -1,10 +1,8 @@
-package com.sacristan.api.global.models.user;
+package com.sacristan.api.global.entities.users.teacher;
 
+import com.sacristan.api.global.entities.users.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor @NoArgsConstructor

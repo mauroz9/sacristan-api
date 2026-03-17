@@ -1,5 +1,8 @@
-package com.sacristan.api.global.models;
+package com.sacristan.api.global.entities.content.rotuine;
 
+import com.sacristan.api.global.entities.content.category.Category;
+import com.sacristan.api.global.entities.content.weekDays.DaysOfTheWeek;
+import com.sacristan.api.global.entities.assignments.routineSequence.RoutineSequence;
 import jakarta.persistence.*;
 import lombok.*;
 

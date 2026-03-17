@@ -1,7 +1,9 @@
-package com.sacristan.api.global.models.user;
+package com.sacristan.api.global.entities.users.student;
 
-import com.sacristan.api.global.models.Routine;
-import com.sacristan.api.global.models.Sequence;
+import com.sacristan.api.global.entities.content.rotuine.Routine;
+import com.sacristan.api.global.entities.content.sequence.Sequence;
+import com.sacristan.api.global.entities.users.teacher.Teacher;
+import com.sacristan.api.global.entities.users.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

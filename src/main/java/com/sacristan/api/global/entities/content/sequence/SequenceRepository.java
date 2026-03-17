@@ -1,7 +1,6 @@
-package com.sacristan.api.global.repositories;
+package com.sacristan.api.global.entities.content.sequence;
 
-import com.sacristan.api.global.models.Category;
-import com.sacristan.api.global.models.Sequence;
+import com.sacristan.api.global.entities.content.category.Category;
 import com.sacristan.api.interfaces.admin.dashboard.dtos.MostUsedSequencesDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

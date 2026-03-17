@@ -1,6 +1,5 @@
-package com.sacristan.api.global.models;
+package com.sacristan.api.global.entities.content.category;
 
-import com.sacristan.api.global.models.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

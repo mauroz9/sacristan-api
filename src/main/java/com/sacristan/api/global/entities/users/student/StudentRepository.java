@@ -1,10 +1,8 @@
-package com.sacristan.api.global.repositories;
+package com.sacristan.api.global.entities.users.student;
 
-import com.sacristan.api.global.models.Routine;
-import com.sacristan.api.global.models.Sequence;
-import com.sacristan.api.global.models.user.Student;
-import com.sacristan.api.global.models.user.Teacher;
-import com.sacristan.api.global.models.user.User;
+import com.sacristan.api.global.entities.content.rotuine.Routine;
+import com.sacristan.api.global.entities.content.sequence.Sequence;
+import com.sacristan.api.global.entities.users.teacher.Teacher;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

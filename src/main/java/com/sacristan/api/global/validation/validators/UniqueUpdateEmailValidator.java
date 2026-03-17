@@ -1,6 +1,6 @@
 package com.sacristan.api.global.validation.validators;
 
-import com.sacristan.api.global.repositories.UserRepository;
+import com.sacristan.api.global.entities.users.user.UserRepository;
 import com.sacristan.api.global.validation.anotations.UniqueUpdateEmail;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintValidator;

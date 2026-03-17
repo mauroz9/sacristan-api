@@ -1,14 +1,13 @@
 package com.sacristan.api.global.security.utils.dtos;
 
-import com.sacristan.api.global.models.user.extra.Role;
+import com.sacristan.api.global.entities.users.role.Role;
 import com.sacristan.api.interfaces.admin.dtos.user.UserResponse;
-import com.sacristan.api.global.models.user.User;
+import com.sacristan.api.global.entities.users.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data

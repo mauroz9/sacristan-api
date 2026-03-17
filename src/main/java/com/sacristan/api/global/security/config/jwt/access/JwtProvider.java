@@ -1,7 +1,7 @@
 package com.sacristan.api.global.security.config.jwt.access;
 
 import com.sacristan.api.global.error.exceptions.JwtTokenException;
-import com.sacristan.api.global.models.user.User;
+import com.sacristan.api.global.entities.users.user.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;

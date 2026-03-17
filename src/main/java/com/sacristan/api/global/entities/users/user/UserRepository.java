@@ -1,7 +1,7 @@
-package com.sacristan.api.global.repositories;
+package com.sacristan.api.global.entities.users.user;
 
-import com.sacristan.api.global.models.user.Teacher;
-import com.sacristan.api.global.models.user.User;
+
+import com.sacristan.api.global.entities.users.teacher.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -32,4 +32,3 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     )
     boolean existsByUsernameIgnoreCaseAndIdNot(String s, Long id);
 }
-

@@ -1,5 +1,6 @@
-package com.sacristan.api.global.models;
+package com.sacristan.api.global.entities.content.step;
 
+import com.sacristan.api.global.entities.content.sequence.Sequence;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;

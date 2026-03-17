@@ -1,6 +1,8 @@
-package com.sacristan.api.global.models;
+package com.sacristan.api.global.entities.tracking.reproduction;
 
-import com.sacristan.api.global.models.user.Student;
+import com.sacristan.api.global.entities.assignments.routineSequence.RoutineSequence;
+import com.sacristan.api.global.entities.users.student.Student;
+import com.sacristan.api.global.entities.tracking.status.Status;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,7 +1,6 @@
 package com.sacristan.api.global.validation.validators;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import com.sacristan.api.global.repositories.UserRepository;
+import com.sacristan.api.global.entities.users.user.UserRepository;
 import com.sacristan.api.global.validation.anotations.UniqueUpdateUsername;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintValidator;

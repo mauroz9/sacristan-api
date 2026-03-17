@@ -1,9 +1,6 @@
 package com.sacristan.api.global.specifications;
 
-import com.sacristan.api.global.models.Routine;
-import com.sacristan.api.global.models.user.Student;
-import com.sacristan.api.global.models.user.User;
-import jakarta.persistence.criteria.Join;
+import com.sacristan.api.global.entities.content.rotuine.Routine;
 import org.springframework.data.jpa.domain.PredicateSpecification;
 
 

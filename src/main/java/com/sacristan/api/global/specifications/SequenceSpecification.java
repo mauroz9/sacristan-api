@@ -1,6 +1,6 @@
 package com.sacristan.api.global.specifications;
 
-import com.sacristan.api.global.models.Sequence;
+import com.sacristan.api.global.entities.content.sequence.Sequence;
 import org.springframework.data.jpa.domain.PredicateSpecification;
 
 public class SequenceSpecification {

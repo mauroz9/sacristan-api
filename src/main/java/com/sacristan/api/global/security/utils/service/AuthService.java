@@ -1,14 +1,10 @@
 package com.sacristan.api.global.security.utils.service;
 
-import com.sacristan.api.global.models.user.User;
+import com.sacristan.api.global.entities.users.user.User;
 import com.sacristan.api.global.security.config.jwt.access.JwtProvider;
 import com.sacristan.api.global.security.config.jwt.refresh.RefreshToken;
 import com.sacristan.api.global.security.config.jwt.refresh.RefreshTokenService;
-import com.sacristan.api.global.security.utils.dtos.JwtUserResponse;
-import com.sacristan.api.global.security.utils.dtos.LoginRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

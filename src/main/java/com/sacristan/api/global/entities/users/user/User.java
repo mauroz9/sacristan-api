@@ -1,6 +1,6 @@
-package com.sacristan.api.global.models.user;
+package com.sacristan.api.global.entities.users.user;
 
-import com.sacristan.api.global.models.user.extra.Role;
+import com.sacristan.api.global.entities.users.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
