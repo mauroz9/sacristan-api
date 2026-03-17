@@ -2,7 +2,7 @@ package com.sacristan.api.global.entities.content.rotuine;
 
 import com.sacristan.api.global.entities.content.category.Category;
 import com.sacristan.api.global.entities.content.weekDays.DaysOfTheWeek;
-import com.sacristan.api.global.entities.assignments.routineSequence.RoutineSequence;
+import com.sacristan.api.global.entities.assignments.routineSegment.RoutineSegment;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,7 +42,7 @@ public class Routine {
     @ToString.Exclude
     @OneToMany(mappedBy = "routine", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
-    private List<RoutineSequence> sequences = new ArrayList<>();
+    private List<RoutineSegment> sequences = new ArrayList<>();
 
     public Routine modify(Routine newRoutine) {
         return Routine.builder()

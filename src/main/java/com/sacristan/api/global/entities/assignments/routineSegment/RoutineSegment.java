@@ -1,4 +1,4 @@
-package com.sacristan.api.global.entities.assignments.routineSequence;
+package com.sacristan.api.global.entities.assignments.routineSegment;
 
 import com.sacristan.api.global.entities.content.rotuine.Routine;
 import com.sacristan.api.global.entities.content.sequence.Sequence;
@@ -8,14 +8,14 @@ import lombok.*;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "routine_sequence")
+@Table(name = "schedule_slots")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class RoutineSequence {
+public class RoutineSegment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

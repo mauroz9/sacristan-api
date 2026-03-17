@@ -1,6 +1,6 @@
 package com.sacristan.api.global.entities.tracking.reproduction;
 
-import com.sacristan.api.global.entities.assignments.routineSequence.RoutineSequence;
+import com.sacristan.api.global.entities.assignments.routineSegment.RoutineSegment;
 import com.sacristan.api.global.entities.users.student.Student;
 import com.sacristan.api.global.entities.tracking.status.Status;
 import jakarta.persistence.*;
@@ -29,7 +29,7 @@ public class Reproduction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "routine_sequence_id")
-    private RoutineSequence routineSequence;
+    private RoutineSegment routineSequence;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_user_id")

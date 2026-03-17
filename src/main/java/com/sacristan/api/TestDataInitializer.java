@@ -1,6 +1,6 @@
 package com.sacristan.api;
 
-import com.sacristan.api.global.entities.assignments.routineSequence.RoutineSequence;
+import com.sacristan.api.global.entities.assignments.routineSegment.RoutineSegment;
 import com.sacristan.api.global.entities.content.category.Category;
 import com.sacristan.api.global.entities.content.category.CategoryRepository;
 import com.sacristan.api.global.entities.content.rotuine.Routine;
@@ -1561,21 +1561,21 @@ public class TestDataInitializer implements CommandLineRunner {
                 .daysOfTheWeek(diasLaborables)
                 .build();
 
-        rutTrabajoMatutino.getSequences().add(RoutineSequence.builder()
+        rutTrabajoMatutino.getSequences().add(RoutineSegment.builder()
                 .routine(rutTrabajoMatutino)
                 .sequence(seqAsamblea)
                 .startTime(LocalTime.of(9, 15))
                 .endTime(LocalTime.of(9, 35)) // Termina justo a las 09:35
                 .build());
 
-        rutTrabajoMatutino.getSequences().add(RoutineSequence.builder()
+        rutTrabajoMatutino.getSequences().add(RoutineSegment.builder()
                 .routine(rutTrabajoMatutino)
                 .sequence(seqTrabajoMesa)
                 .startTime(LocalTime.of(9, 35)) // Empieza justo a las 09:35
                 .endTime(LocalTime.of(10, 15))
                 .build());
 
-        rutTrabajoMatutino.getSequences().add(RoutineSequence.builder()
+        rutTrabajoMatutino.getSequences().add(RoutineSegment.builder()
                 .routine(rutTrabajoMatutino)
                 .sequence(seqManos) // Reutilizamos la de lavarse las manos
                 .startTime(LocalTime.of(10, 15))
@@ -1595,21 +1595,21 @@ public class TestDataInitializer implements CommandLineRunner {
                 .daysOfTheWeek(diasLaborables)
                 .build();
 
-        rutAlmuerzoTemprano.getSequences().add(RoutineSequence.builder()
+        rutAlmuerzoTemprano.getSequences().add(RoutineSegment.builder()
                 .routine(rutAlmuerzoTemprano)
                 .sequence(seqManos) // Lavarse antes de comer
                 .startTime(LocalTime.of(9, 25))
                 .endTime(LocalTime.of(9, 35))
                 .build());
 
-        rutAlmuerzoTemprano.getSequences().add(RoutineSequence.builder()
+        rutAlmuerzoTemprano.getSequences().add(RoutineSegment.builder()
                 .routine(rutAlmuerzoTemprano)
                 .sequence(seqAlmuerzoClase)
                 .startTime(LocalTime.of(9, 35)) // Actividad central a las 09:35
                 .endTime(LocalTime.of(9, 55))
                 .build());
 
-        rutAlmuerzoTemprano.getSequences().add(RoutineSequence.builder()
+        rutAlmuerzoTemprano.getSequences().add(RoutineSegment.builder()
                 .routine(rutAlmuerzoTemprano)
                 .sequence(seqDientes) // Reutilizamos la de cepillarse
                 .startTime(LocalTime.of(9, 55))
@@ -1629,21 +1629,21 @@ public class TestDataInitializer implements CommandLineRunner {
                 .daysOfTheWeek(Set.of(DaysOfTheWeek.TUESDAY, DaysOfTheWeek.THURSDAY))
                 .build();
 
-        rutGimnasiaSemanal.getSequences().add(RoutineSequence.builder()
+        rutGimnasiaSemanal.getSequences().add(RoutineSegment.builder()
                 .routine(rutGimnasiaSemanal)
                 .sequence(seqBano) // Ir al baño antes de bajar al pabellón
                 .startTime(LocalTime.of(9, 20))
                 .endTime(LocalTime.of(9, 35))
                 .build());
 
-        rutGimnasiaSemanal.getSequences().add(RoutineSequence.builder()
+        rutGimnasiaSemanal.getSequences().add(RoutineSegment.builder()
                 .routine(rutGimnasiaSemanal)
                 .sequence(seqGimnasia)
                 .startTime(LocalTime.of(9, 35)) // Inicio de clase a las 09:35
                 .endTime(LocalTime.of(10, 20))
                 .build());
 
-        rutGimnasiaSemanal.getSequences().add(RoutineSequence.builder()
+        rutGimnasiaSemanal.getSequences().add(RoutineSegment.builder()
                 .routine(rutGimnasiaSemanal)
                 .sequence(seqManos) // Asearse al terminar
                 .startTime(LocalTime.of(10, 20))
@@ -1663,21 +1663,21 @@ public class TestDataInitializer implements CommandLineRunner {
                 .daysOfTheWeek(Set.of(DaysOfTheWeek.FRIDAY))
                 .build();
 
-        rutViernesOcio.getSequences().add(RoutineSequence.builder()
+        rutViernesOcio.getSequences().add(RoutineSegment.builder()
                 .routine(rutViernesOcio)
                 .sequence(seqAsamblea)
                 .startTime(LocalTime.of(9, 00))
                 .endTime(LocalTime.of(9, 35)) // Asamblea un poco más larga los viernes
                 .build());
 
-        rutViernesOcio.getSequences().add(RoutineSequence.builder()
+        rutViernesOcio.getSequences().add(RoutineSegment.builder()
                 .routine(rutViernesOcio)
                 .sequence(seqRincones)
                 .startTime(LocalTime.of(9, 35)) // Empieza el juego a las 09:35
                 .endTime(LocalTime.of(10, 20))
                 .build());
 
-        rutViernesOcio.getSequences().add(RoutineSequence.builder()
+        rutViernesOcio.getSequences().add(RoutineSegment.builder()
                 .routine(rutViernesOcio)
                 .sequence(seqDibujo) // Reutilizando la tuya original
                 .startTime(LocalTime.of(10, 20))
@@ -1695,7 +1695,7 @@ public class TestDataInitializer implements CommandLineRunner {
                 .build();
 
         rutPrueba.getSequences().add(
-                RoutineSequence.builder()
+                RoutineSegment.builder()
                         .routine(rutPrueba)
                         .sequence(seqDibujo)
                         .startTime(LocalTime.now().minusMinutes(10))
@@ -1703,7 +1703,7 @@ public class TestDataInitializer implements CommandLineRunner {
                         .build());
 
         rutPrueba.getSequences().add(
-                RoutineSequence.builder()
+                RoutineSegment.builder()
                 .routine(rutPrueba)
                 .sequence(seqDibujo)
                 .startTime(LocalTime.now())
@@ -1711,7 +1711,7 @@ public class TestDataInitializer implements CommandLineRunner {
                 .build());
 
         rutPrueba.getSequences().add(
-                RoutineSequence.builder()
+                RoutineSegment.builder()
                         .routine(rutPrueba)
                         .sequence(seqDibujo)
                         .startTime(LocalTime.now().plusMinutes(10))
@@ -1872,7 +1872,7 @@ public class TestDataInitializer implements CommandLineRunner {
                     // Verificar que la rutina está programada ese día
                     if (!routine.getDaysOfTheWeek().contains(dayEnum)) continue;
 
-                    for (RoutineSequence rs : routine.getSequences()) {
+                    for (RoutineSegment rs : routine.getSequences()) {
                         // 80% de probabilidad de completar
                         if (rnd.nextDouble() > 0.80) continue;
 
