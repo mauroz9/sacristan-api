@@ -8,7 +8,7 @@ import lombok.*;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "schedule_slots")
+@Table(name = "routine_segments")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -11,6 +11,6 @@ public interface RoutineSegmentRepository extends JpaRepository<RoutineSegment, 
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM RoutineSequence r WHERE r.sequence.id = :sequenceId")
+    @Query("DELETE FROM RoutineSegment r WHERE r.sequence.id = :sequenceId")
     void deleteBySequenceId(Long sequenceId);
 }

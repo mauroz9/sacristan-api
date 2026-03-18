@@ -1,6 +1,6 @@
 package com.sacristan.api.global.security.utils.service;
 
-import com.sacristan.api.interfaces.admin.services.model.user.UserUtilsService;
+import com.sacristan.api.global.entities.users.user.UserModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,11 +11,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserUtilsService userUtilsService;
+    private final UserModelService userModelService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userUtilsService.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+        return userModelService.findByEmail(email);
     }
 }

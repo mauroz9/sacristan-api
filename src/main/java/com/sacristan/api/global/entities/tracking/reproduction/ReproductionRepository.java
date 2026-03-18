@@ -1,7 +1,6 @@
 package com.sacristan.api.global.entities.tracking.reproduction;
 
 import com.sacristan.api.global.entities.tracking.status.Status;
-import com.sacristan.api.interfaces.admin.dashboard.dtos.LatestReproductionsDto;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,16 +49,16 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
     )
     double averageCompletedPerStudentToday(LocalDateTime today, LocalDateTime tomorrow, Status completed);
 
-    @Query("""
-        SELECT new com.sacristan.api.interfaces.admin.dashboard.dtos.LatestReproductionsDto(
-            CONCAT(r.student.user.name, ' ', r.student.user.lastName),
-            r.routineSequence.sequence.title,
-            r.endedAt
-        )
-        FROM Reproduction r
-        WHERE r.status = com.sacristan.api.global.models.Status.COMPLETED
-        ORDER BY r.endedAt DESC
-        """)
-    Page<LatestReproductionsDto> findLatestReproductions(Pageable pageable);
+//    @Query("""
+//        SELECT new com.sacristan.api.interfaces.admin.dashboard.dtos.LatestReproductionsDto(
+//            CONCAT(r.student.user.name, ' ', r.student.user.lastName),
+//            r.routineSequence.sequence.title,
+//            r.endedAt
+//        )
+//        FROM Reproduction r
+//        WHERE r.status = com.sacristan.api.global.models.Status.COMPLETED
+//        ORDER BY r.endedAt DESC
+//        """)
+//    Page<LatestReproductionsDto> findLatestReproductions(Pageable pageable);
 
 }

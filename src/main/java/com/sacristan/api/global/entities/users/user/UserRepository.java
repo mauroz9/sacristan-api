@@ -16,8 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     boolean existsByUsernameIgnoreCase(String username);
 
-    Optional<User> findByEmail(String email);
-
     @Query("SELECT COUNT(s) > 0 FROM Student s WHERE s.teacher = :teacher")
     boolean existsStudentsAssignedToTeacher(Teacher teacher);
 
@@ -31,4 +29,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
             "SELECT Count(u) > 0 FROM User u Where Lower(u.username) = Lower(:s) AND u.id <> :id"
     )
     boolean existsByUsernameIgnoreCaseAndIdNot(String s, Long id);
+
+    Optional<User> findByEmail(String email);
 }
