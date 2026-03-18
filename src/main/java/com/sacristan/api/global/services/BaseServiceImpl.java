@@ -1,6 +1,7 @@
 package com.sacristan.api.global.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,11 +10,10 @@ import java.rmi.UnexpectedException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RequiredArgsConstructor
 public abstract class BaseServiceImpl<T, ID, R extends JpaRepository<T, ID>> implements BaseService<T, ID> {
 
-    protected final R repository;
-
+    @Autowired
+    protected R repository;
 
     @Override
     public T save(T entity) throws UnexpectedException {
