@@ -1,0 +1,23 @@
+package com.sacristan.api.OLDinterfaces.admin.dtos.step;
+
+import com.sacristan.api.global.models.Step;
+
+import java.time.Duration;
+
+public record StepResponse(
+        Long id,
+        String title,
+        Integer position,
+        Duration estimatedDuration,
+        Integer arasaacPictogramId
+) {
+    public static StepResponse of(Step step) {
+        return new StepResponse(
+                step.getId(),
+                step.getName(),
+                step.getPosition(),
+                step.getEstimatedDuration(),
+                step.getArasaacPictogramId()
+        );
+    }
+}
