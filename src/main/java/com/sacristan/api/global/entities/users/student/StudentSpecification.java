@@ -1,6 +1,5 @@
-package com.sacristan.api.global.specifications;
+package com.sacristan.api.global.entities.users.student;
 
-import com.sacristan.api.global.entities.users.student.Student;
 import com.sacristan.api.global.entities.users.user.User;
 
 import jakarta.persistence.criteria.Join;

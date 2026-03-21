@@ -1,5 +1,6 @@
 package com.sacristan.api.global.services;
 
+import com.sacristan.api.global.dtos.SortParamDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,10 +12,10 @@ public interface BaseService<T, ID> {
     T save(T entity) throws UnexpectedException;
 
     T getById(ID id);
-
-    T update(T entity) throws UnexpectedException;
-
+    
     void delete(T entity) throws UnexpectedException;
+
+    void deleteById(ID id) throws UnexpectedException;
 
     List<T> listAll() throws UnexpectedException;
 

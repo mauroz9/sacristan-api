@@ -1,6 +1,5 @@
-package com.sacristan.api.global.specifications;
+package com.sacristan.api.global.entities.content.rotuine;
 
-import com.sacristan.api.global.entities.content.rotuine.Routine;
 import org.springframework.data.jpa.domain.PredicateSpecification;
 
 

@@ -1,6 +1,5 @@
-package com.sacristan.api.global.specifications;
+package com.sacristan.api.global.entities.users.teacher;
 
-import com.sacristan.api.global.entities.users.teacher.Teacher;
 import com.sacristan.api.global.entities.users.user.User;
 import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.PredicateSpecification;
