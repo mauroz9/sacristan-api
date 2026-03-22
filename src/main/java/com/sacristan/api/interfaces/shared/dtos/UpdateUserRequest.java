@@ -1,4 +1,4 @@
-package com.sacristan.api.interfaces.admin.shared.dtos;
+package com.sacristan.api.interfaces.shared.dtos;
 
 import com.sacristan.api.global.entities.users.user.User;
 import com.sacristan.api.global.validation.anotations.UniqueUpdateEmail;

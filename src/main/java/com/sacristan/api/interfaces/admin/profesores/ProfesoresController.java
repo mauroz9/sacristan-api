@@ -2,11 +2,10 @@ package com.sacristan.api.interfaces.admin.profesores;
 
 import com.sacristan.api.global.dtos.SortParamDTO;
 import com.sacristan.api.interfaces.admin.profesores.dtos.response.AssignedStudentResponse;
-import com.sacristan.api.interfaces.admin.profesores.dtos.response.TeacherListResponse;
 import com.sacristan.api.interfaces.admin.profesores.dtos.response.UnAssignedStudentResponse;
-import com.sacristan.api.interfaces.admin.shared.dtos.CreateUserRequest;
-import com.sacristan.api.interfaces.admin.shared.dtos.UpdateUserRequest;
-import io.swagger.v3.oas.annotations.Operation;
+import com.sacristan.api.interfaces.shared.dtos.CreateUserRequest;
+import com.sacristan.api.interfaces.shared.dtos.UpdateUserRequest;
+import com.sacristan.api.interfaces.admin.profesores.dtos.response.TeacherListResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
