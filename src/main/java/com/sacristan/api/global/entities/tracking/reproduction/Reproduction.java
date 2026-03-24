@@ -29,7 +29,7 @@ public class Reproduction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "routine_sequence_id")
-    private RoutineSegment routineSequence;
+    private RoutineSegment routineSegment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_user_id")
@@ -62,7 +62,7 @@ public class Reproduction {
     public Reproduction modify(Reproduction newReproduction) {
         return Reproduction.builder()
                 .id(this.id)
-                .routineSequence(newReproduction.getRoutineSequence())
+                .routineSegment(newReproduction.getRoutineSegment())
                 .student(newReproduction.getStudent())
                 .startedAt(newReproduction.getStartedAt())
                 .endedAt(newReproduction.getEndedAt())

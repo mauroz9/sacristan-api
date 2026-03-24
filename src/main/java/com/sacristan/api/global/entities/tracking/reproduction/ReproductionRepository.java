@@ -17,24 +17,6 @@ import java.util.List;
 @Repository
 public interface ReproductionRepository extends JpaRepository<Reproduction, Long>, JpaSpecificationExecutor<Reproduction> {
 
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM Reproduction r WHERE r.routineSequence.id = :routineSequenceId")
-    void deleteByRoutineSequenceId(Long routineSequenceId);
-
-
-    @Query(
-            "SELECT r FROM Reproduction r " +
-            "WHERE r.student.id = :userId " +
-            "AND r.routineSequence.id = :routineSequenceId " +
-            "AND r.startedAt >= :today AND r.startedAt < :tomorrow " +
-            "AND r.status = :completed"
-    )
-    List<Reproduction> findCompletedRoutineSequenceForToday(Long userId, Long routineSequenceId,
-                                                            LocalDateTime today,
-                                                            LocalDateTime tomorrow,
-                                                            Status completed);
-
     @Query(
             "SELECT COUNT(r) FROM Reproduction r " +
             "WHERE r.startedAt >= :today AND r.startedAt < :tomorrow " +
@@ -53,7 +35,7 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
     @Query("""
         SELECT new com.sacristan.api.interfaces.admin.dashboard.dtos.LatestReproductionsDto(
             CONCAT(r.student.user.name, ' ', r.student.user.lastName),
-            r.routineSequence.sequence.title,
+            r.routineSegment.sequence.title,
             r.endedAt
         )
         FROM Reproduction r

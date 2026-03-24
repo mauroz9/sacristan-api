@@ -1890,7 +1890,7 @@ public class TestDataInitializer implements CommandLineRunner {
                         reproductionRepository.save(
                                 Reproduction.builder()
                                         .student(student)
-                                        .routineSequence(rs)
+                                        .routineSegment(rs)
                                         .status(Status.COMPLETED)
                                         .startedAt(startedAt)
                                         .endedAt(endedAt)
