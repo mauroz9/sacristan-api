@@ -1,6 +1,7 @@
 package com.sacristan.api.global.entities.content.sequence;
 
 import com.sacristan.api.global.entities.content.category.Category;
+import com.sacristan.api.interfaces.admin.dashboard.dtos.MostUsedSequencesDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -40,17 +41,17 @@ public interface SequenceRepository extends JpaRepository<Sequence, Long>, JpaSp
             @Param("completedStatus") String completedStatus
     );
 
-//    @Query("""
-//        SELECT new com.sacristan.api.interfaces.admin.dashboard.dtos.MostUsedSequencesDto(
-//            s.id,
-//            s.title,
-//            COUNT(r.id)
-//        )
-//        FROM Sequence s
-//        JOIN RoutineSequence rs ON rs.sequence = s
-//        JOIN Reproduction r ON r.routineSequence = rs
-//        GROUP BY s.id, s.title
-//        ORDER BY COUNT(r.id) DESC
-//        """)
-//    Page<MostUsedSequencesDto> findMostUsedSequences(Pageable pageable);
+    @Query("""
+        SELECT new com.sacristan.api.interfaces.admin.dashboard.dtos.MostUsedSequencesDto(
+            s.id,
+            s.title,
+            COUNT(r.id)
+        )
+        FROM Sequence s
+        JOIN RoutineSequence rs ON rs.sequence = s
+        JOIN Reproduction r ON r.routineSequence = rs
+        GROUP BY s.id, s.title
+        ORDER BY COUNT(r.id) DESC
+        """)
+    Page<MostUsedSequencesDto> findMostUsedSequences(Pageable pageable);
 }

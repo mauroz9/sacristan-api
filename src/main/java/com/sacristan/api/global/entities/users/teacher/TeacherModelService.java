@@ -10,6 +10,10 @@ import java.util.List;
 @Service
 public class TeacherModelService extends BaseServiceImpl<Teacher, Long, TeacherRepository> {
 
+    public long count() {
+        return repository.count();
+    }
+
     public static List<SortParamDTO> getSortParams() {
         return List.of(
                 new SortParamDTO("Nombre", "user.name"),

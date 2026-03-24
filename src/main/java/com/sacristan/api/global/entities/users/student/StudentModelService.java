@@ -18,6 +18,10 @@ public class StudentModelService extends BaseServiceImpl<Student, Long, StudentR
         return repository.findByTeacher(teacher);
     }
 
+    public long count() {
+        return repository.count();
+    }
+
     public static List<SortParamDTO> getSortParams() {
         return List.of(
                 new SortParamDTO("Nombre" , "user.name"),
