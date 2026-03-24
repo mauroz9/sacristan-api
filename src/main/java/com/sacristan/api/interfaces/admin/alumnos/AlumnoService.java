@@ -43,6 +43,10 @@ public class AlumnoService {
         studentModelService.deleteById(id);
     }
 
+    public Student getById(Long id) {
+        return studentModelService.getById(id);
+    }
+
     public Page<Student> list(Pageable pageable, String q) {
         return studentModelService.findByTerm(pageable, StudentSpecification.searchByTerm(q));
     }

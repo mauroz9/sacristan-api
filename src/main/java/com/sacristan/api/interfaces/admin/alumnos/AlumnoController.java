@@ -1,12 +1,11 @@
 package com.sacristan.api.interfaces.admin.alumnos;
 
 import com.sacristan.api.global.dtos.SortParamDTO;
-import com.sacristan.api.global.entities.users.role.Role;
-import com.sacristan.api.global.entities.users.user.User;
 import com.sacristan.api.global.entities.users.student.Student;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.RoutineResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.SequenceResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.StudentListResponse;
+import com.sacristan.api.interfaces.admin.alumnos.dtos.response.ReadStudentResponse;
 import com.sacristan.api.interfaces.shared.dtos.CreateUserRequest;
 import com.sacristan.api.interfaces.shared.dtos.UpdateUserRequest;
 import jakarta.validation.Valid;
@@ -38,6 +37,16 @@ public class AlumnoController {
                 .build();
         service.create(student);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<@Nullable ReadStudentResponse> read(
+            @PathVariable Long id
+    ) {
+        Student student = service.getById(id);
+        return ResponseEntity.ok(
+                ReadStudentResponse.ofEntity(student)
+        );
     }
 
     @PutMapping("/{id}")

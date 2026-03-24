@@ -38,6 +38,10 @@ public class ProfesoresService {
         teacherModelService.deleteById(id);
     }
 
+    public Teacher getById(Long id) {
+        return teacherModelService.getById(id);
+    }
+
     public Page<Teacher> list(Pageable pageable, String q) {
         return teacherModelService.findByTerm(pageable, TeacherSpecification.searchByTerm(q));
     }
