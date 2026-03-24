@@ -1,6 +1,7 @@
 package com.sacristan.api.interfaces.admin.profesores;
 
 import com.sacristan.api.global.dtos.SortParamDTO;
+import com.sacristan.api.global.entities.users.teacher.Teacher;
 import com.sacristan.api.interfaces.admin.profesores.dtos.response.AssignedStudentResponse;
 import com.sacristan.api.interfaces.admin.profesores.dtos.response.UnAssignedStudentResponse;
 import com.sacristan.api.interfaces.shared.dtos.CreateUserRequest;
@@ -20,18 +21,19 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/admin/profesores")
-public class ProfesoresController { // Profesores proviene del nombre de la interfaz, NO DE LA ENTIDAD
+public class ProfesoresController {
 
     private final ProfesoresService service;
-
 
     // * CRUD
     @PostMapping
     public ResponseEntity<?> create(
             @Valid @RequestBody CreateUserRequest createUser
     ) {
-
-        service.create(createUser.toEntity());
+        Teacher teacher = Teacher.builder()
+                .user(createUser.toEntity())
+                .build();
+        service.create(teacher);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -43,7 +45,6 @@ public class ProfesoresController { // Profesores proviene del nombre de la inte
             @PathVariable Long id,
             @Valid @RequestBody UpdateUserRequest updateUser
     ) {
-
         service.update(id, updateUser.toEntity());
 
         return ResponseEntity.ok().build();
@@ -79,7 +80,6 @@ public class ProfesoresController { // Profesores proviene del nombre de la inte
     public ResponseEntity<@Nullable List<SortParamDTO>> getTeacherSortParams() {
         return ResponseEntity.ok(service.getSortParams());
     }
-
 
     // * Relación Alumno - Profesor
     @PutMapping("/{teacherId}/students/{studentId}")
@@ -121,7 +121,5 @@ public class ProfesoresController { // Profesores proviene del nombre de la inte
                         .toList()
         );
     }
-
-
 
 }

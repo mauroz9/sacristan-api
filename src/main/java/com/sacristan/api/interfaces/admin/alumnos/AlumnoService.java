@@ -8,11 +8,9 @@ import com.sacristan.api.global.entities.content.sequence.SequenceModelService;
 import com.sacristan.api.global.entities.users.role.Role;
 import com.sacristan.api.global.entities.users.student.Student;
 import com.sacristan.api.global.entities.users.student.StudentModelService;
-import com.sacristan.api.global.entities.users.teacher.Teacher;
-import com.sacristan.api.global.entities.users.teacher.TeacherModelService;
+import com.sacristan.api.global.entities.users.student.StudentSpecification;
 import com.sacristan.api.global.entities.users.user.User;
 import com.sacristan.api.global.entities.users.user.UserModelService;
-import com.sacristan.api.global.entities.users.student.StudentSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,25 +22,26 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AlumnoService { // Alumnos proviene del nombre de la interfaz, NO DE LA ENTIDAD
+public class AlumnoService {
 
     private final StudentModelService studentModelService;
     private final UserModelService userModelService;
-    private final TeacherModelService teacherModelService;
     private final SequenceModelService sequenceModelService;
     private final RoutineModelService routineModelService;
 
-    public void create(User user) {
-        studentModelService.save(Student.builder()
-                                    .user(userModelService.create(user, Role.STUDENT))
-                                    .build());
+    public void create(Student student) {
+        User createdUser = userModelService.create(student.getUser(), Role.STUDENT);
+        student.setUser(createdUser);
+        studentModelService.save(student);
     }
 
     public void update(Long id, User user) {
-            userModelService.update(id, user);
+        userModelService.update(id, user);
     }
 
-    public void delete(Long id) {studentModelService.deleteById(id);}
+    public void delete(Long id) {
+        studentModelService.deleteById(id);
+    }
 
     public Page<Student> list(Pageable pageable, String q) {
         return studentModelService.findByTerm(pageable, StudentSpecification.searchByTerm(q));

@@ -34,11 +34,11 @@ public record CreateSequenceRequest(
         List<CreateStepRequest> steps
 ) {
 
-    public Sequence toEntity(Category category) {
+    public Sequence toEntity() {
         return Sequence.builder()
                 .title(title)
                 .description(description)
-                .category(category)
+                .category(Category.builder().id(categoryId).build())
                 .estimatedDuration(estimatedDuration)
                 .allowGoBack(allowGoBack != null ? allowGoBack : false)
                 .frontPage(frontPage)

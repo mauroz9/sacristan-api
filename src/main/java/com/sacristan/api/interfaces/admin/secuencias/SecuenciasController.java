@@ -28,7 +28,7 @@ public class SecuenciasController {
     public ResponseEntity<?> create(
             @Valid @RequestBody CreateSequenceRequest createRequest
     ) {
-        service.create(createRequest);
+        service.create(createRequest.toEntity());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -46,7 +46,7 @@ public class SecuenciasController {
             @PathVariable Long id,
             @Valid @RequestBody UpdateSequenceRequest updateRequest
     ) {
-        service.update(id, updateRequest);
+        service.update(id, updateRequest.toEntity());
         return ResponseEntity.ok().build();
     }
 

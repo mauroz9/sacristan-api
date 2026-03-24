@@ -1,6 +1,9 @@
 package com.sacristan.api.interfaces.admin.alumnos;
 
 import com.sacristan.api.global.dtos.SortParamDTO;
+import com.sacristan.api.global.entities.users.role.Role;
+import com.sacristan.api.global.entities.users.user.User;
+import com.sacristan.api.global.entities.users.student.Student;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.RoutineResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.SequenceResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.StudentListResponse;
@@ -21,7 +24,7 @@ import java.util.Set;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/admin/alumnos")
-public class AlumnoController { // Alumnos proviene del nombre de la interfaz, NO DE LA ENTIDAD
+public class AlumnoController {
 
     private final AlumnoService service;
 
@@ -30,7 +33,10 @@ public class AlumnoController { // Alumnos proviene del nombre de la interfaz, N
     public ResponseEntity<?> create(
             @Valid @RequestBody CreateUserRequest createUser
     ) {
-        service.create(createUser.toEntity());
+        Student student = Student.builder()
+                .user(createUser.toEntity())
+                .build();
+        service.create(student);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -168,5 +174,4 @@ public class AlumnoController { // Alumnos proviene del nombre de la interfaz, N
     ) {
         return ResponseEntity.ok(service.countAssignedRoutinesOfStudent(studentId));
     }
-
 }

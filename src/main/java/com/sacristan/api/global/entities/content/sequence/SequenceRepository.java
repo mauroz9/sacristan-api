@@ -48,8 +48,8 @@ public interface SequenceRepository extends JpaRepository<Sequence, Long>, JpaSp
             COUNT(r.id)
         )
         FROM Sequence s
-        JOIN RoutineSequence rs ON rs.sequence = s
-        JOIN Reproduction r ON r.routineSequence = rs
+        JOIN RoutineSegment rs ON rs.sequence = s
+        JOIN Reproduction r ON r.routineSegment = rs
         GROUP BY s.id, s.title
         ORDER BY COUNT(r.id) DESC
         """)

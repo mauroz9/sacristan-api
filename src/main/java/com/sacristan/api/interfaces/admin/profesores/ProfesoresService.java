@@ -6,9 +6,9 @@ import com.sacristan.api.global.entities.users.student.Student;
 import com.sacristan.api.global.entities.users.student.StudentModelService;
 import com.sacristan.api.global.entities.users.teacher.Teacher;
 import com.sacristan.api.global.entities.users.teacher.TeacherModelService;
+import com.sacristan.api.global.entities.users.teacher.TeacherSpecification;
 import com.sacristan.api.global.entities.users.user.User;
 import com.sacristan.api.global.entities.users.user.UserModelService;
-import com.sacristan.api.global.entities.users.teacher.TeacherSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,23 +18,25 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProfesoresService { // Profesores proviene del nombre de la interfaz, NO DE LA ENTIDAD
+public class ProfesoresService {
 
     private final TeacherModelService teacherModelService;
     private final UserModelService userModelService;
     private final StudentModelService studentModelService;
 
-    public void create(User user) {
-        teacherModelService.save(Teacher.builder()
-                                    .user(userModelService.create(user, Role.TEACHER))
-                                    .build());
+    public void create(Teacher teacher) {
+        User createdUser = userModelService.create(teacher.getUser(), Role.TEACHER);
+        teacher.setUser(createdUser);
+        teacherModelService.save(teacher);
     }
 
     public void update(Long id, User user) {
-            userModelService.update(id, user);
+        userModelService.update(id, user);
     }
 
-    public void delete(Long id) {teacherModelService.deleteById(id);}
+    public void delete(Long id) {
+        teacherModelService.deleteById(id);
+    }
 
     public Page<Teacher> list(Pageable pageable, String q) {
         return teacherModelService.findByTerm(pageable, TeacherSpecification.searchByTerm(q));
