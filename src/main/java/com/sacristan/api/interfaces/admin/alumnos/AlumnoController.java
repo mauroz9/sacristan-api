@@ -5,8 +5,8 @@ import com.sacristan.api.global.entities.users.student.Student;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.RoutineResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.SequenceResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.StudentListResponse;
-import com.sacristan.api.interfaces.admin.alumnos.dtos.response.ReadStudentResponse;
 import com.sacristan.api.interfaces.shared.dtos.CreateUserRequest;
+import com.sacristan.api.interfaces.shared.dtos.ReadUserResponse;
 import com.sacristan.api.interfaces.shared.dtos.UpdateUserRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,12 +40,12 @@ public class AlumnoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<@Nullable ReadStudentResponse> read(
+    public ResponseEntity<@Nullable ReadUserResponse> read(
             @PathVariable Long id
     ) {
         Student student = service.getById(id);
         return ResponseEntity.ok(
-                ReadStudentResponse.ofEntity(student)
+                ReadUserResponse.ofEntity(student.getUser())
         );
     }
 

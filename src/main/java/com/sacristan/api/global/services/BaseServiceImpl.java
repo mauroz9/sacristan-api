@@ -49,7 +49,7 @@ public abstract class BaseServiceImpl<T, ID, R extends JpaRepository<T, ID> &
     }
 
     @Override
-    public Page<T> pageAll(Pageable pageable) throws UnexpectedException {
+    public Page<T> pageAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
 

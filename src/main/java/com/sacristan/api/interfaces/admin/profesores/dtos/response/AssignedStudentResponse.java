@@ -6,7 +6,8 @@ public record AssignedStudentResponse(
         Long id,
         String name,
         String lastName,
-        String email
+        String email,
+        Long teacherId
 ) {
 
     public static AssignedStudentResponse ofEntity(Student student) {
@@ -14,7 +15,8 @@ public record AssignedStudentResponse(
                 student.getId(),
                 student.getUser().getName(),
                 student.getUser().getLastName(),
-                student.getUser().getEmail()
+                student.getUser().getEmail(),
+                student.getTeacher().getId()
         );
     }
 

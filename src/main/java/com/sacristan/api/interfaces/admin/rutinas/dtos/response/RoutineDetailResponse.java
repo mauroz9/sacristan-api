@@ -1,6 +1,7 @@
 package com.sacristan.api.interfaces.admin.rutinas.dtos.response;
 
 import com.sacristan.api.global.entities.content.rotuine.Routine;
+import com.sacristan.api.interfaces.admin.extra.dtos.ReadCategoryResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class RoutineDetailResponse {
 
     private Long id;
     private String name;
-    private String category;
+    private CategoryDetailResponse category;
     private Set<String> daysOfTheWeek;
     private List<RoutineSegmentResponse> sequences;
 
@@ -26,16 +27,16 @@ public class RoutineDetailResponse {
         return RoutineDetailResponse.builder()
                 .id(routine.getId())
                 .name(routine.getName())
-                .category(routine.getCategory() != null ? routine.getCategory().getName() : null)
-                .daysOfTheWeek(routine.getDaysOfTheWeek() != null ? 
+                .category(routine.getCategory() != null ? CategoryDetailResponse.ofEntity(routine.getCategory()) : null)
+                .daysOfTheWeek(routine.getDaysOfTheWeek() != null ?
                         routine.getDaysOfTheWeek().stream()
                                 .map(Enum::toString)
-                                .collect(Collectors.toSet()) : 
+                                .collect(Collectors.toSet()) :
                         Set.of())
-                .sequences(routine.getSequences() != null ? 
+                .sequences(routine.getSequences() != null ?
                         routine.getSequences().stream()
                                 .map(RoutineSegmentResponse::ofEntity)
-                                .collect(Collectors.toList()) : 
+                                .collect(Collectors.toList()) :
                         List.of())
                 .build();
     }

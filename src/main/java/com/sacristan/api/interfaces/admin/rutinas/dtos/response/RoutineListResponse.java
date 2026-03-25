@@ -18,7 +18,7 @@ public class RoutineListResponse {
 
     private Long id;
     private String name;
-    private String category;
+    private CategoryDetailResponse category;
     private Set<String> daysOfTheWeek;
     private Integer sequenceCount;
 
@@ -26,11 +26,11 @@ public class RoutineListResponse {
         return RoutineListResponse.builder()
                 .id(routine.getId())
                 .name(routine.getName())
-                .category(routine.getCategory() != null ? routine.getCategory().getName() : null)
-                .daysOfTheWeek(routine.getDaysOfTheWeek() != null ? 
+                .category(routine.getCategory() != null ? CategoryDetailResponse.ofEntity(routine.getCategory()) : null)
+                .daysOfTheWeek(routine.getDaysOfTheWeek() != null ?
                         routine.getDaysOfTheWeek().stream()
                                 .map(Enum::toString)
-                                .collect(Collectors.toSet()) : 
+                                .collect(Collectors.toSet()) :
                         Set.of())
                 .sequenceCount(routine.getSequences() != null ? routine.getSequences().size() : 0)
                 .build();

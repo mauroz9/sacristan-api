@@ -2,9 +2,8 @@ package com.sacristan.api.interfaces.admin.profesores;
 
 import com.sacristan.api.global.dtos.SortParamDTO;
 import com.sacristan.api.global.entities.users.teacher.Teacher;
-import com.sacristan.api.interfaces.admin.alumnos.dtos.response.ReadStudentResponse;
 import com.sacristan.api.interfaces.admin.profesores.dtos.response.AssignedStudentResponse;
-import com.sacristan.api.interfaces.admin.profesores.dtos.response.ReadTeacherResponse;
+import com.sacristan.api.interfaces.shared.dtos.ReadUserResponse;
 import com.sacristan.api.interfaces.admin.profesores.dtos.response.UnAssignedStudentResponse;
 import com.sacristan.api.interfaces.shared.dtos.CreateUserRequest;
 import com.sacristan.api.interfaces.shared.dtos.UpdateUserRequest;
@@ -43,12 +42,12 @@ public class ProfesoresController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<@Nullable ReadTeacherResponse> read(
+    public ResponseEntity<@Nullable ReadUserResponse> read(
             @PathVariable Long id
     ) {
         Teacher teacher = service.getById(id);
         return ResponseEntity.ok(
-                ReadTeacherResponse.ofEntity(teacher)
+                ReadUserResponse.ofEntity(teacher.getUser())
         );
     }
 
