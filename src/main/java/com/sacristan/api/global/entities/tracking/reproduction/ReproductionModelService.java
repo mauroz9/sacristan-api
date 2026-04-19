@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long, ReproductionRepository> {
@@ -22,6 +23,10 @@ public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long
 
     public Page<LatestReproductionsDto> findLatestReproductions(Pageable pageable, Status status) {
         return repository.findLatestReproductions(pageable, status);
+    }
+
+    public List<Reproduction> findCompletedRoutineSequenceForToday(Long id, Long id1, LocalDateTime localDateTime, LocalDateTime localDateTime1, Status status) {
+        return repository.findCompletedRoutineSequenceForToday(id, id1, localDateTime, localDateTime1, status);
     }
 }
 

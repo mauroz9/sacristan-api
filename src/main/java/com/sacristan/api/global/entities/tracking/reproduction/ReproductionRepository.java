@@ -43,4 +43,13 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
         ORDER BY r.endedAt DESC
         """)
     Page<LatestReproductionsDto> findLatestReproductions(Pageable pageable, Status status);
+
+    @Query(
+            "SELECT r FROM Reproduction r " +
+                    "WHERE r.student.id = :userId " +
+                    "AND r.routineSequence.id = :routineSequenceId " +
+                    "AND r.startedAt >= :today AND r.startedAt < :tomorrow " +
+                    "AND r.status = :completed"
+    )
+    List<Reproduction> findCompletedRoutineSequenceForToday(Long id, Long id1, LocalDateTime localDateTime, LocalDateTime localDateTime1, Status status);
 }
