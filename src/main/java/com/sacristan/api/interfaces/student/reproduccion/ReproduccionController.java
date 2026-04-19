@@ -1,9 +1,12 @@
 package com.sacristan.api.interfaces.student.reproduccion;
 
+import com.sacristan.api.global.entities.users.user.User;
 import com.sacristan.api.interfaces.student.reproduccion.dtos.response.SequenceDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,21 +16,28 @@ public class ReproduccionController {
 
     private final ReproduccionService service;
 
-    // * SEQUENCES
     @GetMapping("/sequences/{id}")
-    public ResponseEntity<@Nullable SequenceDetailResponse> getSequenceDetails(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getSequenceDetails(id));
+    public ResponseEntity<@Nullable SequenceDetailResponse> getSequenceDetails(
+            @AuthenticationPrincipal User user,
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(SequenceDetailResponse.ofEntity(service.getSequenceDetails(id)));
     }
 
-    // * REPRODUCTIONS
     @PostMapping("/reproductions/{id}")
-    public ResponseEntity<?> startReproduction(@PathVariable Long id) {
-        return ResponseEntity.ok(service.startReproduction(id));
+    public ResponseEntity<Long> startReproduction(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.startReproduction(id, user));
     }
 
     @PutMapping("/reproductions/{id}/end")
-    public ResponseEntity<?> endReproduction(@PathVariable Long id) {
-        service.endReproduction(id);
+    public ResponseEntity<?> endReproduction(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user
+    ) {
+        service.endReproduction(id, user);
         return ResponseEntity.ok().build();
     }
 }
