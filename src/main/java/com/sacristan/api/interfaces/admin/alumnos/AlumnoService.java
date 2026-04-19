@@ -55,7 +55,6 @@ public class AlumnoService {
         return StudentModelService.getSortParams();
     }
 
-    // * Sequence methods
     public Student assignSequenceToStudent(Long studentId, Long sequenceId) {
         Student student = studentModelService.getById(studentId);
         Sequence sequence = sequenceModelService.getById(sequenceId);
@@ -101,7 +100,6 @@ public class AlumnoService {
         return student.getSequences().size();
     }
 
-    // * Routine methods
     public Student assignRoutineToStudent(Long studentId, Long routineId) {
         Student student = studentModelService.getById(studentId);
         Routine routine = routineModelService.getById(routineId);

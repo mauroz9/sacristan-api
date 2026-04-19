@@ -1,11 +1,14 @@
 package com.sacristan.api.global.entities.content.sequence;
 
 import com.sacristan.api.global.dtos.SortParamDTO;
+import com.sacristan.api.global.entities.content.category.Category;
 import com.sacristan.api.global.services.BaseServiceImpl;
 import com.sacristan.api.interfaces.admin.dashboard.dtos.MostUsedSequencesDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.PredicateSpecification;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.events.SequenceEndEvent;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,6 +38,14 @@ public class SequenceModelService extends BaseServiceImpl<Sequence, Long, Sequen
                 new SortParamDTO("Descripción", "description"),
                 new SortParamDTO("Categoría", "category.name")
         );
+    }
+
+    public Integer getSequencesByCategory(Category c) {
+        return repository.countByCategory(c);
+    }
+
+    public Page<Sequence> findByFilters(Pageable pageable, PredicateSpecification<Sequence> spec) {
+        return repository.findBy(spec, p -> p.page(pageable));
     }
 }
 

@@ -1,5 +1,6 @@
 package com.sacristan.api.interfaces.student.perfil;
 
+import com.sacristan.api.interfaces.student.perfil.dtos.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +13,15 @@ public class PerfilController {
 
     private final PerfilService service;
 
+    // * PROFILE
     @GetMapping("/profile")
-    public ResponseEntity<@Nullable ?> getProfile() {
+    public ResponseEntity<@Nullable UserResponse> getProfile() {
         return ResponseEntity.ok(service.getProfile());
     }
 
+    // * TEACHER
     @GetMapping("/teacher")
-    public ResponseEntity<@Nullable ?> getTeacher() {
+    public ResponseEntity<@Nullable UserResponse> getTeacher() {
         return ResponseEntity.ok(service.getTeacher());
     }
 }
-

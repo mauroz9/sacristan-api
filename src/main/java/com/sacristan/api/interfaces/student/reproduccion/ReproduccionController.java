@@ -1,5 +1,6 @@
 package com.sacristan.api.interfaces.student.reproduccion;
 
+import com.sacristan.api.interfaces.student.reproduccion.dtos.response.SequenceDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +13,13 @@ public class ReproduccionController {
 
     private final ReproduccionService service;
 
+    // * SEQUENCES
     @GetMapping("/sequences/{id}")
-    public ResponseEntity<@Nullable ?> getSequenceDetails(@PathVariable Long id) {
+    public ResponseEntity<@Nullable SequenceDetailResponse> getSequenceDetails(@PathVariable Long id) {
         return ResponseEntity.ok(service.getSequenceDetails(id));
     }
 
+    // * REPRODUCTIONS
     @PostMapping("/reproductions/{id}")
     public ResponseEntity<?> startReproduction(@PathVariable Long id) {
         return ResponseEntity.ok(service.startReproduction(id));
@@ -28,4 +31,3 @@ public class ReproduccionController {
         return ResponseEntity.ok().build();
     }
 }
-

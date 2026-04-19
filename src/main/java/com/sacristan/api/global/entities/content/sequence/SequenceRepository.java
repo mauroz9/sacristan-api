@@ -54,4 +54,9 @@ public interface SequenceRepository extends JpaRepository<Sequence, Long>, JpaSp
         ORDER BY COUNT(r.id) DESC
         """)
     Page<MostUsedSequencesDto> findMostUsedSequences(Pageable pageable);
+
+    @Query(
+            "SELECT COUNT(s) FROM Sequence s WHERE s.category = :category"
+    )
+    Integer countByCategory(Category c);
 }

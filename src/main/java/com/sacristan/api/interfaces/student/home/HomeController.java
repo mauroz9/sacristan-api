@@ -1,5 +1,6 @@
 package com.sacristan.api.interfaces.student.home;
 
+import com.sacristan.api.interfaces.student.home.dtos.response.RoutineListResponse;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
@@ -14,8 +15,9 @@ public class HomeController {
 
     private final HomeService service;
 
+    // * ROUTINES
     @GetMapping("/routines")
-    public ResponseEntity<@Nullable Page<?>> getRoutines(Pageable pageable) {
+    public ResponseEntity<@Nullable Page<RoutineListResponse>> getRoutines(Pageable pageable) {
         return ResponseEntity.ok(service.getRoutines(pageable));
     }
 }
