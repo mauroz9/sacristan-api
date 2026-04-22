@@ -75,4 +75,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
             @Param("searchQuery") String searchQuery,
             Pageable pageable
     );
+
+    @Query("SELECT s.routines FROM Student s WHERE s.id = :id")
+    List<Routine> getRoutinesByUserId(Long id);
 }

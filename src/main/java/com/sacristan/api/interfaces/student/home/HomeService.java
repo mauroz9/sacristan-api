@@ -26,11 +26,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HomeService {
 
-    private final RoutineModelService routineModelService;
+    private final StudentModelService studentModelService;
     private final ReproductionModelService reproductionModelService;
 
     public Page<PendingSequenceResponse> getPendingSequences(Pageable pageable, User user) {
-        List<Routine> routines = routineModelService.getByUserId(user);
+        List<Routine> routines = studentModelService.getRoutinesByUserId(user);
 
         List<RoutineSegment> pendingSequences = routines.stream()
                 .filter(r -> r.getDaysOfTheWeek().contains(DaysOfTheWeek.valueOf(LocalDate.now().getDayOfWeek().name())))
