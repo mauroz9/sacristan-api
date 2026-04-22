@@ -15,8 +15,4 @@ public class RoutineModelService extends BaseServiceImpl<Routine, Long, RoutineR
                 new SortParamDTO("Categoría", "category.name")
         );
     }
-
-    public List<Routine> getByUserId(User user) {
-        return repository.findByUserId(user.getId());
-    }
 }

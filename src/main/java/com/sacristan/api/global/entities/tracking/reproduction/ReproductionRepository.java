@@ -2,12 +2,10 @@ package com.sacristan.api.global.entities.tracking.reproduction;
 
 import com.sacristan.api.global.entities.tracking.status.Status;
 import com.sacristan.api.interfaces.admin.dashboard.dtos.LatestReproductionsDto;
-import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -47,9 +45,9 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
     @Query(
             "SELECT r FROM Reproduction r " +
                     "WHERE r.student.id = :userId " +
-                    "AND r.routineSequence.id = :routineSequenceId " +
+                    "AND r.routineSegment.id = :routineSegmentId " +
                     "AND r.startedAt >= :today AND r.startedAt < :tomorrow " +
                     "AND r.status = :completed"
     )
-    List<Reproduction> findCompletedRoutineSequenceForToday(Long id, Long id1, LocalDateTime localDateTime, LocalDateTime localDateTime1, Status status);
+    List<Reproduction> findCompletedRoutineSegmentForToday(Long id, Long id1, LocalDateTime localDateTime, LocalDateTime localDateTime1, Status status);
 }

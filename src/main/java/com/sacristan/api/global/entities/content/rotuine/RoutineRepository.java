@@ -12,7 +12,4 @@ import java.util.List;
 public interface RoutineRepository extends JpaRepository<Routine, Long>, JpaSpecificationExecutor<Routine> {
 
     boolean existsByCategory(Category category);
-
-    @Query("SELECT r FROM Routine r WHERE r.user.id = :id")
-    List<Routine> findByUserId(Long id);
 }
