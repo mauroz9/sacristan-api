@@ -1,9 +1,8 @@
 package com.sacristan.api.global.security.utils.controller;
 
-import com.sacristan.api.global.models.user.User;
+import com.sacristan.api.global.entities.users.user.User;
 import com.sacristan.api.global.security.config.jwt.access.JwtProvider;
 import com.sacristan.api.global.security.config.jwt.refresh.RefreshToken;
-import com.sacristan.api.global.security.config.jwt.refresh.RefreshTokenException;
 import com.sacristan.api.global.security.config.jwt.refresh.RefreshTokenNotFoundException;
 import com.sacristan.api.global.security.config.jwt.refresh.RefreshTokenService;
 import com.sacristan.api.global.security.utils.dtos.JwtUserResponse;
@@ -14,9 +13,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;

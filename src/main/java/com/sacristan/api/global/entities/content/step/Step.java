@@ -1,0 +1,55 @@
+package com.sacristan.api.global.entities.content.step;
+
+import com.sacristan.api.global.entities.content.sequence.Sequence;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.Duration;
+@Entity
+@Table(name = "steps")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class Step {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private Long id;
+
+    private String name;
+    private Integer position;
+
+    @Nullable
+    private Duration estimatedDuration;
+
+    private Integer arasaacPictogramId;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sequence_id")
+    private Sequence sequence;
+
+    public Step modify(Step newStep){
+        this.name = newStep.getName();
+        this.position = newStep.getPosition();
+        this.estimatedDuration = newStep.getEstimatedDuration();
+        this.arasaacPictogramId = newStep.getArasaacPictogramId();
+        return this;
+    }
+
+    public Step duplicate(Sequence newSequence){
+        return Step.builder()
+                .name(this.name)
+                .position(this.position)
+                .estimatedDuration(this.estimatedDuration)
+                .arasaacPictogramId(this.arasaacPictogramId)
+                .sequence(newSequence)
+                .build();
+    }
+
+}

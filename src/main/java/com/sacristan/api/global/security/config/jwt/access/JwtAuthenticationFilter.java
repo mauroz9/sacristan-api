@@ -1,8 +1,8 @@
 package com.sacristan.api.global.security.config.jwt.access;
 
+import com.sacristan.api.global.entities.users.user.UserModelService;
 import com.sacristan.api.global.error.exceptions.JwtTokenException;
-import com.sacristan.api.global.models.user.User;
-import com.sacristan.api.interfaces.admin.services.model.user.UserUtilsService;
+import com.sacristan.api.global.entities.users.user.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ import java.util.Optional;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
-    private final UserUtilsService userUtilsService;
+    private final UserModelService userModelService;
     private final JwtProvider jwtProvider;
 
     @Autowired
@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
                 Long userId = jwtProvider.getUserIdFromToken(token);
 
-                Optional<User> result = userUtilsService.findByIdOptional(userId);
+                Optional<User> result = userModelService.findById(userId);
 
                 if (result.isPresent()) {
                     User user = result.get();

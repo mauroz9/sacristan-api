@@ -1,6 +1,6 @@
 package com.sacristan.api.global.security.config.jwt.refresh;
 
-import com.sacristan.api.global.models.user.User;
+import com.sacristan.api.global.entities.users.user.User;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

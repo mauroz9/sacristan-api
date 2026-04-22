@@ -1,7 +1,7 @@
 package com.sacristan.api.global.security.config.jwt.refresh;
 
-import com.sacristan.api.global.models.user.User;
-import com.sacristan.api.global.models.user.extra.Role;
+import com.sacristan.api.global.entities.users.user.User;
+import com.sacristan.api.global.entities.users.role.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
