@@ -32,6 +32,8 @@ public class HomeService {
     public Page<PendingSequenceResponse> getPendingSequences(Pageable pageable, User user) {
         List<Routine> routines = studentModelService.getRoutinesByUserId(user);
 
+        System.out.println("Routines for user " + user.getEmail() + ": " + routines);
+
         List<RoutineSegment> pendingSequences = routines.stream()
                 .filter(r -> r.getDaysOfTheWeek().contains(DaysOfTheWeek.valueOf(LocalDate.now().getDayOfWeek().name())))
                 .map(Routine::getSequences)
@@ -44,6 +46,7 @@ public class HomeService {
                             LocalDate.now().atStartOfDay().plusDays(1),
                             Status.COMPLETED
                     );
+                    System.out.println("Falla el filtro...");
                     return !reproductions
                             .stream()
                             .map(Reproduction::getRoutineSegment)
@@ -57,10 +60,14 @@ public class HomeService {
 
         List<PendingSequenceResponse> pendingSequenceDTOs = new ArrayList<>();
 
+        System.out.println("Pending sequences for user " + user.getEmail() + ": " + pendingSequences);
+
         for (RoutineSegment routineSequence : pendingSequences) {
             Sequence s = routineSequence.getSequence();
             pendingSequenceDTOs.add(PendingSequenceResponse.from(s, routineSequence.getStartTime(), routineSequence.getId()));
         }
+
+        System.out.println("TODO OK....");
 
         return new PageImpl<>(pendingSequenceDTOs, pageable, pendingSequenceDTOs.size());
     }

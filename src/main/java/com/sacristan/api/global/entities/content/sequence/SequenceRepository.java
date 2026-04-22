@@ -4,6 +4,7 @@ import com.sacristan.api.global.entities.content.category.Category;
 import com.sacristan.api.interfaces.admin.dashboard.dtos.MostUsedSequencesDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -58,5 +59,5 @@ public interface SequenceRepository extends JpaRepository<Sequence, Long>, JpaSp
     @Query(
             "SELECT COUNT(s) FROM Sequence s WHERE s.category = :category"
     )
-    Integer countByCategory(Category c);
+    Integer countByCategory(Category category);
 }
