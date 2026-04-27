@@ -25,8 +25,8 @@ public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long
         return repository.findLatestReproductions(pageable, status);
     }
 
-    public List<Reproduction> findCompletedRoutineSequenceForToday(Long id, Long id1, LocalDateTime localDateTime, LocalDateTime localDateTime1, Status status) {
-        return repository.findCompletedRoutineSegmentForToday(id, id1, localDateTime, localDateTime1, status);
+    public List<Reproduction> findCompletedRoutineSequenceForToday(Long userId, Long routineSegmentId, LocalDateTime today, LocalDateTime tomorrow, Status completed) {
+        return repository.findCompletedRoutineSegmentForToday(userId, routineSegmentId, today, tomorrow, completed);
     }
 }
 

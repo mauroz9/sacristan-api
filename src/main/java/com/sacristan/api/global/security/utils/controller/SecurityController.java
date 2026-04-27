@@ -10,6 +10,7 @@ import com.sacristan.api.global.security.utils.dtos.LoginRequest;
 import com.sacristan.api.global.security.utils.dtos.RefreshTokenRequest;
 import com.sacristan.api.global.security.utils.service.AuthService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class SecurityController
     @PostMapping("/login")
     @Transactional
     public ResponseEntity<JwtUserResponse> login (
-            @RequestBody LoginRequest loginRequest
+            @Valid @RequestBody LoginRequest loginRequest
     ) {
 
         String token = authService.generateToken(loginRequest.email(), loginRequest.password());

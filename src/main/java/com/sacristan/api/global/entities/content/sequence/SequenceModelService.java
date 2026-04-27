@@ -44,9 +44,6 @@ public class SequenceModelService extends BaseServiceImpl<Sequence, Long, Sequen
         return repository.countByCategory(c);
     }
 
-    public Page<Sequence> findByFilters(Pageable pageable, PredicateSpecification<Sequence> spec) {
-        return repository.findBy(spec, p -> p.page(pageable));
-    }
 }
 
 

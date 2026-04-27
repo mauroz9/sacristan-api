@@ -16,26 +16,6 @@ public class SequenceSpecification {
         };
     }
 
-    public static PredicateSpecification<Sequence> searchByFilters(Long categoryId, String search, Long userID) {
-        return (from, cb) -> {
-            var predicates = cb.conjunction();
-
-            if (categoryId != null) {
-                predicates = cb.and(predicates, cb.equal(from.get("category").get("id"), categoryId));
-            }
-
-            if (search != null && !search.isBlank()) {
-                predicates = cb.and(predicates, buildTermPredicate(search, from, cb));
-            }
-
-            if (userID != null) {
-                predicates = cb.and(predicates, cb.equal(from.join("assignedUsers").get("id"), userID));
-            }
-
-            return predicates;
-        };
-    }
-
     private static Predicate buildTermPredicate(String query, From<?, Sequence> from, CriteriaBuilder cb) {
         String likeQuery = "%" + query.toLowerCase() + "%";
         return cb.or(
