@@ -52,6 +52,10 @@ public class StudentModelService extends BaseServiceImpl<Student, Long, StudentR
     public void deleteRoutineAssignmentsByRoutineId(Long id) {
         repository.deleteRoutineAssignmentsByRoutineId(id);
     }
+
+    public void deleteSequenceAssignmentsBySequenceId(Long id) {
+        repository.deleteSequenceAssignmentsBySequenceId(id);
+    }
 }
 
 

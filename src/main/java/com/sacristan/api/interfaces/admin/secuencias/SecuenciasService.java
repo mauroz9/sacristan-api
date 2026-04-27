@@ -1,12 +1,16 @@
 package com.sacristan.api.interfaces.admin.secuencias;
 
 import com.sacristan.api.global.dtos.SortParamDTO;
+import com.sacristan.api.global.entities.assignments.routineSegment.RoutineSegment;
+import com.sacristan.api.global.entities.assignments.routineSegment.RoutineSegmentModelService;
 import com.sacristan.api.global.entities.content.category.CategoryModelService;
 import com.sacristan.api.global.entities.content.sequence.Sequence;
 import com.sacristan.api.global.entities.content.sequence.SequenceModelService;
 import com.sacristan.api.global.entities.content.sequence.SequenceSpecification;
 import com.sacristan.api.global.entities.content.step.Step;
 import com.sacristan.api.global.entities.content.step.StepModelService;
+import com.sacristan.api.global.entities.tracking.reproduction.ReproductionModelService;
+import com.sacristan.api.global.entities.users.student.StudentModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +25,9 @@ public class SecuenciasService {
     private final SequenceModelService sequenceModelService;
     private final CategoryModelService categoryModelService;
     private final StepModelService stepModelService;
+    private final RoutineSegmentModelService routineSegmentModelService;
+    private final ReproductionModelService reproductionModelService;
+    private final StudentModelService studentModelService;
 
     // * CRUD Operations
     public Sequence create(Sequence sequence) {
@@ -64,6 +71,16 @@ public class SecuenciasService {
     }
 
     public void delete(Long id) {
+
+        studentModelService.deleteSequenceAssignmentsBySequenceId(id);
+
+        List<RoutineSegment> routineSegmentList = routineSegmentModelService.getBySequenceId(id);
+        routineSegmentList.forEach(routineSegment -> {
+            reproductionModelService.deleteByRoutineSegmentId(routineSegment.getId());
+        });
+        routineSegmentModelService.deleteBySequenceId(id);
+
+        stepModelService.deleteBySequenceId(id);
         sequenceModelService.deleteById(id);
     }
 

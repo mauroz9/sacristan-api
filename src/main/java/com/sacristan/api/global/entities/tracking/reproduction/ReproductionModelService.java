@@ -29,8 +29,8 @@ public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long
         return repository.findCompletedRoutineSegmentForToday(userId, routineSegmentId, today, tomorrow, completed);
     }
 
-    public void deleteByRoutineSegmentId(Long routineSegmentId) {
-        repository.deleteByRoutineSegmentId(routineSegmentId);
+    public void deleteByRoutineSegmentId(Long id) {
+        repository.deleteByRoutineSegmentId(id);
     }
 
 }

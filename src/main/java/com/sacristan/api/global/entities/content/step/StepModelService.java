@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StepModelService extends BaseServiceImpl<Step, Long, StepRepository> {
+    public void deleteBySequenceId(Long id) {
+        repository.deleteBySequenceId(id);
+    }
 }
 
 
