@@ -43,14 +43,14 @@ public class Reproduction {
     @MapKeyColumn(name = "step_id")
     @Column(name = "reproductions_count")
     @Builder.Default
-    private Map<Long, Integer> stepReproductions = new HashMap<>();
+    private Map<Integer, Integer> stepReproductions = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "reproduction_step_times", joinColumns = @JoinColumn(name = "reproduction_id"))
     @MapKeyColumn(name = "step_id")
     @Column(name = "active_time_ms")
     @Builder.Default
-    private Map<Long, Long> reproductionTime = new HashMap<>();
+    private Map<Integer, Long> reproductionTime = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "reproduction_clicks", joinColumns = @JoinColumn(name = "reproduction_id"))

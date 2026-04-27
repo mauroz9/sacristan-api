@@ -1,6 +1,7 @@
 package com.sacristan.api.interfaces.student.reproduccion;
 
 import com.sacristan.api.global.entities.users.user.User;
+import com.sacristan.api.interfaces.student.reproduccion.dtos.request.EndReproductionRequest;
 import com.sacristan.api.interfaces.student.reproduccion.dtos.response.SequenceDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
@@ -35,9 +36,10 @@ public class ReproduccionController {
     @PutMapping("/reproductions/{id}/end")
     public ResponseEntity<?> endReproduction(
             @PathVariable Long id,
+            @RequestBody EndReproductionRequest request,
             @AuthenticationPrincipal User user
     ) {
-        service.endReproduction(id, user);
+        service.endReproduction(id, request, user);
         return ResponseEntity.ok().build();
     }
 }
