@@ -36,7 +36,28 @@ public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long
     public void deleteByStudentId(Long id) {
         repository.deleteByStudentId(id);
     }
+
+    public Integer countByStudentIdAndStatus(Long studentId, Status status) {
+        return repository.countByStudentIdAndStatus(studentId, status);
+    }
+
+    public Reproduction findFirstByStudentIdOrderByStartedAtDesc(Long studentId) {
+        return repository.findFirstByStudentIdOrderByStartedAtDesc(studentId);
+    }
+
+    public List<Reproduction> findTop10ByStudentIdOrderByStartedAtDesc(Long studentId) {
+        return repository.findTop10ByStudentIdOrderByStartedAtDesc(studentId);
+    }
+
+    public List<Reproduction> findByStudentIdAndStartedAtAfter(Long studentId, LocalDateTime date) {
+        return repository.findByStudentIdAndStartedAtAfter(studentId, date);
+    }
+
+    public List<java.sql.Date> findDistinctReproductionDatesByStudentId(Long studentId) {
+        return repository.findDistinctReproductionDatesByStudentId(studentId);
+    }
+
+    public List<Reproduction> findByStudentId(Long studentId) {
+        return repository.findByStudentId(studentId);
+    }
 }
-
-
-

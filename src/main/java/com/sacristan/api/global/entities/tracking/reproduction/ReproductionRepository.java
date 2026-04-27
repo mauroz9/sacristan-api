@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -62,4 +63,18 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
     @Transactional
     @Query("DELETE FROM Reproduction r WHERE r.student.id = :id")
     void deleteByStudentId(Long id);
+
+    Integer countByStudentIdAndStatus(Long studentId, Status status);
+
+    Reproduction findFirstByStudentIdOrderByStartedAtDesc(Long studentId);
+
+    List<Reproduction> findTop10ByStudentIdOrderByStartedAtDesc(Long studentId);
+
+    List<Reproduction> findByStudentIdAndStartedAtAfter(Long studentId, LocalDateTime date);
+
+    @Query("SELECT DISTINCT CAST(r.startedAt AS date) FROM Reproduction r WHERE r.student.id = :studentId ORDER BY CAST(r.startedAt AS date) DESC")
+    List<java.sql.Date> findDistinctReproductionDatesByStudentId(@Param("studentId") Long studentId);
+
+    // Obtener reproducciones para calcular promedios y categorías
+    List<Reproduction> findByStudentId(Long studentId);
 }
