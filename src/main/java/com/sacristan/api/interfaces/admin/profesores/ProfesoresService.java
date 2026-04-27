@@ -35,6 +35,8 @@ public class ProfesoresService {
     }
 
     public void delete(Long id) {
+        List<Student> studentList = getStudentsByTeacher(id);
+        studentList.forEach(student -> unassignTeacher(student.getId()));
         teacherModelService.deleteById(id);
     }
 
