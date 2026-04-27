@@ -2,6 +2,7 @@ package com.sacristan.api.global.error;
 
 import com.sacristan.api.global.error.exceptions.BadRequestException;
 import com.sacristan.api.global.error.exceptions.JwtTokenException;
+import com.sacristan.api.global.security.config.jwt.refresh.RefreshTokenNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.java.Log;
 import org.jspecify.annotations.Nullable;
@@ -55,6 +56,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     // MANEJAR RefreshTokenException
     // RefreshTokenNotFoundException
+
+    @ExceptionHandler(RefreshTokenNotFoundException.class)
+    public ProblemDetail handleRefreshTokenNotFoundException(RefreshTokenNotFoundException ex, HttpServletRequest request) {
+        ProblemDetail pb = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, "Refresh token not found: " + ex.getMessage());
+        pb.setType(URI.create("about:blank"));
+        pb.setTitle("Invalid refresh token");
+        pb.setInstance(URI.create(request.getRequestURI()));
+        return pb;
+    }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ProblemDetail handleBadCredentialsException(BadCredentialsException ex, HttpServletRequest request) {
