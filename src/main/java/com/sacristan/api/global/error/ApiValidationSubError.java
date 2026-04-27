@@ -23,6 +23,8 @@ public record ApiValidationSubError(
     public static ApiValidationSubError from(ObjectError error) {
         ApiValidationSubError result = null;
 
+        System.out.println(error);
+
         if (error instanceof FieldError fieldError) {
             result = ApiValidationSubError.builder()
                     .object(error.getObjectName())
