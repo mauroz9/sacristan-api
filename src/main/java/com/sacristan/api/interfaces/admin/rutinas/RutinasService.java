@@ -10,6 +10,8 @@ import com.sacristan.api.global.entities.content.sequence.Sequence;
 import com.sacristan.api.global.entities.content.sequence.SequenceModelService;
 import com.sacristan.api.global.entities.assignments.routineSegment.RoutineSegment;
 import com.sacristan.api.global.entities.assignments.routineSegment.RoutineSegmentModelService;
+import com.sacristan.api.global.entities.tracking.reproduction.ReproductionModelService;
+import com.sacristan.api.global.entities.users.student.StudentModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +30,8 @@ public class RutinasService {
     private final CategoryModelService categoryModelService;
     private final SequenceModelService sequenceModelService;
     private final RoutineSegmentModelService routineSegmentModelService;
+    private final ReproductionModelService reproductionModelService;
+    private final StudentModelService studentModelService;
 
     // * CRUD Operations
     public Routine create(Routine routine) {
@@ -119,6 +123,15 @@ public class RutinasService {
     }
 
     public void delete(Long id) {
+        List<RoutineSegment> routineSegmentList = routineSegmentModelService.getByRoutineId(id);
+        routineSegmentList.forEach(routineSegment -> {
+            reproductionModelService.deleteByRoutineSegmentId(routineSegment.getId());
+        });
+
+        routineSegmentModelService.deleteByRoutineId(id);
+
+        studentModelService.deleteRoutineAssignmentsByRoutineId(id);
+
         routineModelService.deleteById(id);
     }
 

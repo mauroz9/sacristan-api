@@ -3,6 +3,7 @@ package com.sacristan.api.global.entities.users.student;
 import com.sacristan.api.global.entities.content.rotuine.Routine;
 import com.sacristan.api.global.entities.content.sequence.Sequence;
 import com.sacristan.api.global.entities.users.teacher.Teacher;
+import jakarta.transaction.Transactional;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -78,4 +79,9 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
 
     @Query("SELECT s.routines FROM Student s WHERE s.id = :id")
     List<Routine> getRoutinesByUserId(Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value= "DELETE FROM student_routines WHERE routine_id = :routineId", nativeQuery = true)
+    void deleteRoutineAssignmentsByRoutineId(Long routineId);
 }
