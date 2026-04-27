@@ -2,9 +2,12 @@ package com.sacristan.api.global.entities.users.student;
 
 import com.sacristan.api.global.dtos.SortParamDTO;
 import com.sacristan.api.global.entities.content.rotuine.Routine;
+import com.sacristan.api.global.entities.content.sequence.Sequence;
 import com.sacristan.api.global.entities.users.teacher.Teacher;
 import com.sacristan.api.global.entities.users.user.User;
 import com.sacristan.api.global.services.BaseServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +38,15 @@ public class StudentModelService extends BaseServiceImpl<Student, Long, StudentR
 
     public List<Routine> getRoutinesByUserId(User user) {
         return repository.getRoutinesByUserId(user.getId());
+    }
+
+    public Page<Sequence> findByFilters(Pageable pageable, Long id, Long categoryId, String search) {
+        return repository.findFilteredSequencesByStudentId(
+                id,
+                categoryId,
+                search,
+                pageable
+        );
     }
 }
 

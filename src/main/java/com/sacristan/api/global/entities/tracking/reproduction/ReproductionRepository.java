@@ -49,5 +49,5 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
                     "AND r.startedAt >= :today AND r.startedAt < :tomorrow " +
                     "AND r.status = :completed"
     )
-    List<Reproduction> findCompletedRoutineSegmentForToday(Long id, Long id1, LocalDateTime localDateTime, LocalDateTime localDateTime1, Status status);
+    List<Reproduction> findCompletedRoutineSegmentForToday(Long userId, Long routineSegmentId, LocalDateTime today, LocalDateTime tomorrow, Status completed);
 }
