@@ -19,7 +19,7 @@ public class SequenceDetailResponse {
     private Long id;
     private String title;
     private String description;
-    private String category;
+    private CategoryResponse category;
     private Duration estimatedDuration;
     private Boolean allowGoBack;
     private Integer frontPage;
@@ -30,7 +30,7 @@ public class SequenceDetailResponse {
                 .id(sequence.getId())
                 .title(sequence.getTitle())
                 .description(sequence.getDescription())
-                .category(sequence.getCategory() != null ? sequence.getCategory().getName() : null)
+                .category(sequence.getCategory() != null ? CategoryResponse.ofEntity(sequence.getCategory()) : null)
                 .estimatedDuration(sequence.getEstimatedDuration())
                 .allowGoBack(sequence.getAllowGoBack())
                 .frontPage(sequence.getFrontPage())
