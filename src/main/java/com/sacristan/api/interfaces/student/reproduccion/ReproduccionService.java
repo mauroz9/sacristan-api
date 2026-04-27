@@ -60,7 +60,7 @@ public class ReproduccionService {
         buttonClicks.put("previous", request.getButtonClicks().getPrevious());
         buttonClicks.put("next", request.getButtonClicks().getNext());
 
-        if (request.getButtonClicks().getComplete() == 0 || request.getButtonClicks().getComplete() == null) {
+        if (request.getButtonClicks().getComplete() == 0) {
             reproduction.setStatus(Status.ABANDONED);
         } else {
             reproduction.setStatus(Status.COMPLETED);
@@ -85,28 +85,5 @@ public class ReproduccionService {
 
         reproduction.setEndedAt(LocalDateTime.now());
         reproductionModelService.save(reproduction);
-    }
-
-    private void logReproductionStats(EndReproductionRequest request) {
-        System.out.println("Reproducción completada - ID: " + request.getReproductionId() +
-                ", Total pasos: " + request.getTotalSteps() +
-                ", Total clicks: " + request.getTotalClicks());
-
-        if (request.getStepStats() != null && !request.getStepStats().isEmpty()) {
-            System.out.println("Estadísticas por paso:");
-            request.getStepStats().forEach(step ->
-                    System.out.println("  Paso " + step.getStepIndex() + ": " +
-                            step.getViewCount() + " visualizaciones, " +
-                            step.getTotalViewTimeMs() + " ms de visualización total")
-            );
-        }
-
-        if (request.getButtonClicks() != null) {
-            System.out.println("Clicks de botones - Anterior: " +
-                    request.getButtonClicks().getPrevious() +
-                    ", Siguiente: " + request.getButtonClicks().getNext() +
-                    ", Completar: " + request.getButtonClicks().getComplete() +
-                    ", Salir: " + request.getButtonClicks().getExit());
-        }
     }
 }

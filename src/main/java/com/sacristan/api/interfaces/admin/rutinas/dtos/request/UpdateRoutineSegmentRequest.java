@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalTime;
 
 public record UpdateRoutineSegmentRequest(
-        @NotNull(message = "{validation.empty.routineSegmentId}")
         Long routineSegmentId,
 
         @NotNull(message = "{validation.empty.sequenceId}")
@@ -22,6 +21,7 @@ public record UpdateRoutineSegmentRequest(
 
     public RoutineSegment toEntity() {
         return RoutineSegment.builder()
+                .id(routineSegmentId)
                 .sequence(Sequence.builder().id(sequenceId).build())
                 .startTime(startTime)
                 .endTime(endTime)
