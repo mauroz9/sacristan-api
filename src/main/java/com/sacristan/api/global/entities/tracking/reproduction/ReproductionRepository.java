@@ -2,10 +2,12 @@ package com.sacristan.api.global.entities.tracking.reproduction;
 
 import com.sacristan.api.global.entities.tracking.status.Status;
 import com.sacristan.api.interfaces.admin.dashboard.dtos.LatestReproductionsDto;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -50,4 +52,9 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
                     "AND r.status = :completed"
     )
     List<Reproduction> findCompletedRoutineSegmentForToday(Long userId, Long routineSegmentId, LocalDateTime today, LocalDateTime tomorrow, Status completed);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Reproduction r WHERE r.routineSegment.id = :id")
+    void deleteByRoutineSegmentId(Long id);
 }

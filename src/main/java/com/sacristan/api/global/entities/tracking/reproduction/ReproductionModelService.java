@@ -28,6 +28,11 @@ public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long
     public List<Reproduction> findCompletedRoutineSequenceForToday(Long userId, Long routineSegmentId, LocalDateTime today, LocalDateTime tomorrow, Status completed) {
         return repository.findCompletedRoutineSegmentForToday(userId, routineSegmentId, today, tomorrow, completed);
     }
+
+    public void deleteByRoutineSegmentId(Long routineSegmentId) {
+        repository.deleteByRoutineSegmentId(routineSegmentId);
+    }
+
 }
 
 

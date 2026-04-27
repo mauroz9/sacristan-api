@@ -48,6 +48,10 @@ public class StudentModelService extends BaseServiceImpl<Student, Long, StudentR
                 pageable
         );
     }
+
+    public void deleteRoutineAssignmentsByRoutineId(Long id) {
+        repository.deleteRoutineAssignmentsByRoutineId(id);
+    }
 }
 
 
