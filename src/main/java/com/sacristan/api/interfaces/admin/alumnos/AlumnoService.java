@@ -5,6 +5,7 @@ import com.sacristan.api.global.entities.content.rotuine.Routine;
 import com.sacristan.api.global.entities.content.rotuine.RoutineModelService;
 import com.sacristan.api.global.entities.content.sequence.Sequence;
 import com.sacristan.api.global.entities.content.sequence.SequenceModelService;
+import com.sacristan.api.global.entities.tracking.reproduction.ReproductionModelService;
 import com.sacristan.api.global.entities.users.role.Role;
 import com.sacristan.api.global.entities.users.student.Student;
 import com.sacristan.api.global.entities.users.student.StudentModelService;
@@ -28,6 +29,7 @@ public class AlumnoService {
     private final UserModelService userModelService;
     private final SequenceModelService sequenceModelService;
     private final RoutineModelService routineModelService;
+    private final ReproductionModelService reproductionModelService;
 
     public void create(Student student) {
         User createdUser = userModelService.create(student.getUser(), Role.STUDENT);
@@ -40,6 +42,7 @@ public class AlumnoService {
     }
 
     public void delete(Long id) {
+        reproductionModelService.deleteByStudentId(id);
         studentModelService.deleteById(id);
     }
 
