@@ -57,4 +57,9 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
     @Transactional
     @Query("DELETE FROM Reproduction r WHERE r.routineSegment.id = :id")
     void deleteByRoutineSegmentId(Long id);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Reproduction r WHERE r.student.id = :id")
+    void deleteByStudentId(Long id);
 }

@@ -33,6 +33,9 @@ public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long
         repository.deleteByRoutineSegmentId(id);
     }
 
+    public void deleteByStudentId(Long id) {
+        repository.deleteByStudentId(id);
+    }
 }
 
 
