@@ -23,7 +23,7 @@ public interface SequenceRepository extends JpaRepository<Sequence, Long>, JpaSp
         SELECT COALESCE(COUNT(*), 0)
         FROM student_routines sr
         JOIN routine_days rd ON rd.routine_id = sr.routine_id
-        JOIN routine_sequence rs ON rs.routine_id = sr.routine_id
+        JOIN routine_segments rs ON rs.routine_id = sr.routine_id
         WHERE rd.day_of_the_week = :dayName
         """, nativeQuery = true)
     long countExpectedSequencesForDay(@Param("dayName") String dayName);

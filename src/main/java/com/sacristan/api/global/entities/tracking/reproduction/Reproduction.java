@@ -28,7 +28,7 @@ public class Reproduction {
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "routine_sequence_id")
+    @JoinColumn(name = "routine_segment_id")
     private RoutineSegment routineSegment;
 
     @ManyToOne(fetch = FetchType.LAZY)
