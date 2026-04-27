@@ -44,6 +44,7 @@ public class AlumnoService {
     public void delete(Long id) {
         reproductionModelService.deleteByStudentId(id);
         studentModelService.deleteById(id);
+        userModelService.deleteById(id);
     }
 
     public Student getById(Long id) {

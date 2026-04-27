@@ -38,6 +38,7 @@ public class ProfesoresService {
         List<Student> studentList = getStudentsByTeacher(id);
         studentList.forEach(student -> unassignTeacher(student.getId()));
         teacherModelService.deleteById(id);
+        userModelService.deleteById(id);
     }
 
     public Teacher getById(Long id) {
