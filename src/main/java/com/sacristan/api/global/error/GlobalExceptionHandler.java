@@ -151,6 +151,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         pb.setInstance(URI.create(request.getRequestURI()));
         pb.setProperty("exception", ex.getClass().getName());
 
+        System.err.println("Error no registrado durante la ejecución del código...");
+        System.err.println("Exception: " + ex.getClass().getName());
+        System.err.println("Exception message: " + ex.getMessage());
+
         return pb;
 
     }

@@ -11,8 +11,16 @@ import java.util.List;
 @Service
 public class RoutineSegmentModelService extends BaseServiceImpl<RoutineSegment, Long, RoutineSegmentRepository> {
 
+    public List<RoutineSegment> getBySequenceId(Long id) {
+        return repository.findBySequenceId(id);
+    }
+
     public void deleteByRoutineId(Long id) {
         repository.deleteByRoutineId(id);
+    }
+
+    public void deleteBySequenceId(Long id) {
+        repository.deleteBySequenceId(id);
     }
 
     public List<RoutineSegment> getByRoutineId(Long routineId) {

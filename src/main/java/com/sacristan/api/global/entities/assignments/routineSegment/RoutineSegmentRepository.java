@@ -24,4 +24,7 @@ public interface RoutineSegmentRepository extends JpaRepository<RoutineSegment, 
     void deleteByRoutineId(@Param("routineId") Long routineId);
 
     List<RoutineSegment> findByRoutineId(Long routineId);
+
+    @Query("SELECT r FROM RoutineSegment r WHERE r.sequence.id = :id")
+    List<RoutineSegment> findBySequenceId(Long id);
 }

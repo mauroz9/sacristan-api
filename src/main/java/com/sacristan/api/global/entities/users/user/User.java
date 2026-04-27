@@ -58,14 +58,12 @@ public class User implements UserDetails {
 
 
     /* -- USER ROLES -- */
-
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
 
     /* -- SECURITY METHODS -- */
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
