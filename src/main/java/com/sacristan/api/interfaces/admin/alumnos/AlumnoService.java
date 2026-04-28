@@ -5,6 +5,7 @@ import com.sacristan.api.global.entities.content.rotuine.Routine;
 import com.sacristan.api.global.entities.content.rotuine.RoutineModelService;
 import com.sacristan.api.global.entities.content.sequence.Sequence;
 import com.sacristan.api.global.entities.content.sequence.SequenceModelService;
+import com.sacristan.api.global.entities.content.weekDays.DaysOfTheWeek;
 import com.sacristan.api.global.entities.tracking.reproduction.Reproduction;
 import com.sacristan.api.global.entities.tracking.reproduction.ReproductionModelService;
 import com.sacristan.api.global.entities.tracking.status.Status;
@@ -24,6 +25,7 @@ import java.sql.Date;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
@@ -249,6 +251,18 @@ public class AlumnoService {
         );
     }
 
+    private DaysOfTheWeek getTodayEnum() {
+        return switch (LocalDate.now().getDayOfWeek()) {
+            case MONDAY -> DaysOfTheWeek.MONDAY;
+            case TUESDAY -> DaysOfTheWeek.TUESDAY;
+            case WEDNESDAY -> DaysOfTheWeek.WEDNESDAY;
+            case THURSDAY -> DaysOfTheWeek.THURSDAY;
+            case FRIDAY -> DaysOfTheWeek.FRIDAY;
+            case SATURDAY -> DaysOfTheWeek.SATURDAY;
+            case SUNDAY -> DaysOfTheWeek.SUNDAY;
+        };
+    }
+
     public StudentDashboardResponse getStudentDashboardData(Long studentId) {
         Student student = getById(studentId); // Lanza excepción si no existe
 
@@ -287,25 +301,43 @@ public class AlumnoService {
                 .map(this::mapToRecentActivityDTO)
                 .toList();
 
-        List<AssignedSequenceProgressDTO> assignedProgress = student.getSequences().stream()
-                .map(seq -> {
-                    long completadasDeSecuencia = completedReproductions.stream()
-                            .filter(r -> r.getRoutineSegment().getSequence().getId().equals(seq.getId()))
-                            .count();
+        LocalDate todayDate = LocalDate.now();
+        LocalTime nowTime = LocalTime.now();
+        DaysOfTheWeek todayEnum = getTodayEnum();
 
-                    Optional<Reproduction> lastTime = allReproductions.stream()
-                            .filter(r -> r.getRoutineSegment().getSequence().getId().equals(seq.getId()))
-                            .max(Comparator.comparing(Reproduction::getStartedAt));
+        List<AssignedSequenceProgressDTO> assignedProgress = student.getRoutines().stream()
+                .filter(routine -> routine.getDaysOfTheWeek().contains(todayEnum))
+                .flatMap(routine -> routine.getSequences().stream())
+                .map(segment -> {
+                    boolean isCompleted = completedReproductions.stream()
+                            .anyMatch(r -> r.getRoutineSegment() != null
+                                    && r.getRoutineSegment().getId().equals(segment.getId())
+                                    && r.getEndedAt() != null
+                                    && r.getEndedAt().toLocalDate().equals(todayDate));
+
+                    String estado;
+                    if (isCompleted) {
+                        estado = "COMPLETADA";
+                    } else if (segment.getEndTime() != null && nowTime.isAfter(segment.getEndTime())) {
+                        estado = "CADUCADA";
+                    } else {
+                        estado = "PENDIENTE";
+                    }
+
+                    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+                    String start = segment.getStartTime() != null ? segment.getStartTime().format(timeFormatter) : "--:--";
+                    String end = segment.getEndTime() != null ? segment.getEndTime().format(timeFormatter) : "--:--";
+                    String franja = start + " - " + end;
 
                     return new AssignedSequenceProgressDTO(
-                            seq.getId(),
-                            seq.getTitle(),
-                            seq.getCategory() != null ? seq.getCategory().getName() : "Sin categoría",
-                            (int) completadasDeSecuencia,
-                            50,
-                            calculateElapsedTime(lastTime.map(Reproduction::getStartedAt).orElse(null))
+                            segment.getId(),
+                            segment.getSequence().getTitle(),
+                            segment.getSequence().getCategory() != null ? segment.getSequence().getCategory().getName() : "Sin categoría",
+                            franja,
+                            estado
                     );
                 })
+                .sorted(Comparator.comparing(AssignedSequenceProgressDTO::franjaHoraria))
                 .toList();
 
         return new StudentDashboardResponse(statsDTO, weeklyProgress, topCategories, assignedProgress, recentActivity);
