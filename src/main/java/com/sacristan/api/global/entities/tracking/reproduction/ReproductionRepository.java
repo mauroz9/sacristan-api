@@ -90,4 +90,16 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
             @Param("status") Status status,
             @Param("today") LocalDate today
     );
+
+    @Query("""
+        SELECT DISTINCT r.routineSegment.id
+        FROM Reproduction r
+        WHERE r.student.id = :studentId
+          AND r.status = :status
+          AND r.endedAt IS NOT NULL
+          AND CAST(r.endedAt AS date) = :today
+        """)
+    List<Long> findCompletedRoutineSegmentIdsForToday(@Param("studentId") Long studentId,
+                                                     @Param("status") Status status,
+                                                     @Param("today") LocalDate today);
 }

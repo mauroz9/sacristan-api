@@ -65,4 +65,8 @@ public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long
     public boolean existsCompletedToday(Long studentId, Long segmentId, LocalDate today) {
         return repository.existsCompletedToday(studentId, segmentId, Status.COMPLETED, today);
     }
+
+    public List<Long> findCompletedRoutineSegmentIdsForToday(Long studentId, LocalDate today) {
+        return repository.findCompletedRoutineSegmentIdsForToday(studentId, Status.COMPLETED, today);
+    }
 }

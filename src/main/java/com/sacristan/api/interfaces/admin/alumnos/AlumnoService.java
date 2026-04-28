@@ -167,7 +167,7 @@ public class AlumnoService {
         int racha = 1;
 
         LocalDate today = LocalDate.now();
-        LocalDate currentCheck = dates.get(0).toLocalDate();
+        LocalDate currentCheck = dates.getFirst().toLocalDate();
 
         if (currentCheck.isBefore(today.minusDays(1))) return 0;
 
@@ -195,10 +195,11 @@ public class AlumnoService {
     private List<DailyProgressDTO> generateWeeklyProgress(List<Reproduction> completed) {
         List<DailyProgressDTO> progress = new ArrayList<>();
         LocalDate today = LocalDate.now();
+        Locale spanishLocale = Locale.of("es", "ES");
 
         for (int i = 6; i >= 0; i--) {
             LocalDate date = today.minusDays(i);
-            String dayName = date.getDayOfWeek().getDisplayName(TextStyle.SHORT, new Locale("es", "ES"));
+            String dayName = date.getDayOfWeek().getDisplayName(TextStyle.SHORT, spanishLocale);
             dayName = dayName.substring(0, 1).toUpperCase() + dayName.substring(1); // Capitalizar
 
             long count = completed.stream()
@@ -232,7 +233,7 @@ public class AlumnoService {
     }
 
     private RecentActivityDTO mapToRecentActivityDTO(Reproduction r) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm", new Locale("es", "ES"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm", Locale.of("es", "ES"));
 
         String duracion = "N/A";
         if (r.getEndedAt() != null && r.getStartedAt() != null) {
@@ -276,35 +277,30 @@ public class AlumnoService {
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
         DaysOfTheWeek todayEnum = getTodayEnum();
+        Set<Long> completedSegmentIdsToday = new HashSet<>(reproductionModelService.findCompletedRoutineSegmentIdsForToday(studentId, today));
 
-        // A) Completadas Hoy (Globales, incluye tanto las mandadas como las que haga por libre)
         int completadasHoy = (int) completedReproductions.stream()
                 .filter(r -> r.getEndedAt().toLocalDate().equals(today))
                 .count();
 
-        // --- LÓGICA DE LA AGENDA DIARIA ---
-        // Extraemos la lista de todas las tareas (segmentos) que le tocan hacer HOY
         List<RoutineSegment> segmentosHoy = student.getRoutines().stream()
                 .filter(r -> r.getDaysOfTheWeek().contains(todayEnum))
                 .flatMap(r -> r.getSequences().stream())
                 .toList();
 
-        // B) Pendientes Hoy (Las que le tocan hoy, que NO ha hecho, y que no han caducado)
         int pendientesHoy = (int) segmentosHoy.stream()
-                .filter(segment -> !reproductionModelService.existsCompletedToday(studentId, segment.getId(), today))
+                .filter(segment -> !completedSegmentIdsToday.contains(segment.getId()))
                 .filter(segment -> segment.getEndTime() == null || !now.isAfter(segment.getEndTime()))
                 .count();
 
-        // C) Tasa de Éxito de Hoy (Completadas de la agenda vs Total de la agenda de hoy)
         int totalAsignadasHoy = segmentosHoy.size();
         int completadasAsignadasHoy = (int) segmentosHoy.stream()
-                .filter(segment -> reproductionModelService.existsCompletedToday(studentId, segment.getId(), today))
+                .filter(segment -> completedSegmentIdsToday.contains(segment.getId()))
                 .count();
 
         int tasaExito = totalAsignadasHoy == 0 ? 0 :
                 (int) Math.round((double) completadasAsignadasHoy / totalAsignadasHoy * 100);
 
-        // D) Resto de Estadísticas (Racha, Media de tiempo, etc.)
         Reproduction last = reproductionModelService.findFirstByStudentIdOrderByStartedAtDesc(studentId);
         List<java.sql.Date> activityDates = reproductionModelService.findDistinctReproductionDatesByStudentId(studentId);
 
@@ -315,7 +311,7 @@ public class AlumnoService {
         return new StudentStatsDTO(
                 completadasHoy,
                 pendientesHoy,
-                tasaExito, // Ahora es % del cumplimiento de la agenda diaria
+                tasaExito,
                 Math.round(avgTime * 10.0) / 10.0,
                 calculateStreak(activityDates),
                 calculateElapsedTime(last != null ? last.getStartedAt() : null)
@@ -335,11 +331,11 @@ public class AlumnoService {
         return getCategoriesPlayed(completed);
     }
 
-    private AssignedSequenceProgressDTO mapToAgendaDTO(RoutineSegment segment, Long studentId, LocalDate today, LocalTime now) {
-        boolean isCompleted = reproductionModelService.existsCompletedToday(studentId, segment.getId(), today);
+    private AssignedSequenceProgressDTO mapToAgendaDTO(RoutineSegment segment, LocalDateTime now, Set<Long> completedSegmentIdsToday) {
+        boolean isCompleted = completedSegmentIdsToday.contains(segment.getId());
 
         String estado = isCompleted ? "COMPLETADA" :
-                (segment.getEndTime() != null && now.isAfter(segment.getEndTime()) ? "CADUCADA" : "PENDIENTE");
+                (segment.getEndTime() != null && now.toLocalTime().isAfter(segment.getEndTime()) ? "CADUCADA" : "PENDIENTE");
 
         return new AssignedSequenceProgressDTO(
                 segment.getId(),
@@ -353,13 +349,14 @@ public class AlumnoService {
     public Page<AssignedSequenceProgressDTO> getStudentAgenda(Long studentId, Pageable pageable) {
         Student student = getById(studentId);
         LocalDate today = LocalDate.now();
-        LocalTime now = LocalTime.now();
+        LocalDateTime now = LocalDateTime.now();
         DaysOfTheWeek todayEnum = getTodayEnum();
+        Set<Long> completedSegmentIdsToday = new HashSet<>(reproductionModelService.findCompletedRoutineSegmentIdsForToday(studentId, today));
 
         List<AssignedSequenceProgressDTO> fullAgenda = student.getRoutines().stream()
                 .filter(r -> r.getDaysOfTheWeek().contains(todayEnum))
                 .flatMap(r -> r.getSequences().stream())
-                .map(segment -> mapToAgendaDTO(segment, studentId, today, now))
+                .map(segment -> mapToAgendaDTO(segment, now, completedSegmentIdsToday))
                 .sorted(Comparator.comparing(AssignedSequenceProgressDTO::franjaHoraria))
                 .toList();
 
