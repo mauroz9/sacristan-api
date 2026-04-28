@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -45,8 +46,8 @@ public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long
         return repository.findFirstByStudentIdOrderByStartedAtDesc(studentId);
     }
 
-    public List<Reproduction> findTop10ByStudentIdOrderByStartedAtDesc(Long studentId) {
-        return repository.findTop10ByStudentIdOrderByStartedAtDesc(studentId);
+    public Page<Reproduction> findByStudentIdOrderByStartedAtDesc(Long studentId, Pageable pageable) {
+        return repository.findByStudentIdOrderByStartedAtDesc(studentId, pageable);
     }
 
     public List<Reproduction> findByStudentIdAndStartedAtAfter(Long studentId, LocalDateTime date) {
@@ -59,5 +60,9 @@ public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long
 
     public List<Reproduction> findByStudentId(Long studentId) {
         return repository.findByStudentId(studentId);
+    }
+
+    public boolean existsCompletedToday(Long studentId, Long segmentId, LocalDate today) {
+        return repository.existsCompletedToday(studentId, segmentId, Status.COMPLETED, today);
     }
 }

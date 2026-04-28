@@ -1,6 +1,7 @@
 package com.sacristan.api.interfaces.admin.alumnos;
 
 import com.sacristan.api.global.dtos.SortParamDTO;
+import com.sacristan.api.global.entities.assignments.routineSegment.RoutineSegment;
 import com.sacristan.api.global.entities.content.rotuine.Routine;
 import com.sacristan.api.global.entities.content.rotuine.RoutineModelService;
 import com.sacristan.api.global.entities.content.sequence.Sequence;
@@ -18,6 +19,7 @@ import com.sacristan.api.global.entities.users.user.UserModelService;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.dashboard.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -263,84 +265,80 @@ public class AlumnoService {
         };
     }
 
-    public StudentDashboardResponse getStudentDashboardData(Long studentId) {
-        Student student = getById(studentId); // Lanza excepción si no existe
-
+    public StudentStatsDTO getStudentStats(Long studentId) {
         Integer completadas = reproductionModelService.countByStudentIdAndStatus(studentId, Status.COMPLETED);
         Integer enProgreso = reproductionModelService.countByStudentIdAndStatus(studentId, Status.IN_PROGRESS);
-        int totalIntentos = completadas + enProgreso;
-        Integer tasaExito = totalIntentos == 0 ? 0 : (int) Math.round((double) completadas / totalIntentos * 100);
+        int total = completadas + enProgreso;
 
-        Reproduction lastReproduction = reproductionModelService.findFirstByStudentIdOrderByStartedAtDesc(studentId);
-        String ultimaActividadStr = calculateElapsedTime(lastReproduction != null ? lastReproduction.getStartedAt() : null);
-
+        Reproduction last = reproductionModelService.findFirstByStudentIdOrderByStartedAtDesc(studentId);
         List<java.sql.Date> activityDates = reproductionModelService.findDistinctReproductionDatesByStudentId(studentId);
-        Integer racha = calculateStreak(activityDates);
 
-        List<Reproduction> allReproductions = reproductionModelService.findByStudentId(studentId);
-        List<Reproduction> completedReproductions = allReproductions.stream()
+        Double avgTime = reproductionModelService.findByStudentId(studentId).stream()
                 .filter(r -> r.getStatus() == Status.COMPLETED && r.getEndedAt() != null)
-                .toList();
-
-        Double tiempoPromedio = completedReproductions.stream()
                 .mapToLong(r -> Duration.between(r.getStartedAt(), r.getEndedAt()).toMinutes())
-                .average()
-                .orElse(0.0);
-        tiempoPromedio = Math.round(tiempoPromedio * 10.0) / 10.0; // Redondear a 1 decimal
+                .average().orElse(0.0);
 
-        StudentStatsDTO statsDTO = new StudentStatsDTO(
-                completadas, enProgreso, tasaExito, tiempoPromedio, racha, ultimaActividadStr
+        return new StudentStatsDTO(
+                completadas, enProgreso,
+                total == 0 ? 0 : (int) Math.round((double) completadas / total * 100),
+                Math.round(avgTime * 10.0) / 10.0,
+                calculateStreak(activityDates),
+                calculateElapsedTime(last != null ? last.getStartedAt() : null)
         );
+    }
 
-        List<DailyProgressDTO> weeklyProgress = generateWeeklyProgress(completedReproductions);
+    public List<DailyProgressDTO> getWeeklyProgress(Long studentId) {
+        List<Reproduction> completed = reproductionModelService.findByStudentIdAndStartedAtAfter(
+                        studentId, LocalDateTime.now().minusDays(7))
+                .stream().filter(r -> r.getStatus() == Status.COMPLETED).toList();
+        return generateWeeklyProgress(completed);
+    }
 
-        List<CategoryStatDTO> topCategories = getCategoriesPlayed(completedReproductions);
+    public List<CategoryStatDTO> getCategoryStats(Long studentId) {
+        List<Reproduction> completed = reproductionModelService.findByStudentId(studentId).stream()
+                .filter(r -> r.getStatus() == Status.COMPLETED).toList();
+        return getCategoriesPlayed(completed);
+    }
 
-        List<RecentActivityDTO> recentActivity = reproductionModelService.findTop10ByStudentIdOrderByStartedAtDesc(studentId)
-                .stream()
-                .map(this::mapToRecentActivityDTO)
-                .toList();
+    private AssignedSequenceProgressDTO mapToAgendaDTO(RoutineSegment segment, Long studentId, LocalDate today, LocalTime now) {
+        boolean isCompleted = reproductionModelService.existsCompletedToday(studentId, segment.getId(), today);
 
-        LocalDate todayDate = LocalDate.now();
-        LocalTime nowTime = LocalTime.now();
+        String estado = isCompleted ? "COMPLETADA" :
+                (segment.getEndTime() != null && now.isAfter(segment.getEndTime()) ? "CADUCADA" : "PENDIENTE");
+
+        return new AssignedSequenceProgressDTO(
+                segment.getId(),
+                segment.getSequence().getTitle(),
+                segment.getSequence().getCategory().getName(),
+                segment.getStartTime() + " - " + segment.getEndTime(),
+                estado
+        );
+    }
+
+    public Page<AssignedSequenceProgressDTO> getStudentAgenda(Long studentId, Pageable pageable) {
+        Student student = getById(studentId);
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
         DaysOfTheWeek todayEnum = getTodayEnum();
 
-        List<AssignedSequenceProgressDTO> assignedProgress = student.getRoutines().stream()
-                .filter(routine -> routine.getDaysOfTheWeek().contains(todayEnum))
-                .flatMap(routine -> routine.getSequences().stream())
-                .map(segment -> {
-                    boolean isCompleted = completedReproductions.stream()
-                            .anyMatch(r -> r.getRoutineSegment() != null
-                                    && r.getRoutineSegment().getId().equals(segment.getId())
-                                    && r.getEndedAt() != null
-                                    && r.getEndedAt().toLocalDate().equals(todayDate));
-
-                    String estado;
-                    if (isCompleted) {
-                        estado = "COMPLETADA";
-                    } else if (segment.getEndTime() != null && nowTime.isAfter(segment.getEndTime())) {
-                        estado = "CADUCADA";
-                    } else {
-                        estado = "PENDIENTE";
-                    }
-
-                    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-                    String start = segment.getStartTime() != null ? segment.getStartTime().format(timeFormatter) : "--:--";
-                    String end = segment.getEndTime() != null ? segment.getEndTime().format(timeFormatter) : "--:--";
-                    String franja = start + " - " + end;
-
-                    return new AssignedSequenceProgressDTO(
-                            segment.getId(),
-                            segment.getSequence().getTitle(),
-                            segment.getSequence().getCategory() != null ? segment.getSequence().getCategory().getName() : "Sin categoría",
-                            franja,
-                            estado
-                    );
-                })
+        List<AssignedSequenceProgressDTO> fullAgenda = student.getRoutines().stream()
+                .filter(r -> r.getDaysOfTheWeek().contains(todayEnum))
+                .flatMap(r -> r.getSequences().stream())
+                .map(segment -> mapToAgendaDTO(segment, studentId, today, now))
                 .sorted(Comparator.comparing(AssignedSequenceProgressDTO::franjaHoraria))
                 .toList();
 
-        return new StudentDashboardResponse(statsDTO, weeklyProgress, topCategories, assignedProgress, recentActivity);
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), fullAgenda.size());
+
+        if (start > fullAgenda.size()) return new PageImpl<>(List.of(), pageable, fullAgenda.size());
+
+        return new PageImpl<>(fullAgenda.subList(start, end), pageable, fullAgenda.size());
+    }
+
+    public Page<RecentActivityDTO> getStudentActivity(Long studentId, Pageable pageable) {
+        return reproductionModelService.findByStudentIdOrderByStartedAtDesc(studentId, pageable)
+                .map(this::mapToRecentActivityDTO);
     }
 }
 
