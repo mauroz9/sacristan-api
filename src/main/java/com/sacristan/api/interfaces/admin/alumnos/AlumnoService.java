@@ -266,21 +266,56 @@ public class AlumnoService {
     }
 
     public StudentStatsDTO getStudentStats(Long studentId) {
-        Integer completadas = reproductionModelService.countByStudentIdAndStatus(studentId, Status.COMPLETED);
-        Integer enProgreso = reproductionModelService.countByStudentIdAndStatus(studentId, Status.IN_PROGRESS);
-        int total = completadas + enProgreso;
+        Student student = getById(studentId);
+        List<Reproduction> allReproductions = reproductionModelService.findByStudentId(studentId);
 
+        List<Reproduction> completedReproductions = allReproductions.stream()
+                .filter(r -> r.getStatus() == Status.COMPLETED && r.getEndedAt() != null)
+                .toList();
+
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        DaysOfTheWeek todayEnum = getTodayEnum();
+
+        // A) Completadas Hoy (Globales, incluye tanto las mandadas como las que haga por libre)
+        int completadasHoy = (int) completedReproductions.stream()
+                .filter(r -> r.getEndedAt().toLocalDate().equals(today))
+                .count();
+
+        // --- LÓGICA DE LA AGENDA DIARIA ---
+        // Extraemos la lista de todas las tareas (segmentos) que le tocan hacer HOY
+        List<RoutineSegment> segmentosHoy = student.getRoutines().stream()
+                .filter(r -> r.getDaysOfTheWeek().contains(todayEnum))
+                .flatMap(r -> r.getSequences().stream())
+                .toList();
+
+        // B) Pendientes Hoy (Las que le tocan hoy, que NO ha hecho, y que no han caducado)
+        int pendientesHoy = (int) segmentosHoy.stream()
+                .filter(segment -> !reproductionModelService.existsCompletedToday(studentId, segment.getId(), today))
+                .filter(segment -> segment.getEndTime() == null || !now.isAfter(segment.getEndTime()))
+                .count();
+
+        // C) Tasa de Éxito de Hoy (Completadas de la agenda vs Total de la agenda de hoy)
+        int totalAsignadasHoy = segmentosHoy.size();
+        int completadasAsignadasHoy = (int) segmentosHoy.stream()
+                .filter(segment -> reproductionModelService.existsCompletedToday(studentId, segment.getId(), today))
+                .count();
+
+        int tasaExito = totalAsignadasHoy == 0 ? 0 :
+                (int) Math.round((double) completadasAsignadasHoy / totalAsignadasHoy * 100);
+
+        // D) Resto de Estadísticas (Racha, Media de tiempo, etc.)
         Reproduction last = reproductionModelService.findFirstByStudentIdOrderByStartedAtDesc(studentId);
         List<java.sql.Date> activityDates = reproductionModelService.findDistinctReproductionDatesByStudentId(studentId);
 
-        Double avgTime = reproductionModelService.findByStudentId(studentId).stream()
-                .filter(r -> r.getStatus() == Status.COMPLETED && r.getEndedAt() != null)
+        Double avgTime = completedReproductions.stream()
                 .mapToLong(r -> Duration.between(r.getStartedAt(), r.getEndedAt()).toMinutes())
                 .average().orElse(0.0);
 
         return new StudentStatsDTO(
-                completadas, enProgreso,
-                total == 0 ? 0 : (int) Math.round((double) completadas / total * 100),
+                completadasHoy,
+                pendientesHoy,
+                tasaExito, // Ahora es % del cumplimiento de la agenda diaria
                 Math.round(avgTime * 10.0) / 10.0,
                 calculateStreak(activityDates),
                 calculateElapsedTime(last != null ? last.getStartedAt() : null)
