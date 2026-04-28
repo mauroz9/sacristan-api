@@ -5,20 +5,28 @@ import com.sacristan.api.global.entities.content.rotuine.Routine;
 import com.sacristan.api.global.entities.content.rotuine.RoutineModelService;
 import com.sacristan.api.global.entities.content.sequence.Sequence;
 import com.sacristan.api.global.entities.content.sequence.SequenceModelService;
+import com.sacristan.api.global.entities.tracking.reproduction.Reproduction;
 import com.sacristan.api.global.entities.tracking.reproduction.ReproductionModelService;
+import com.sacristan.api.global.entities.tracking.status.Status;
 import com.sacristan.api.global.entities.users.role.Role;
 import com.sacristan.api.global.entities.users.student.Student;
 import com.sacristan.api.global.entities.users.student.StudentModelService;
 import com.sacristan.api.global.entities.users.student.StudentSpecification;
 import com.sacristan.api.global.entities.users.user.User;
 import com.sacristan.api.global.entities.users.user.UserModelService;
+import com.sacristan.api.interfaces.admin.alumnos.dtos.response.dashboard.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+import java.sql.Date;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -148,6 +156,159 @@ public class AlumnoService {
     public Integer countAssignedRoutinesOfStudent(Long studentId) {
         Student student = studentModelService.getById(studentId);
         return student.getRoutines().size();
+    }
+
+    private Integer calculateStreak(List<Date> dates) {
+        if (dates == null || dates.isEmpty()) return 0;
+        int racha = 1;
+
+        LocalDate today = LocalDate.now();
+        LocalDate currentCheck = dates.get(0).toLocalDate();
+
+        if (currentCheck.isBefore(today.minusDays(1))) return 0;
+
+        for (int i = 1; i < dates.size(); i++) {
+            LocalDate previousDate = dates.get(i).toLocalDate();
+            if (currentCheck.minusDays(1).equals(previousDate)) {
+                racha++;
+                currentCheck = previousDate;
+            } else {
+                break;
+            }
+        }
+        return racha;
+    }
+
+    private String calculateElapsedTime(LocalDateTime time) {
+        if (time == null) return "Sin actividad";
+        Duration duration = Duration.between(time, LocalDateTime.now());
+        if (duration.toDays() > 0) return duration.toDays() + " días";
+        if (duration.toHours() > 0) return duration.toHours() + " horas";
+        if (duration.toMinutes() > 0) return duration.toMinutes() + " minutos";
+        return "Hace un momento";
+    }
+
+    private List<DailyProgressDTO> generateWeeklyProgress(List<Reproduction> completed) {
+        List<DailyProgressDTO> progress = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+
+        for (int i = 6; i >= 0; i--) {
+            LocalDate date = today.minusDays(i);
+            String dayName = date.getDayOfWeek().getDisplayName(TextStyle.SHORT, new Locale("es", "ES"));
+            dayName = dayName.substring(0, 1).toUpperCase() + dayName.substring(1); // Capitalizar
+
+            long count = completed.stream()
+                    .filter(r -> r.getEndedAt() != null && r.getEndedAt().toLocalDate().equals(date))
+                    .count();
+
+            progress.add(new DailyProgressDTO(dayName, (int) count));
+        }
+        return progress;
+    }
+
+    private List<CategoryStatDTO> getCategoriesPlayed(List<Reproduction> completed) {
+        if (completed.isEmpty()) return List.of();
+
+        Map<String, Long> categoryCounts = completed.stream()
+                .filter(r -> r.getRoutineSegment() != null && r.getRoutineSegment().getSequence() != null && r.getRoutineSegment().getSequence().getCategory() != null)
+                .collect(Collectors.groupingBy(
+                        r -> r.getRoutineSegment().getSequence().getCategory().getName(),
+                        Collectors.counting()
+                ));
+
+        long total = categoryCounts.values().stream().mapToLong(Long::longValue).sum();
+
+        return categoryCounts.entrySet().stream()
+                .map(entry -> new CategoryStatDTO(
+                        entry.getKey(),
+                        (int) Math.round((double) entry.getValue() / total * 100)
+                ))
+                .sorted((c1, c2) -> Integer.compare(c2.porcentaje(), c1.porcentaje()))
+                .toList();
+    }
+
+    private RecentActivityDTO mapToRecentActivityDTO(Reproduction r) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm", new Locale("es", "ES"));
+
+        String duracion = "N/A";
+        if (r.getEndedAt() != null && r.getStartedAt() != null) {
+            long minutes = Duration.between(r.getStartedAt(), r.getEndedAt()).toMinutes();
+            duracion = minutes + " min";
+        }
+
+        String sequenceTitle = r.getRoutineSegment() != null && r.getRoutineSegment().getSequence() != null
+                ? r.getRoutineSegment().getSequence().getTitle()
+                : "Secuencia eliminada";
+
+        return new RecentActivityDTO(
+                r.getId(),
+                sequenceTitle,
+                r.getStartedAt() != null ? r.getStartedAt().format(formatter) : "",
+                duracion,
+                r.getStatus() == Status.COMPLETED
+        );
+    }
+
+    public StudentDashboardResponse getStudentDashboardData(Long studentId) {
+        Student student = getById(studentId); // Lanza excepción si no existe
+
+        Integer completadas = reproductionModelService.countByStudentIdAndStatus(studentId, Status.COMPLETED);
+        Integer enProgreso = reproductionModelService.countByStudentIdAndStatus(studentId, Status.IN_PROGRESS);
+        int totalIntentos = completadas + enProgreso;
+        Integer tasaExito = totalIntentos == 0 ? 0 : (int) Math.round((double) completadas / totalIntentos * 100);
+
+        Reproduction lastReproduction = reproductionModelService.findFirstByStudentIdOrderByStartedAtDesc(studentId);
+        String ultimaActividadStr = calculateElapsedTime(lastReproduction != null ? lastReproduction.getStartedAt() : null);
+
+        List<java.sql.Date> activityDates = reproductionModelService.findDistinctReproductionDatesByStudentId(studentId);
+        Integer racha = calculateStreak(activityDates);
+
+        List<Reproduction> allReproductions = reproductionModelService.findByStudentId(studentId);
+        List<Reproduction> completedReproductions = allReproductions.stream()
+                .filter(r -> r.getStatus() == Status.COMPLETED && r.getEndedAt() != null)
+                .toList();
+
+        Double tiempoPromedio = completedReproductions.stream()
+                .mapToLong(r -> Duration.between(r.getStartedAt(), r.getEndedAt()).toMinutes())
+                .average()
+                .orElse(0.0);
+        tiempoPromedio = Math.round(tiempoPromedio * 10.0) / 10.0; // Redondear a 1 decimal
+
+        StudentStatsDTO statsDTO = new StudentStatsDTO(
+                completadas, enProgreso, tasaExito, tiempoPromedio, racha, ultimaActividadStr
+        );
+
+        List<DailyProgressDTO> weeklyProgress = generateWeeklyProgress(completedReproductions);
+
+        List<CategoryStatDTO> topCategories = getCategoriesPlayed(completedReproductions);
+
+        List<RecentActivityDTO> recentActivity = reproductionModelService.findTop10ByStudentIdOrderByStartedAtDesc(studentId)
+                .stream()
+                .map(this::mapToRecentActivityDTO)
+                .toList();
+
+        List<AssignedSequenceProgressDTO> assignedProgress = student.getSequences().stream()
+                .map(seq -> {
+                    long completadasDeSecuencia = completedReproductions.stream()
+                            .filter(r -> r.getRoutineSegment().getSequence().getId().equals(seq.getId()))
+                            .count();
+
+                    Optional<Reproduction> lastTime = allReproductions.stream()
+                            .filter(r -> r.getRoutineSegment().getSequence().getId().equals(seq.getId()))
+                            .max(Comparator.comparing(Reproduction::getStartedAt));
+
+                    return new AssignedSequenceProgressDTO(
+                            seq.getId(),
+                            seq.getTitle(),
+                            seq.getCategory() != null ? seq.getCategory().getName() : "Sin categoría",
+                            (int) completadasDeSecuencia,
+                            50,
+                            calculateElapsedTime(lastTime.map(Reproduction::getStartedAt).orElse(null))
+                    );
+                })
+                .toList();
+
+        return new StudentDashboardResponse(statsDTO, weeklyProgress, topCategories, assignedProgress, recentActivity);
     }
 }
 
