@@ -1,8 +1,8 @@
 package com.sacristan.api.interfaces.admin.alumnos.dtos.response.dashboard;
 
 public record StudentStatsDTO(
-        Integer secuenciasCompletadas,
-        Integer secuenciasEnProgreso,
+        Integer secuenciasCompletadasHoy,
+        Integer secuenciasPendientesHoy,
         Integer tasaExito,
         Double tiempoPromedio,
         Integer racha,

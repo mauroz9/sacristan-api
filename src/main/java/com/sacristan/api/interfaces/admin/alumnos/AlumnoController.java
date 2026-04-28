@@ -5,7 +5,7 @@ import com.sacristan.api.global.entities.users.student.Student;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.RoutineResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.SequenceResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.StudentListResponse;
-import com.sacristan.api.interfaces.admin.alumnos.dtos.response.dashboard.StudentDashboardResponse;
+import com.sacristan.api.interfaces.admin.alumnos.dtos.response.dashboard.*;
 import com.sacristan.api.interfaces.shared.dtos.CreateUserRequest;
 import com.sacristan.api.interfaces.shared.dtos.ReadUserResponse;
 import com.sacristan.api.interfaces.shared.dtos.UpdateUserRequest;
@@ -185,10 +185,32 @@ public class AlumnoController {
         return ResponseEntity.ok(service.countAssignedRoutinesOfStudent(studentId));
     }
 
-    @GetMapping("/{studentId}/dashboard")
-    public ResponseEntity<@Nullable StudentDashboardResponse> getStudentDashboard(
-            @PathVariable Long studentId
-    ) {
-        return ResponseEntity.ok(service.getStudentDashboardData(studentId));
+    @GetMapping("/{studentId}/stats")
+    public ResponseEntity<StudentStatsDTO> getStudentStats(@PathVariable Long studentId) {
+        return ResponseEntity.ok(service.getStudentStats(studentId));
+    }
+
+    @GetMapping("/{studentId}/weekly-progress")
+    public ResponseEntity<List<DailyProgressDTO>> getWeeklyProgress(@PathVariable Long studentId) {
+        return ResponseEntity.ok(service.getWeeklyProgress(studentId));
+    }
+
+    @GetMapping("/{studentId}/categories")
+    public ResponseEntity<List<CategoryStatDTO>> getCategoryStats(@PathVariable Long studentId) {
+        return ResponseEntity.ok(service.getCategoryStats(studentId));
+    }
+
+    @GetMapping("/{studentId}/agenda")
+    public ResponseEntity<Page<AssignedSequenceProgressDTO>> getStudentAgenda(
+            @PathVariable Long studentId,
+            Pageable pageable) {
+        return ResponseEntity.ok(service.getStudentAgenda(studentId, pageable));
+    }
+
+    @GetMapping("/{studentId}/activity")
+    public ResponseEntity<Page<RecentActivityDTO>> getStudentActivity(
+            @PathVariable Long studentId,
+            Pageable pageable) {
+        return ResponseEntity.ok(service.getStudentActivity(studentId, pageable));
     }
 }

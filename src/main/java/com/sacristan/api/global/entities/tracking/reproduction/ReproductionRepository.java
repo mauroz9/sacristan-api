@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -68,13 +69,37 @@ public interface ReproductionRepository extends JpaRepository<Reproduction, Long
 
     Reproduction findFirstByStudentIdOrderByStartedAtDesc(Long studentId);
 
-    List<Reproduction> findTop10ByStudentIdOrderByStartedAtDesc(Long studentId);
-
     List<Reproduction> findByStudentIdAndStartedAtAfter(Long studentId, LocalDateTime date);
 
     @Query("SELECT DISTINCT CAST(r.startedAt AS date) FROM Reproduction r WHERE r.student.id = :studentId ORDER BY CAST(r.startedAt AS date) DESC")
     List<java.sql.Date> findDistinctReproductionDatesByStudentId(@Param("studentId") Long studentId);
 
-    // Obtener reproducciones para calcular promedios y categorías
     List<Reproduction> findByStudentId(Long studentId);
+
+    Page<Reproduction> findByStudentIdOrderByStartedAtDesc(Long studentId, Pageable pageable);
+
+    @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END " +
+            "FROM Reproduction r " +
+            "WHERE r.student.id = :studentId " +
+            "AND r.routineSegment.id = :segmentId " +
+            "AND r.status = :status " +
+            "AND CAST(r.endedAt AS date) = :today")
+    boolean existsCompletedToday(
+            @Param("studentId") Long studentId,
+            @Param("segmentId") Long segmentId,
+            @Param("status") Status status,
+            @Param("today") LocalDate today
+    );
+
+    @Query("""
+        SELECT DISTINCT r.routineSegment.id
+        FROM Reproduction r
+        WHERE r.student.id = :studentId
+          AND r.status = :status
+          AND r.endedAt IS NOT NULL
+          AND CAST(r.endedAt AS date) = :today
+        """)
+    List<Long> findCompletedRoutineSegmentIdsForToday(@Param("studentId") Long studentId,
+                                                     @Param("status") Status status,
+                                                     @Param("today") LocalDate today);
 }
