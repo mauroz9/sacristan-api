@@ -337,11 +337,19 @@ public class AlumnoService {
         String estado = isCompleted ? "COMPLETADA" :
                 (segment.getEndTime() != null && now.toLocalTime().isAfter(segment.getEndTime()) ? "CADUCADA" : "PENDIENTE");
 
+        String categoryName = segment.getSequence() != null && segment.getSequence().getCategory() != null
+                ? segment.getSequence().getCategory().getName()
+                : "Sin categoría";
+
+        String franjaHoraria = segment.getStartTime() != null
+                ? String.valueOf(segment.getStartTime()) + (segment.getEndTime() != null ? " - " + segment.getEndTime() : "")
+                : (segment.getEndTime() != null ? "- " + segment.getEndTime() : "Sin horario");
+
         return new AssignedSequenceProgressDTO(
                 segment.getId(),
                 segment.getSequence().getTitle(),
-                segment.getSequence().getCategory().getName(),
-                segment.getStartTime() + " - " + segment.getEndTime(),
+                categoryName,
+                franjaHoraria,
                 estado
         );
     }
@@ -357,7 +365,7 @@ public class AlumnoService {
                 .filter(r -> r.getDaysOfTheWeek().contains(todayEnum))
                 .flatMap(r -> r.getSequences().stream())
                 .map(segment -> mapToAgendaDTO(segment, now, completedSegmentIdsToday))
-                .sorted(Comparator.comparing(AssignedSequenceProgressDTO::franjaHoraria))
+                .sorted(Comparator.comparing(AssignedSequenceProgressDTO::franjaHoraria, Comparator.nullsLast(String::compareTo)))
                 .toList();
 
         int start = (int) pageable.getOffset();
