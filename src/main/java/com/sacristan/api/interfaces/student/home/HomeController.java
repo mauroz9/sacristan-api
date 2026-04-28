@@ -18,7 +18,6 @@ public class HomeController {
 
     @GetMapping("/routines")
     public ResponseEntity<Page<PendingSequenceResponse>> getPendingSequences(Pageable pageable, @AuthenticationPrincipal User user) {
-        System.out.println("Getting pending sequences for user: " + user);
         return ResponseEntity.ok(service.getPendingSequences(pageable, user));
     }
 }

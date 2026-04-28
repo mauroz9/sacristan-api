@@ -10,14 +10,19 @@ import com.sacristan.api.global.entities.tracking.reproduction.ReproductionModel
 import com.sacristan.api.global.entities.tracking.status.Status;
 import com.sacristan.api.global.entities.users.student.StudentModelService;
 import com.sacristan.api.global.entities.users.user.User;
+import com.sacristan.api.interfaces.student.reproduccion.dtos.request.EndReproductionRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReproduccionService {
 
     private final SequenceModelService  sequenceModelService;
@@ -42,15 +47,43 @@ public class ReproduccionService {
         return reproductionModelService.save(reproduction).getId();
     }
 
-    public void endReproduction(Long id, User user) {
+    public void endReproduction(Long id, EndReproductionRequest request, User user) {
+        System.out.println("FINALIZANDO.....");
         Reproduction reproduction = reproductionModelService.getById(id);
 
         if (!reproduction.getStudent().getId().equals(user.getId())) {
             throw new IllegalArgumentException("You can only finish your own reproductions");
         }
 
+        Map<String, Integer> buttonClicks = new HashMap<>();
+
+        buttonClicks.put("previous", request.getButtonClicks().getPrevious());
+        buttonClicks.put("next", request.getButtonClicks().getNext());
+
+        if (request.getButtonClicks().getComplete() == 0) {
+            reproduction.setStatus(Status.ABANDONED);
+        } else {
+            reproduction.setStatus(Status.COMPLETED);
+        }
+
+        buttonClicks.put("complete",  request.getButtonClicks().getComplete());
+        buttonClicks.put("exit",  request.getButtonClicks().getExit());
+
+        reproduction.setButtonsClicks(buttonClicks);
+
+        Map<Integer, Integer> stepReproduction = new HashMap<>();
+        Map<Integer, Long> stepTime = new HashMap<>();
+
+        request.getStepStats().forEach(step -> {
+            stepReproduction.put(step.getStepIndex(), step.getViewCount());
+            stepTime.put(step.getStepIndex(), step.getTotalViewTimeMs());
+        });
+
+        reproduction.setStepReproductions(stepReproduction);
+        reproduction.setReproductionTime(stepTime);
+
+
         reproduction.setEndedAt(LocalDateTime.now());
-        reproduction.setStatus(Status.COMPLETED);
         reproductionModelService.save(reproduction);
     }
 }
