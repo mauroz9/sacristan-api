@@ -45,7 +45,7 @@ public class AlumnoController {
     public ResponseEntity<@Nullable ReadUserResponse> read(
             @PathVariable Long id
     ) {
-        Student student = service.getById(id);
+        Student student = service.read(id);
         return ResponseEntity.ok(
                 ReadUserResponse.ofEntity(student.getUser())
         );
@@ -186,6 +186,7 @@ public class AlumnoController {
         return ResponseEntity.ok(service.countAssignedRoutinesOfStudent(studentId));
     }
 
+    // * STATS
     @GetMapping("/{studentId}/stats")
     public ResponseEntity<StudentStatsDTO> getStudentStats(@PathVariable Long studentId) {
         return ResponseEntity.ok(service.getStudentStats(studentId));
