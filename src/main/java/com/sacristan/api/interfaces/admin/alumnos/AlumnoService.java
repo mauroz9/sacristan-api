@@ -50,6 +50,10 @@ public class AlumnoService {
         userModelService.deleteById(id);
     }
 
+    public Student getById(Long id) {
+        return studentModelService.getById(id);
+    }
+
     public Page<Student> list(Pageable pageable, String q) {
         return studentModelService.findByTerm(pageable, StudentSpecification.searchByTerm(q));
     }
@@ -149,6 +153,8 @@ public class AlumnoService {
         return student.getRoutines().size();
     }
 
+    // ==================== Stats Methods (delegados a StudentStatsService) ====================
+
     public StudentStatsDTO getStudentStats(Long studentId) {
         return studentStatsService.calculateStudentStats(studentId);
     }
@@ -171,10 +177,6 @@ public class AlumnoService {
 
     public ReproductionDetailDTO getReproductionDetail(Long reproductionId) {
         return studentStatsService.getReproductionDetail(reproductionId);
-    }
-
-    public Student read(Long id) {
-        return studentModelService.getById(id);
     }
 }
 

@@ -139,9 +139,10 @@ public class StudentStatsService {
             duracion = minutes + " min";
         }
 
-        String sequenceTitle = r.getRoutineSegment() != null && r.getRoutineSegment().getSequence() != null
-                ? r.getRoutineSegment().getSequence().getTitle()
-                : "Secuencia eliminada";
+        String sequenceTitle = "Secuencia eliminada";
+        if (r.getRoutineSegment() != null && r.getRoutineSegment().getSequence() != null && r.getRoutineSegment().getSequence().getTitle() != null && !r.getRoutineSegment().getSequence().getTitle().isBlank()) {
+            sequenceTitle = r.getRoutineSegment().getSequence().getTitle();
+        }
 
         return new RecentActivityDTO(
                 r.getId(),
@@ -163,19 +164,24 @@ public class StudentStatsService {
                 : "Sin categoría";
 
         String franjaHoraria = segment.getStartTime() != null
-                ? String.valueOf(segment.getStartTime()) + (segment.getEndTime() != null ? " - " + segment.getEndTime() : "")
+                ? segment.getStartTime() + (segment.getEndTime() != null ? " - " + segment.getEndTime() : "")
                 : (segment.getEndTime() != null ? "- " + segment.getEndTime() : "Sin horario");
+
+        String sequenceTitle = "Secuencia eliminada";
+        if (segment.getSequence() != null && segment.getSequence().getTitle() != null && !segment.getSequence().getTitle().isBlank()) {
+            sequenceTitle = segment.getSequence().getTitle();
+        }
 
         return new AssignedSequenceProgressDTO(
                 segment.getId(),
-                segment.getSequence().getTitle(),
+                sequenceTitle,
                 categoryName,
                 franjaHoraria,
                 estado
         );
     }
 
-    private ButtonClicksDTO extractButtonClicks(Map<String, Integer> clicksMap) {
+    public ButtonClicksDTO extractButtonClicks(Map<String, Integer> clicksMap) {
         if (clicksMap == null) {
             return new ButtonClicksDTO(0, 0, 0, 0);
         }
@@ -188,15 +194,22 @@ public class StudentStatsService {
         );
     }
 
-    private List<StepTrackingDTO> extractStepTracking(Reproduction rep) {
+    public List<StepTrackingDTO> extractStepTracking(Reproduction rep) {
+        if (rep == null || rep.getRoutineSegment() == null || rep.getRoutineSegment().getSequence() == null || rep.getRoutineSegment().getSequence().getSteps() == null) {
+            return List.of();
+        }
+
+        Map<Integer, Integer> stepReproductions = rep.getStepReproductions() != null ? rep.getStepReproductions() : Map.of();
+        Map<Integer, Long> reproductionTime = rep.getReproductionTime() != null ? rep.getReproductionTime() : Map.of();
+
         AtomicInteger indexCounter = new AtomicInteger(0);
 
         return rep.getRoutineSegment().getSequence().getSteps().stream()
                 .map(step -> {
                     int stepIndex = indexCounter.getAndIncrement();
 
-                    Integer views = (Integer) rep.getStepReproductions().getOrDefault(stepIndex, 0);
-                    Long timeMs = ((Number) rep.getReproductionTime().getOrDefault(stepIndex, 0L)).longValue();
+                    Integer views = stepReproductions.getOrDefault(stepIndex, 0);
+                    Long timeMs = reproductionTime.getOrDefault(stepIndex, 0L);
 
                     String formattedTime = (timeMs / 1000) + " seg";
 
@@ -308,16 +321,37 @@ public class StudentStatsService {
                 .orElseThrow(() -> new NoSuchElementException("No se encontró la reproducción con id: " + reproductionId));
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-        ButtonClicksDTO buttons = extractButtonClicks(rep.getButtonsClicks());
+        String sequenceTitle = "Secuencia eliminada";
+        String categoryName = "Sin categoría";
+        String studentFullName = "--";
 
+        if (rep.getRoutineSegment() != null && rep.getRoutineSegment().getSequence() != null) {
+            var seq = rep.getRoutineSegment().getSequence();
+            if (seq.getTitle() != null && !seq.getTitle().isBlank()) {
+                sequenceTitle = seq.getTitle();
+            }
+            if (seq.getCategory() != null && seq.getCategory().getName() != null && !seq.getCategory().getName().isBlank()) {
+                categoryName = seq.getCategory().getName();
+            }
+        }
+
+        if (rep.getStudent() != null && rep.getStudent().getUser() != null) {
+            var u = rep.getStudent().getUser();
+            String n = u.getName() != null ? u.getName() : "";
+            String ln = u.getLastName() != null ? u.getLastName() : "";
+            String combined = (n + " " + ln).trim();
+            if (!combined.isBlank()) studentFullName = combined;
+        }
+
+        ButtonClicksDTO buttons = extractButtonClicks(rep.getButtonsClicks());
         List<StepTrackingDTO> steps = extractStepTracking(rep);
 
         return new ReproductionDetailDTO(
                 rep.getId(),
-                rep.getRoutineSegment().getSequence().getTitle(),
-                rep.getStudent().getUser().getName() + " " + rep.getStudent().getUser().getLastName(),
-                rep.getRoutineSegment().getSequence().getCategory().getName(),
-                rep.getStatus().name(),
+                sequenceTitle,
+                studentFullName,
+                categoryName,
+                rep.getStatus() != null ? rep.getStatus().name() : "--",
                 rep.getStartedAt() != null ? rep.getStartedAt().format(dtf) : "--",
                 rep.getEndedAt() != null ? rep.getEndedAt().format(dtf) : "En curso",
                 calculateDuration(rep.getStartedAt(), rep.getEndedAt()),
