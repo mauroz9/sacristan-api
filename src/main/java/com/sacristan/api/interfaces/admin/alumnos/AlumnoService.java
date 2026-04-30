@@ -17,6 +17,9 @@ import com.sacristan.api.global.entities.users.student.StudentSpecification;
 import com.sacristan.api.global.entities.users.user.User;
 import com.sacristan.api.global.entities.users.user.UserModelService;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.dashboard.*;
+import com.sacristan.api.interfaces.admin.alumnos.dtos.response.reproduction.ButtonClicksDTO;
+import com.sacristan.api.interfaces.admin.alumnos.dtos.response.reproduction.ReproductionDetailDTO;
+import com.sacristan.api.interfaces.admin.alumnos.dtos.response.reproduction.StepTrackingDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,6 +34,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -379,6 +383,72 @@ public class AlumnoService {
     public Page<RecentActivityDTO> getStudentActivity(Long studentId, Pageable pageable) {
         return reproductionModelService.findByStudentIdOrderByStartedAtDesc(studentId, pageable)
                 .map(this::mapToRecentActivityDTO);
+    }
+
+    public ReproductionDetailDTO getReproductionDetail(Long reproductionId) {
+        Reproduction rep = reproductionModelService.findById(reproductionId)
+                .orElseThrow(() -> new NoSuchElementException("No se encontró la reproducción con id: " + reproductionId));
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+        ButtonClicksDTO buttons = extractButtonClicks(rep.getButtonsClicks());
+
+        List<StepTrackingDTO> steps = extractStepTracking(rep);
+
+        return new ReproductionDetailDTO(
+                rep.getId(),
+                rep.getRoutineSegment().getSequence().getTitle(),
+                rep.getStudent().getUser().getName() + " " + rep.getStudent().getUser().getLastName(),
+                rep.getRoutineSegment().getSequence().getCategory().getName(),
+                rep.getStatus().name(),
+                rep.getStartedAt() != null ? rep.getStartedAt().format(dtf) : "--",
+                rep.getEndedAt() != null ? rep.getEndedAt().format(dtf) : "En curso",
+                calculateDuration(rep.getStartedAt(), rep.getEndedAt()),
+                buttons,
+                steps
+        );
+    }
+
+    private ButtonClicksDTO extractButtonClicks(Map<String, Integer> clicksMap) {
+        if (clicksMap == null) {
+            return new ButtonClicksDTO(0, 0, 0, 0); // Prevención de NullPointerException
+        }
+
+        return new ButtonClicksDTO(
+                clicksMap.getOrDefault("previous", 0),
+                clicksMap.getOrDefault("next", 0),
+                clicksMap.getOrDefault("complete", 0),
+                clicksMap.getOrDefault("exit", 0)
+        );
+    }
+
+    private List<StepTrackingDTO> extractStepTracking(Reproduction rep) {
+        AtomicInteger indexCounter = new AtomicInteger(0);
+
+        return rep.getRoutineSegment().getSequence().getSteps().stream()
+                .map(step -> {
+                    int stepIndex = indexCounter.getAndIncrement();
+
+                    Integer views = (Integer) rep.getStepReproductions().getOrDefault(stepIndex, 0);
+                    Long timeMs = ((Number) rep.getReproductionTime().getOrDefault(stepIndex, 0L)).longValue();
+
+                    String formattedTime = (timeMs / 1000) + " seg";
+
+                    return new StepTrackingDTO(
+                            stepIndex + 1,
+                            step.getName(),
+                            views,
+                            formattedTime
+                    );
+                }).toList();
+    }
+
+    private String calculateDuration(LocalDateTime start, LocalDateTime end) {
+        if (start == null || end == null) {
+            return "--";
+        }
+
+        long seconds = Duration.between(start, end).getSeconds();
+        return String.format("%d min %d seg", seconds / 60, seconds % 60);
     }
 }
 
