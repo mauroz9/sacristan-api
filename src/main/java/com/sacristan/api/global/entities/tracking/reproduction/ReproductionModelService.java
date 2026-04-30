@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long, ReproductionRepository> {
@@ -68,5 +69,9 @@ public class ReproductionModelService extends BaseServiceImpl<Reproduction, Long
 
     public List<Long> findCompletedRoutineSegmentIdsForToday(Long studentId, LocalDate today) {
         return repository.findCompletedRoutineSegmentIdsForToday(studentId, Status.COMPLETED, today);
+    }
+
+    public Optional<Reproduction> findById(Long id) {
+        return repository.findById(id);
     }
 }

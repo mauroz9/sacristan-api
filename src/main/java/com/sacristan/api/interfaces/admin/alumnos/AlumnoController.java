@@ -6,6 +6,7 @@ import com.sacristan.api.interfaces.admin.alumnos.dtos.response.RoutineResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.SequenceResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.StudentListResponse;
 import com.sacristan.api.interfaces.admin.alumnos.dtos.response.dashboard.*;
+import com.sacristan.api.interfaces.admin.alumnos.dtos.response.reproduction.ReproductionDetailDTO;
 import com.sacristan.api.interfaces.shared.dtos.CreateUserRequest;
 import com.sacristan.api.interfaces.shared.dtos.ReadUserResponse;
 import com.sacristan.api.interfaces.shared.dtos.UpdateUserRequest;
@@ -212,5 +213,11 @@ public class AlumnoController {
             @PathVariable Long studentId,
             Pageable pageable) {
         return ResponseEntity.ok(service.getStudentActivity(studentId, pageable));
+    }
+
+    @GetMapping("/reproductions/{reproductionId}/detail")
+    public ResponseEntity<ReproductionDetailDTO> getReproductionDetail(@PathVariable Long reproductionId) {
+        ReproductionDetailDTO detail = service.getReproductionDetail(reproductionId);
+        return ResponseEntity.ok(detail);
     }
 }
