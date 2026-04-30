@@ -1,6 +1,7 @@
 package com.sacristan.api.interfaces.student.perfil;
 
 import com.sacristan.api.global.entities.users.user.User;
+import com.sacristan.api.interfaces.student.perfil.dtos.response.StudentPunctuationResponse;
 import com.sacristan.api.interfaces.student.perfil.dtos.response.StudentResponse;
 import com.sacristan.api.interfaces.student.perfil.dtos.response.TeacherResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,12 @@ public class PerfilController {
             @AuthenticationPrincipal User user
     ) {
         return ResponseEntity.ok(TeacherResponse.ofEntity(service.getTeacher(user)));
+    }
+
+    @GetMapping("/punctuation")
+    public ResponseEntity<StudentPunctuationResponse> getPunctuation(
+            @AuthenticationPrincipal User user
+    ){
+        return ResponseEntity.ok(service.getPunctuation(user));
     }
 }
